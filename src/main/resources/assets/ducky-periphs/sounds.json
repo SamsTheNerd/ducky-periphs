@@ -1,0 +1,8 @@
+{
+    "quack": {
+        "subtitle": "subtitles.ducky-periphs.quack",
+        "sounds": [
+            "ducky-periphs:quack"
+        ]
+    }
+}

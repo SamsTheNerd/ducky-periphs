@@ -1,0 +1,92 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"head": "ducky-periphs:block/duck/duck_head",
+		"eyes": "ducky-periphs:block/duck/duck_eyes",
+		"wing": "ducky-periphs:block/duck/duck_wing",
+		"body": "ducky-periphs:block/duck/duck_body",
+		"nose": "ducky-periphs:block/duck/nose",
+		"particle": "ducky-periphs:block/duck/duck_head"
+	},
+	"elements": [
+		{
+			"name": "Body",
+			"from": [4, 0, 5],
+			"to": [12, 4, 11],
+			"faces": {
+				"north": {"uv": [8, 0, 16, 4], "texture": "#body", "tintindex": 0},
+				"east": {"uv": [8, 8, 14, 12], "texture": "#body", "tintindex": 0},
+				"south": {"uv": [8, 4, 16, 8], "texture": "#body", "tintindex": 0},
+				"west": {"uv": [0, 12, 6, 16], "texture": "#body", "tintindex": 0},
+				"up": {"uv": [8, 6, 0, 0], "texture": "#body", "tintindex": 0},
+				"down": {"uv": [8, 6, 0, 12], "texture": "#body", "tintindex": 0, "cullface": "down"}
+			}
+		},
+		{
+			"name": "Head",
+			"from": [9, 3, 6],
+			"to": [13, 7, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#head", "tintindex": 0},
+				"east": {"uv": [0, 4, 4, 8], "texture": "#head", "tintindex": 0},
+				"south": {"uv": [4, 0, 8, 4], "texture": "#head", "tintindex": 0},
+				"west": {"uv": [4, 4, 8, 8], "texture": "#head", "tintindex": 0},
+				"up": {"uv": [4, 12, 0, 8], "texture": "#head", "tintindex": 0},
+				"down": {"uv": [12, 0, 8, 4], "texture": "#head", "tintindex": 0}
+			}
+		},
+		{
+			"name": "Right Wing",
+			"from": [5, 1, 4],
+			"to": [11, 4, 5],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 3], "texture": "#wing", "tintindex": 0},
+				"east": {"uv": [6, 1, 7, 4], "texture": "#wing", "tintindex": 0},
+				"south": {"uv": [0, 3, 6, 6], "texture": "#wing", "tintindex": 0},
+				"west": {"uv": [6, 4, 7, 7], "texture": "#wing", "tintindex": 0},
+				"up": {"uv": [6, 7, 0, 6], "texture": "#wing", "tintindex": 0},
+				"down": {"uv": [12, 0, 6, 1], "texture": "#wing", "tintindex": 0}
+			}
+		},
+		{
+			"name": "Left Wing",
+			"from": [5, 1, 11],
+			"to": [11, 4, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 3], "texture": "#wing", "tintindex": 0},
+				"east": {"uv": [0, 0, 1, 3], "texture": "#wing", "tintindex": 0},
+				"south": {"uv": [0, 0, 6, 3], "texture": "#wing", "tintindex": 0},
+				"west": {"uv": [0, 0, 1, 3], "texture": "#wing", "tintindex": 0},
+				"up": {"uv": [0, 0, 6, 1], "texture": "#wing", "tintindex": 0},
+				"down": {"uv": [0, 0, 6, 1], "texture": "#wing", "tintindex": 0}
+			}
+		},
+		{
+			"name": "nose",
+			"from": [13, 4, 7],
+			"to": [14, 5, 9],
+			"faces": {
+				"north": {"uv": [1, 2, 2, 3], "texture": "#nose"},
+				"east": {"uv": [0, 0, 2, 1], "texture": "#nose"},
+				"south": {"uv": [2, 2, 3, 3], "texture": "#nose"},
+				"west": {"uv": [0, 1, 2, 2], "texture": "#nose"},
+				"up": {"uv": [1, 4, 0, 2], "texture": "#nose"},
+				"down": {"uv": [3, 0, 2, 2], "texture": "#nose"}
+			}
+		},
+		{
+			"name": "Eyes",
+			"from": [13, 3, 6],
+			"to": [13, 7, 10],
+			"faces": {
+				"east": {"uv": [0, 4, 4, 8], "texture": "#eyes"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 260, 0],
+			"translation": [0, 8, 0]
+		}
+	}
+}

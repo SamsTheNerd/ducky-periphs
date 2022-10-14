@@ -1,0 +1,16 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "  L",
+        "LLL",
+        "LLL"
+    ],
+    "key": {
+        "L": {
+            "item": "techreborn:rubber"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:duck_block"
+    }
+}

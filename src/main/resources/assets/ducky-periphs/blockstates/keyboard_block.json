@@ -1,0 +1,20 @@
+{
+    "multipart": [
+        { 
+            "when": {"facing": "north"},
+            "apply": {"model": "ducky-periphs:block/keyboard_block_tinted", "y": 90}
+        },
+        {
+            "when": {"facing": "south"},
+            "apply": {"model": "ducky-periphs:block/keyboard_block_tinted", "y": 270}
+        },
+        {
+            "when": {"facing": "west"},
+            "apply": {"model": "ducky-periphs:block/keyboard_block_tinted", "y": 0}
+        },
+        {
+            "when": {"facing": "east"},
+            "apply": {"model": "ducky-periphs:block/keyboard_block_tinted", "y": 180}
+        }
+    ]
+}

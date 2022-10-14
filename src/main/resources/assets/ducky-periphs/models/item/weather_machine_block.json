@@ -1,0 +1,6 @@
+{
+    "parent": "ducky-periphs:block/weather_machine/wm_base",
+    "textures": {
+        "front": "ducky-periphs:block/weather_machine/wm_front_default"
+    }
+}

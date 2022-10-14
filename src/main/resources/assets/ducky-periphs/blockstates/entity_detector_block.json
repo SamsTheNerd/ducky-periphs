@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": {"model": "ducky-periphs:block/entity_detector_block"}
+    }
+}

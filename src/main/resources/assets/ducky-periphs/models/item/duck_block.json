@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "ducky-periphs:item/duck/duck_base",
+        "layer1": "ducky-periphs:item/duck/duck_face"
+    }
+}

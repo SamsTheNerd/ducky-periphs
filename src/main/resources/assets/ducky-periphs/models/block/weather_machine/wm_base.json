@@ -1,0 +1,32 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "bottom": "ducky-periphs:block/weather_machine/wm_bottom",
+        "top": "ducky-periphs:block/weather_machine/wm_top",
+        "side": "ducky-periphs:block/weather_machine/wm_side",
+        "front": "ducky-periphs:block/weather_machine/wm_front_base",
+        "top_overlay": "ducky-periphs:block/weather_machine/wm_top_overlay",
+        "particle": "block/stone"
+    },
+    "elements": [
+        {
+            "from": [0, 0, 0],
+            "to": [16, 16, 16],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+                "up":    { "uv": [ 16, 16, 0, 0 ], "texture": "#top",    "cullface": "up"},
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#front",   "cullface": "north" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#side",   "cullface": "south" },
+                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side",   "cullface": "west" },
+                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side",   "cullface": "east" }
+            }
+        },
+        {
+            "from": [0, 0, 0],
+            "to": [16,16,16],
+            "faces": {
+                "up": { "uv": [ 16, 16, 0, 0 ], "texture": "#top_overlay", "cullface": "up", "tintindex": 0}
+            }
+        }
+    ]
+}

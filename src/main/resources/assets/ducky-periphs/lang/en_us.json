@@ -1,0 +1,16 @@
+{
+    "block.ducky-periphs.duck_block": "Rubber Ducky",
+    "item.ducky-periphs.duck_block": "Rubber Ducky",
+
+    "block.ducky-periphs.weather_machine_block": "Weather Machine",
+    "item.ducky-periphs.weather_machine_block": "Weather Machine",
+    "block.ducky-periphs.entity_detector_block": "Entity Detector",
+    "item.ducky-periphs.entity_detector_block": "Entity Detector",
+    
+    "subtitles.ducky-periphs.quack": "Rubber Duck Squeak",
+    "itemGroup.ducky-periphs.general": "Ducky Peripherals",
+
+    "block.ducky-periphs.keyboard_block": "Keyboard",
+    "item.ducky-periphs.keyboard_block": "Keyboard"
+    
+}

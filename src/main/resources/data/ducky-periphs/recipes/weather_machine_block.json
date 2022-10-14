@@ -1,0 +1,31 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "SGS",
+        "POB",
+        "SRS"
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:stone"
+        },
+        "G": {
+            "item": "minecraft:grass_block"
+        },
+        "P": {
+            "tag": "c:glass_panes"
+        },
+        "B": {
+            "item": "minecraft:bucket"
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        },
+        "O": {
+            "item": "minecraft:observer"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:weather_machine_block"
+    }
+}

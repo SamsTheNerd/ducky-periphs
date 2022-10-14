@@ -1,0 +1,6 @@
+{
+    "parent": "ducky-periphs:block/weather_machine/wm_temp_template",
+    "textures": {
+        "thermo_texture": "ducky-periphs:block/weather_machine/wm_thermo_1"
+    }
+}

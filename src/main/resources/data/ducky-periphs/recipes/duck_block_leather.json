@@ -1,0 +1,19 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "  L",
+        "LLL",
+        "LSL"
+    ],
+    "key": {
+        "L": {
+            "item": "minecraft:leather"
+        },
+        "S": {
+            "item": "minecraft:sponge"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:duck_block"
+    }
+}

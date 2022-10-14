@@ -1,0 +1,195 @@
+{
+    "multipart": [
+        { 
+            "when": {"facing": "north"},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_base"}
+        },
+        {
+            "when": {"facing": "south"},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_base", "y": 180}
+        },
+        {
+            "when": {"facing": "west"},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_base", "y": 270}
+        },
+        {
+            "when": {"facing": "east"},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_base", "y": 90}
+        },
+
+
+
+
+        {
+            "when": {"facing": "north", "temp": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_0"}
+        },
+        {
+            "when": {"facing": "north", "temp": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_1"}
+        },
+        {
+            "when": {"facing": "north", "temp": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_2"}
+        },
+        {
+            "when": {"facing": "north", "temp": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_3"}
+        },
+        {
+            "when": {"facing": "north", "temp": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_4"}
+        },
+
+        {
+            "when": {"facing": "west", "temp": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_0", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "temp": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_1", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "temp": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_2", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "temp": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_3", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "temp": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_4", "y": 270}
+        },
+
+        {
+            "when": {"facing": "south", "temp": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_0", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "temp": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_1", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "temp": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_2", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "temp": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_3", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "temp": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_4", "y": 180}
+        },
+
+        {
+            "when": {"facing": "east", "temp": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_0", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "temp": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_1", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "temp": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_2", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "temp": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_3", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "temp": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_temp_4", "y": 90}
+        },
+
+
+
+
+        {
+            "when": {"facing": "north", "tank": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_0"}
+        },
+        {
+            "when": {"facing": "north", "tank": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_1"}
+        },
+        {
+            "when": {"facing": "north", "tank": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_2"}
+        },
+        {
+            "when": {"facing": "north", "tank": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_3"}
+        },
+        {
+            "when": {"facing": "north", "tank": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_4"}
+        },
+
+        {
+            "when": {"facing": "west", "tank": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_0", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "tank": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_1", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "tank": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_2", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "tank": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_3", "y": 270}
+        },
+        {
+            "when": {"facing": "west", "tank": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_4", "y": 270}
+        },
+
+        {
+            "when": {"facing": "south", "tank": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_0", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "tank": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_1", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "tank": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_2", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "tank": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_3", "y": 180}
+        },
+        {
+            "when": {"facing": "south", "tank": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_4", "y": 180}
+        },
+
+        {
+            "when": {"facing": "east", "tank": 0},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_0", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "tank": 1},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_1", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "tank": 2},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_2", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "tank": 3},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_3", "y": 90}
+        },
+        {
+            "when": {"facing": "east", "tank": 4},
+            "apply": {"model": "ducky-periphs:block/weather_machine/wm_tank_4", "y": 90}
+        }
+    
+    ]
+}

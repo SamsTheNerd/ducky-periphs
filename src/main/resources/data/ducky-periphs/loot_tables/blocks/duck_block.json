@@ -1,0 +1,37 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "ducky-periphs:duck_block",
+                    "functions": [
+                        {
+                            "function": "minecraft:copy_nbt",
+                            "source": "block_entity",
+                            "ops": [
+                                {
+                                    "op": "replace",
+                                    "source": "color",
+                                    "target": "display.color"
+                                },
+                                {
+                                    "op": "replace",
+                                    "source": "CustomName",
+                                    "target": "display.Name"
+                                },
+                                {
+                                    "op": "replace",
+                                    "source": "RepairCost",
+                                    "target": "RepairCost"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

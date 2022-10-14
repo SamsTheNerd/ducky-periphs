@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "bbb",
+        "srs"
+    ],
+    "key": {
+        "b": {
+            "tag": "minecraft:buttons"
+        },
+        "s": {
+            "item": "minecraft:stone"
+        },
+        "r": {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:keyboard_block"
+    }
+}

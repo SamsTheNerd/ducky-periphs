@@ -1,0 +1,6 @@
+{
+    "parent": "ducky-periphs:block/weather_machine/wm_tank_template",
+    "textures": {
+        "tank_texture": "ducky-periphs:block/weather_machine/wm_tank_1"
+    }
+}

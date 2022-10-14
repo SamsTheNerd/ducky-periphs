@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SGS",
+        "OEO",
+        "SRS"
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:stone"
+        },
+        "G": {
+            "tag": "c:glass_panes"
+        },
+        "O": {
+            "item": "minecraft:observer"
+        },
+        "E": {
+            "item": "minecraft:ender_eye"
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:entity_detector_block"
+    }
+}

@@ -1,0 +1,2939 @@
+{
+    "credit": "Made with Blockbench",
+    "texture_size": [
+        16,
+        8
+    ],
+    "textures": {
+        "0": "ducky-periphs:block/keyboard/case_base_w_corners",
+        "1": "ducky-periphs:block/keyboard/keys_base_full",
+        "particle": "ducky-periphs:block/keyboard/case_base_w_corners",
+        "ArrowKeys": "ducky-periphs:block/keyboard/keyzones/arrow_keys",
+        "BackKeys": "ducky-periphs:block/keyboard/keyzones/back_key",
+        "BackslashKeys": "ducky-periphs:block/keyboard/keyzones/backslash_key",
+        "CapsKeys": "ducky-periphs:block/keyboard/keyzones/caps_key",
+        "EnterKeys": "ducky-periphs:block/keyboard/keyzones/enter_key",
+        "ESCKeys": "ducky-periphs:block/keyboard/keyzones/esc_key",
+        "GraveKeys": "ducky-periphs:block/keyboard/keyzones/grave_key",
+        "LeftFNKeys": "ducky-periphs:block/keyboard/keyzones/left_fn_keys",
+        "LShift": "ducky-periphs:block/keyboard/keyzones/lshift",
+        "MidFNKeys": "ducky-periphs:block/keyboard/keyzones/mid_fn_keys",
+        "MidSideKeys": "ducky-periphs:block/keyboard/keyzones/mid_side_keys",
+        "ModifierKeysLeft": "ducky-periphs:block/keyboard/keyzones/modifier_keys_left",
+        "ModifierKeysRight": "ducky-periphs:block/keyboard/keyzones/modifier_keys_right",
+        "MostKeys": "ducky-periphs:block/keyboard/keyzones/most_keys",
+        "NumRow": "ducky-periphs:block/keyboard/keyzones/num_row",
+        "RightFNKeys": "ducky-periphs:block/keyboard/keyzones/right_fn_keys",
+        "RShift": "ducky-periphs:block/keyboard/keyzones/rshift",
+        "ScreenKeys": "ducky-periphs:block/keyboard/keyzones/screen_keys",
+        "SpaceKey": "ducky-periphs:block/keyboard/keyzones/space_key",
+        "TabKey": "ducky-periphs:block/keyboard/keyzones/tab_key",
+        "TopSideKeys": "ducky-periphs:block/keyboard/keyzones/top_side_keys",
+        "WASDKeys": "ducky-periphs:block/keyboard/keyzones/wasd_keys"
+    },
+    "elements": [
+        {
+            "name": "Case-Right",
+            "from": [
+                5,
+                0,
+                11
+            ],
+            "to": [
+                11,
+                1,
+                15
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        4,
+                        8,
+                        10,
+                        10
+                    ],
+                    "texture": "#0",
+                    "tintindex": 0
+                },
+                "east": {
+                    "uv": [
+                        11,
+                        0,
+                        15,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 0
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        2,
+                        16,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#0",
+                    "tintindex": 0
+                },
+                "west": {
+                    "uv": [
+                        11,
+                        14,
+                        15,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 0
+                },
+                "up": {
+                    "uv": [
+                        15,
+                        14,
+                        11,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 0
+                },
+                "down": {
+                    "uv": [
+                        11,
+                        14,
+                        15,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 0
+                }
+            }
+        },
+        {
+            "name": "Case-Left",
+            "from": [
+                5,
+                0,
+                1
+            ],
+            "to": [
+                11,
+                1,
+                5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        2,
+                        1,
+                        14
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 1
+                },
+                "east": {
+                    "uv": [
+                        1,
+                        0,
+                        5,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 1
+                },
+                "south": {
+                    "uv": [
+                        14,
+                        8,
+                        20,
+                        10
+                    ],
+                    "texture": "#0",
+                    "tintindex": 1
+                },
+                "west": {
+                    "uv": [
+                        1,
+                        14,
+                        5,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 1
+                },
+                "up": {
+                    "uv": [
+                        5,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 1
+                },
+                "down": {
+                    "uv": [
+                        1,
+                        14,
+                        5,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 1
+                }
+            }
+        },
+        {
+            "name": "Case-Mid-Left",
+            "from": [
+                5,
+                0,
+                5
+            ],
+            "to": [
+                11,
+                1,
+                8
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        3,
+                        6,
+                        9,
+                        8
+                    ],
+                    "texture": "#0",
+                    "tintindex": 2
+                },
+                "east": {
+                    "uv": [
+                        5,
+                        0,
+                        8,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 2
+                },
+                "south": {
+                    "uv": [
+                        12,
+                        6,
+                        18,
+                        8
+                    ],
+                    "texture": "#0",
+                    "tintindex": 2
+                },
+                "west": {
+                    "uv": [
+                        5,
+                        14,
+                        8,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 2
+                },
+                "up": {
+                    "uv": [
+                        8,
+                        14,
+                        5,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 2
+                },
+                "down": {
+                    "uv": [
+                        5,
+                        14,
+                        8,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 2
+                }
+            }
+        },
+        {
+            "name": "Case-Mid-Right",
+            "from": [
+                5,
+                0,
+                8
+            ],
+            "to": [
+                11,
+                1,
+                11
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        3,
+                        6,
+                        9,
+                        8
+                    ],
+                    "texture": "#0",
+                    "tintindex": 3
+                },
+                "east": {
+                    "uv": [
+                        8,
+                        0,
+                        11,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 3
+                },
+                "south": {
+                    "uv": [
+                        12,
+                        6,
+                        18,
+                        8
+                    ],
+                    "texture": "#0",
+                    "tintindex": 3
+                },
+                "west": {
+                    "uv": [
+                        8,
+                        14,
+                        11,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 3
+                },
+                "up": {
+                    "uv": [
+                        11,
+                        14,
+                        8,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 3
+                },
+                "down": {
+                    "uv": [
+                        8,
+                        14,
+                        11,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#0",
+                    "tintindex": 3
+                }
+            }
+        },
+        {
+            "name": "2DCase Right",
+            "from": [
+                4.5,
+                0,
+                15.5
+            ],
+            "to": [
+                11.5,
+                1,
+                15.5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        1,
+                        1,
+                        15
+                    ],
+                    "rotation": 90,
+                    "texture": "#0",
+                    "tintindex": 4
+                },
+                "east": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 4
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        1,
+                        1,
+                        15
+                    ],
+                    "rotation": 90,
+                    "texture": "#0",
+                    "tintindex": 4
+                },
+                "west": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 4
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        7,
+                        0
+                    ],
+                    "texture": "#0",
+                    "tintindex": 4
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        7,
+                        0
+                    ],
+                    "texture": "#0",
+                    "tintindex": 4
+                }
+            }
+        },
+        {
+            "name": "2DCase Left",
+            "from": [
+                4.5,
+                0,
+                0.5
+            ],
+            "to": [
+                11.5,
+                1,
+                0.5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        1,
+                        1,
+                        15
+                    ],
+                    "rotation": 90,
+                    "texture": "#0",
+                    "tintindex": 5
+                },
+                "east": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 5
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        1,
+                        1,
+                        15
+                    ],
+                    "rotation": 90,
+                    "texture": "#0",
+                    "tintindex": 5
+                },
+                "west": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 5
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        7,
+                        0
+                    ],
+                    "texture": "#0",
+                    "tintindex": 5
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        7,
+                        0
+                    ],
+                    "texture": "#0",
+                    "tintindex": 5
+                }
+            }
+        },
+        {
+            "name": "2DCase Front FR",
+            "from": [
+                4.5,
+                0,
+                11
+            ],
+            "to": [
+                4.5,
+                1,
+                15.5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 6
+                },
+                "east": {
+                    "uv": [
+                        11,
+                        0,
+                        15.5,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 6
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 6
+                },
+                "west": {
+                    "uv": [
+                        11,
+                        14,
+                        15.5,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 6
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 6
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 6
+                }
+            }
+        },
+        {
+            "name": "2DCase Front FL",
+            "from": [
+                4.5,
+                0,
+                0.5
+            ],
+            "to": [
+                4.5,
+                1,
+                5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 7
+                },
+                "east": {
+                    "uv": [
+                        0.5,
+                        0,
+                        5,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 7
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 7
+                },
+                "west": {
+                    "uv": [
+                        0.5,
+                        14,
+                        5,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 7
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 7
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 7
+                }
+            }
+        },
+        {
+            "name": "2DCase Front ML",
+            "from": [
+                4.5,
+                0,
+                5
+            ],
+            "to": [
+                4.5,
+                1,
+                8
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 8
+                },
+                "east": {
+                    "uv": [
+                        5,
+                        0,
+                        8,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 8
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 8
+                },
+                "west": {
+                    "uv": [
+                        5,
+                        14,
+                        8,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 8
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 8
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 8
+                }
+            }
+        },
+        {
+            "name": "2DCase Front MR",
+            "from": [
+                4.5,
+                0,
+                8
+            ],
+            "to": [
+                4.5,
+                1,
+                11
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 9
+                },
+                "east": {
+                    "uv": [
+                        8,
+                        0,
+                        11,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 9
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 9
+                },
+                "west": {
+                    "uv": [
+                        8,
+                        14,
+                        11,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 9
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 9
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 9
+                }
+            }
+        },
+        {
+            "name": "2DCase Back FR",
+            "from": [
+                11.5,
+                0,
+                11
+            ],
+            "to": [
+                11.5,
+                1,
+                15.5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 10
+                },
+                "east": {
+                    "uv": [
+                        11,
+                        0,
+                        15.5,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 10
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 10
+                },
+                "west": {
+                    "uv": [
+                        11,
+                        14,
+                        15.5,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 10
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 10
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 10
+                }
+            }
+        },
+        {
+            "name": "2DCase Back FL",
+            "from": [
+                11.5,
+                0,
+                0.5
+            ],
+            "to": [
+                11.5,
+                1,
+                5
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 11
+                },
+                "east": {
+                    "uv": [
+                        0.5,
+                        0,
+                        5,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 11
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 11
+                },
+                "west": {
+                    "uv": [
+                        0.5,
+                        14,
+                        5,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 11
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 11
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 11
+                }
+            }
+        },
+        {
+            "name": "2DCase Back ML",
+            "from": [
+                11.5,
+                0,
+                5
+            ],
+            "to": [
+                11.5,
+                1,
+                8
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 12
+                },
+                "east": {
+                    "uv": [
+                        5,
+                        0,
+                        8,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 12
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 12
+                },
+                "west": {
+                    "uv": [
+                        5,
+                        14,
+                        8,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 12
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 12
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 12
+                }
+            }
+        },
+        {
+            "name": "2DCase Back MR",
+            "from": [
+                11.5,
+                0,
+                8
+            ],
+            "to": [
+                11.5,
+                1,
+                11
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 13
+                },
+                "east": {
+                    "uv": [
+                        8,
+                        0,
+                        11,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 13
+                },
+                "south": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        2
+                    ],
+                    "texture": "#0",
+                    "tintindex": 13
+                },
+                "west": {
+                    "uv": [
+                        8,
+                        14,
+                        11,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 13
+                },
+                "up": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 13
+                },
+                "down": {
+                    "uv": [
+                        0,
+                        0,
+                        0,
+                        16
+                    ],
+                    "texture": "#0",
+                    "tintindex": 13
+                }
+            }
+        },
+        {
+            "name": "ArrowKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#ArrowKeys",
+                    "tintindex": 14
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#ArrowKeys",
+                    "tintindex": 14
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#ArrowKeys",
+                    "tintindex": 14
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#ArrowKeys",
+                    "tintindex": 14
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#ArrowKeys",
+                    "tintindex": 14
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#ArrowKeys",
+                    "tintindex": 14
+                }
+            }
+        },
+        {
+            "name": "BackKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#BackKeys",
+                    "tintindex": 15
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#BackKeys",
+                    "tintindex": 15
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#BackKeys",
+                    "tintindex": 15
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#BackKeys",
+                    "tintindex": 15
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#BackKeys",
+                    "tintindex": 15
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#BackKeys",
+                    "tintindex": 15
+                }
+            }
+        },
+        {
+            "name": "BackslashKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#BackslashKeys",
+                    "tintindex": 16
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#BackslashKeys",
+                    "tintindex": 16
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#BackslashKeys",
+                    "tintindex": 16
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#BackslashKeys",
+                    "tintindex": 16
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#BackslashKeys",
+                    "tintindex": 16
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#BackslashKeys",
+                    "tintindex": 16
+                }
+            }
+        },
+        {
+            "name": "CapsKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#CapsKeys",
+                    "tintindex": 17
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#CapsKeys",
+                    "tintindex": 17
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#CapsKeys",
+                    "tintindex": 17
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#CapsKeys",
+                    "tintindex": 17
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#CapsKeys",
+                    "tintindex": 17
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#CapsKeys",
+                    "tintindex": 17
+                }
+            }
+        },
+        {
+            "name": "EnterKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#EnterKeys",
+                    "tintindex": 18
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#EnterKeys",
+                    "tintindex": 18
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#EnterKeys",
+                    "tintindex": 18
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#EnterKeys",
+                    "tintindex": 18
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#EnterKeys",
+                    "tintindex": 18
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#EnterKeys",
+                    "tintindex": 18
+                }
+            }
+        },
+        {
+            "name": "ESCKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#ESCKeys",
+                    "tintindex": 19
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#ESCKeys",
+                    "tintindex": 19
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#ESCKeys",
+                    "tintindex": 19
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#ESCKeys",
+                    "tintindex": 19
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#ESCKeys",
+                    "tintindex": 19
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#ESCKeys",
+                    "tintindex": 19
+                }
+            }
+        },
+        {
+            "name": "GraveKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#GraveKeys",
+                    "tintindex": 20
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#GraveKeys",
+                    "tintindex": 20
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#GraveKeys",
+                    "tintindex": 20
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#GraveKeys",
+                    "tintindex": 20
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#GraveKeys",
+                    "tintindex": 20
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#GraveKeys",
+                    "tintindex": 20
+                }
+            }
+        },
+        {
+            "name": "LeftFNKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#LeftFNKeys",
+                    "tintindex": 21
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#LeftFNKeys",
+                    "tintindex": 21
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#LeftFNKeys",
+                    "tintindex": 21
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#LeftFNKeys",
+                    "tintindex": 21
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#LeftFNKeys",
+                    "tintindex": 21
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#LeftFNKeys",
+                    "tintindex": 21
+                }
+            }
+        },
+        {
+            "name": "RightFNKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#RightFNKeys",
+                    "tintindex": 22
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#RightFNKeys",
+                    "tintindex": 22
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#RightFNKeys",
+                    "tintindex": 22
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#RightFNKeys",
+                    "tintindex": 22
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#RightFNKeys",
+                    "tintindex": 22
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#RightFNKeys",
+                    "tintindex": 22
+                }
+            }
+        },
+        {
+            "name": "LShift",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#LShift",
+                    "tintindex": 23
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#LShift",
+                    "tintindex": 23
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#LShift",
+                    "tintindex": 23
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#LShift",
+                    "tintindex": 23
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#LShift",
+                    "tintindex": 23
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#LShift",
+                    "tintindex": 23
+                }
+            }
+        },
+        {
+            "name": "RShift",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#RShift",
+                    "tintindex": 24
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#RShift",
+                    "tintindex": 24
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#RShift",
+                    "tintindex": 24
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#RShift",
+                    "tintindex": 24
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#RShift",
+                    "tintindex": 24
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#RShift",
+                    "tintindex": 24
+                }
+            }
+        },
+        {
+            "name": "MidFNKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#MidFNKeys",
+                    "tintindex": 25
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#MidFNKeys",
+                    "tintindex": 25
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#MidFNKeys",
+                    "tintindex": 25
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#MidFNKeys",
+                    "tintindex": 25
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#MidFNKeys",
+                    "tintindex": 25
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#MidFNKeys",
+                    "tintindex": 25
+                }
+            }
+        },
+        {
+            "name": "MidSideKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#MidSideKeys",
+                    "tintindex": 26
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#MidSideKeys",
+                    "tintindex": 26
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#MidSideKeys",
+                    "tintindex": 26
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#MidSideKeys",
+                    "tintindex": 26
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#MidSideKeys",
+                    "tintindex": 26
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#MidSideKeys",
+                    "tintindex": 26
+                }
+            }
+        },
+        {
+            "name": "ModifierKeysLeft",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#ModifierKeysLeft",
+                    "tintindex": 27
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#ModifierKeysLeft",
+                    "tintindex": 27
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#ModifierKeysLeft",
+                    "tintindex": 27
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#ModifierKeysLeft",
+                    "tintindex": 27
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#ModifierKeysLeft",
+                    "tintindex": 27
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#ModifierKeysLeft",
+                    "tintindex": 27
+                }
+            }
+        },
+        {
+            "name": "ModifierKeysRight",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#ModifierKeysRight",
+                    "tintindex": 28
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#ModifierKeysRight",
+                    "tintindex": 28
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#ModifierKeysRight",
+                    "tintindex": 28
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#ModifierKeysRight",
+                    "tintindex": 28
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#ModifierKeysRight",
+                    "tintindex": 28
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#ModifierKeysRight",
+                    "tintindex": 28
+                }
+            }
+        },
+        {
+            "name": "MostKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#MostKeys",
+                    "tintindex": 29
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#MostKeys",
+                    "tintindex": 29
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#MostKeys",
+                    "tintindex": 29
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#MostKeys",
+                    "tintindex": 29
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#MostKeys",
+                    "tintindex": 29
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#MostKeys",
+                    "tintindex": 29
+                }
+            }
+        },
+        {
+            "name": "NumRow",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#NumRow",
+                    "tintindex": 30
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#NumRow",
+                    "tintindex": 30
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#NumRow",
+                    "tintindex": 30
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#NumRow",
+                    "tintindex": 30
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#NumRow",
+                    "tintindex": 30
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#NumRow",
+                    "tintindex": 30
+                }
+            }
+        },
+        {
+            "name": "ScreenKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#ScreenKeys",
+                    "tintindex": 31
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#ScreenKeys",
+                    "tintindex": 31
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#ScreenKeys",
+                    "tintindex": 31
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#ScreenKeys",
+                    "tintindex": 31
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#ScreenKeys",
+                    "tintindex": 31
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#ScreenKeys",
+                    "tintindex": 31
+                }
+            }
+        },
+        {
+            "name": "SpaceKey",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#SpaceKey",
+                    "tintindex": 32
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#SpaceKey",
+                    "tintindex": 32
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#SpaceKey",
+                    "tintindex": 32
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#SpaceKey",
+                    "tintindex": 32
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#SpaceKey",
+                    "tintindex": 32
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#SpaceKey",
+                    "tintindex": 32
+                }
+            }
+        },
+        {
+            "name": "TabKey",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#TabKey",
+                    "tintindex": 33
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#TabKey",
+                    "tintindex": 33
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#TabKey",
+                    "tintindex": 33
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#TabKey",
+                    "tintindex": 33
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#TabKey",
+                    "tintindex": 33
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#TabKey",
+                    "tintindex": 33
+                }
+            }
+        },
+        {
+            "name": "TopSideKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#TopSideKeys",
+                    "tintindex": 34
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#TopSideKeys",
+                    "tintindex": 34
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#TopSideKeys",
+                    "tintindex": 34
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#TopSideKeys",
+                    "tintindex": 34
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#TopSideKeys",
+                    "tintindex": 34
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#TopSideKeys",
+                    "tintindex": 34
+                }
+            }
+        },
+        {
+            "name": "WASDKeys",
+            "from": [
+                5,
+                1,
+                1
+            ],
+            "to": [
+                11,
+                2,
+                15
+            ],
+            "shade": false,
+            "faces": {
+                "north": {
+                    "uv": [
+                        0,
+                        14,
+                        1,
+                        2
+                    ],
+                    "rotation": 90,
+                    "texture": "#WASDKeys",
+                    "tintindex": 35
+                },
+                "east": {
+                    "uv": [
+                        15,
+                        0,
+                        1,
+                        2
+                    ],
+                    "texture": "#WASDKeys",
+                    "tintindex": 35
+                },
+                "south": {
+                    "uv": [
+                        15,
+                        14,
+                        16,
+                        2
+                    ],
+                    "rotation": 270,
+                    "texture": "#WASDKeys",
+                    "tintindex": 35
+                },
+                "west": {
+                    "uv": [
+                        15,
+                        14,
+                        1,
+                        16
+                    ],
+                    "rotation": 180,
+                    "texture": "#WASDKeys",
+                    "tintindex": 35
+                },
+                "up": {
+                    "uv": [
+                        1,
+                        2,
+                        15,
+                        14
+                    ],
+                    "rotation": 90,
+                    "texture": "#WASDKeys",
+                    "tintindex": 35
+                },
+                "down": {
+                    "uv": [
+                        20,
+                        0,
+                        26,
+                        28
+                    ],
+                    "texture": "#WASDKeys",
+                    "tintindex": 35
+                }
+            }
+        }
+    ],
+    "display": {
+        "ground": {
+            "translation": [
+                0,
+                4.5,
+                0
+            ]
+        },
+        "gui": {
+            "rotation": [
+                0,
+                90,
+                90
+            ]
+        },
+        "fixed": {
+            "rotation": [
+                0,
+                -90,
+                90
+            ],
+            "translation": [
+                0,
+                1,
+                -8.75
+            ]
+        }
+    },
+    "groups": [
+        0,
+        1,
+        {
+            "name": "Case",
+            "origin": [
+                0,
+                0,
+                0
+            ],
+            "color": 0,
+            "children": [
+                6,
+                7,
+                8,
+                9
+            ]
+        },
+        10,
+        11,
+        {
+            "name": "2DCase Front",
+            "origin": [
+                0,
+                0,
+                0
+            ],
+            "color": 0,
+            "children": [
+                12,
+                13,
+                14,
+                15
+            ]
+        },
+        {
+            "name": "2DCase Back",
+            "origin": [
+                0,
+                0,
+                0
+            ],
+            "color": 0,
+            "children": [
+                16,
+                17,
+                18,
+                19
+            ]
+        }
+    ]
+}
