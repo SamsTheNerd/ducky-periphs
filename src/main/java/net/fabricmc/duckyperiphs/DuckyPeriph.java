@@ -55,12 +55,12 @@ public class DuckyPeriph implements ModInitializer {
 
 	// Weather Machine Registering
 	public static BlockEntityType<WeatherMachineTile> WEATHER_MACHINE_TILE;
-	public static final WeatherMachineBlock WEATHER_MACHINE_BLOCK = new WeatherMachineBlock(FabricBlockSettings.of(Material.STONE).hardness((float)1.5));
+	public static final WeatherMachineBlock WEATHER_MACHINE_BLOCK = new WeatherMachineBlock(FabricBlockSettings.of(Material.STONE).hardness((float)1.3));
 	public static final BlockItem WEATHER_MACHINE_ITEM = new BlockItem(WEATHER_MACHINE_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 
 	// Entity Detector Registering
 	public static BlockEntityType<EntityDetectorTile> ENTITY_DETECTOR_TILE;
-	public static final EntityDetectorBlock ENTITY_DETECTOR_BLOCK = new EntityDetectorBlock(FabricBlockSettings.of(Material.STONE).strength((float)1.5));
+	public static final EntityDetectorBlock ENTITY_DETECTOR_BLOCK = new EntityDetectorBlock(FabricBlockSettings.of(Material.STONE).hardness((float)1.3));
 	public static final BlockItem ENTITY_DETECTOR_ITEM = new BlockItem(ENTITY_DETECTOR_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 
 	// Keyboard Registering - may end up having more keyboards here later
