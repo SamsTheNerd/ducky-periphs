@@ -2,5 +2,8 @@
 
 ## Peripherals
 - [[Entity Detector | entitydetector]]
-- [[Weather Machine| peripherals/weathermachine]]
-- [[Keyboard | peripherals/keyboard]]
+- [[Weather Machine| weathermachine]]
+- [[Keyboard | keyboard]]
+
+## Misc
+- [[Ducky | ducky]]
