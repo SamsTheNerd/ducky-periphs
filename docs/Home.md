@@ -1,7 +1,7 @@
 # Ducky Peripherals Wiki Home
 
 ## Peripherals
-- [[Entity Detector | entitydetector]]
+- [[Entity Detector | /peripherals/entitydetector]]
 - [[Weather Machine| weathermachine]]
 - [[Keyboard | keyboard]]
 
