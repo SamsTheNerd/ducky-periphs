@@ -3,9 +3,9 @@
 <!-- [[/images/renders/EntityDetectorRender.png | Entity Detector Block Render]] -->
 
 <img width=400 src="images/renders/EntityDetectorRender.png" align="right" alt="An orthographic render of the entity detector block">
-\< Insert block description here later>
+< Insert block description here later>
 
-<br>
+<br clear="right">
 
 <table align=center>
     <tr>
