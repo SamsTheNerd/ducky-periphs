@@ -1,1 +1,1 @@
-Welcome to the ducky-periphs wiki!
+# Ducky Peripherals Wiki Home
