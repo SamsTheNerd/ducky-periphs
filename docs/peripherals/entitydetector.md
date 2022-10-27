@@ -2,4 +2,6 @@
 
 <!-- [[/images/renders/EntityDetectorRender.png | Entity Detector Block Render]] -->
 
-<img src="../docs/images/renderEntityDetectorRender.png" align="right">
+<img src="/images/render/EntityDetectorRender.png" align="right">
+<br>
+<img src="../docs/images/render/EntityDetectorRender.png" align="right">
