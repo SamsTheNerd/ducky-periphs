@@ -2,4 +2,5 @@
 
 ## Peripherals
 - [[Entity Detector | entitydetector]]
-- [Weather Machine](/weathermachine)
+- [[Weather Machine| peripherals/weathermachine]]
+- [[Keyboard | peripherals/keyboard]]
