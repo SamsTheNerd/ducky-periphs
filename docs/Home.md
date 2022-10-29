@@ -1,4 +1,4 @@
-# Ducky Peripherals Wiki Home
+<!-- # Ducky Peripherals Wiki Home -->
 
 ## Peripherals
 - [[Entity Detector | Entity-Detector]]
