@@ -10,6 +10,14 @@ This peripheral can be used to get data on nearby entities, including players.
 
 <br clear="right">
 
+## Crafting
+
+
+<img align=center width=400 src="../images/recipes/entity_detector_recipe.gif">
+
+
+<br>
+
 ## Methods
 <br>
 
