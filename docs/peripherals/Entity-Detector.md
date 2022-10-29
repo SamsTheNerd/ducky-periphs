@@ -4,11 +4,14 @@
 
 <p valign="left"> 
 <br>
+<br>
 This peripheral can be used to get data on nearby entities, including players.
 </p>
 
 <br clear="right">
 
+## Methods
+<br>
 
 <table align=center>
     <tr>
@@ -53,6 +56,12 @@ This peripheral can be used to get data on nearby entities, including players.
     </tr>
 </table>
 
+<br>
+<br>
+<br>
+<br>
+
+## Events
 
 <table align=center>
     <tr>
