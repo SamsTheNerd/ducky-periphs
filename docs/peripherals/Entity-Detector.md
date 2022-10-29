@@ -13,7 +13,7 @@ This peripheral can be used to get data on nearby entities, including players.
 ## Crafting
 
 
-<img align=center width=400 src="../images/recipes/entity_detector_recipe.gif">
+<img align=center width=400 src="images/recipes/entity_detector_recipe.gif" alt="crafting recipe for the entity detector block. In english reading order the recipe is: stone, any glass pane, stone / observer, eye of ender, observer / stone, redstone, stone">
 
 
 <br>
