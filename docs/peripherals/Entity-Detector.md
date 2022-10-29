@@ -2,7 +2,9 @@
 
 <!-- [[/images/renders/EntityDetectorRender.png | Entity Detector Block Render]] -->
 
-<img  align="center" width=400 src="images/renders/EntityDetectorRender.png" alt="An orthographic render of the entity detector block">
+<img  align="left" width=400 src="images/renders/EntityDetectorRender.png" alt="An orthographic render of the entity detector block">
+
+<img  align="right" width=400 src="images/renders/EntityDetectorRender.png" alt="An orthographic render of the entity detector block">
 
 <br clear="center">
  
