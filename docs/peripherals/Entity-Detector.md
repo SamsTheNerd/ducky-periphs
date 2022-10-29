@@ -1,4 +1,4 @@
-<img  align="right" width=350 src="../images/renders/EntityDetectorRender.png" alt="An orthographic render of the entity detector block">
+<img  align="right" width=350 src="images/renders/EntityDetectorRender.png" alt="An orthographic render of the entity detector block">
 
 <br clear="center">
 
