@@ -1,9 +1,9 @@
 # Ducky Peripherals Wiki Home
 
 ## Peripherals
-- [[Entity Detector | entitydetector]]
-- [[Weather Machine| weathermachine]]
-- [[Keyboard | keyboard]]
+- [[Entity Detector | Entity-Detector]]
+- [[Weather Machine| Weather-Machine]]
+- [[Keyboard | Keyboard]]
 
 ## Misc
-- [[Ducky | ducky]]
+- [[Ducky | Ducky]]
