@@ -34,4 +34,23 @@
             Returns
         </th>
     </tr>
+    <tr>
+        <td>
+            nearbyEntities()
+        </td>
+        <td>
+            Gets the entities in a 17x33x17 range around the block
+        </td>
+        <td align="right">
+            none
+        </td>
+        <td>
+        <pre><code class="language-json">array: {
+    i: {
+                    s
+                }
+            }
+        </code></pre>
+        </td>
+    </tr>
 </table>
