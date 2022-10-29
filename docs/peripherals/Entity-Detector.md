@@ -49,7 +49,7 @@ This peripheral can be used to get data on nearby entities, including players.
   }
 }
 </code></pre>
-        </td>
+</td>
     </tr>
 </table>
 
@@ -89,7 +89,7 @@ This peripheral can be used to get data on nearby entities, including players.
 }
 
 </code></pre>
-        </td>
+</td>
     </tr>
     <tr>
         <td>
