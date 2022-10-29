@@ -4,16 +4,7 @@
 
 <p valign="left"> 
 <br>
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
-< Insert block description here later >
+This peripheral can be used to get data on nearby entities, including players.
 </p>
 
 <br clear="right">
@@ -61,3 +52,69 @@
         </td>
     </tr>
 </table>
+
+
+<table align=center>
+    <tr>
+        <th>
+            Event Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Returns
+        </th>
+    </tr>
+    <tr>
+        <td>
+            newEntity
+        </td>
+        <td width = 200>
+            Fires when an entity spawns or enters the range
+        </td>
+        <td width=350>
+<pre><code class="language-json">1: 'newEntity' - event name
+2: array: {
+  i: {
+    "uuid": string,
+    "name": string, //entity name
+    "isPlayer": bool,
+    "type": string,
+    // coordinates:
+    "x": double,
+    "y": double,
+    "z": double
+  }
+}
+
+</code></pre>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            removedEntity
+        </td>
+        <td width = 200>
+            Fires when an entity dies or leaves the range
+        </td>
+        <td width=350>
+<pre><code class="language-json">1: 'removed' - event name
+2: array: {
+  i: {
+    "uuid": string,
+    "name": string, //entity name
+    "isPlayer": bool,
+    "type": string,
+    // coordinates:
+    "x": double,
+    "y": double,
+    "z": double
+  }
+}
+
+</code></pre>
+</td>
+    </tr>
+</table>
+
