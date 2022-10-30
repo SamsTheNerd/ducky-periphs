@@ -1,10 +1,8 @@
-<img  align="right" width=350 src="images/renders/EntityDetectorRender.png" alt="An orthographic render of the entity detector block">
+<img  align="right" width=350 src="images/renders/EntityDetectorRenderPadded.png" alt="An isometric render of the entity detector block">
 
 <br clear="center">
 
 <p valign="left"> 
-<br>
-<br>
 This peripheral can be used to get data on nearby entities, including players.
 </p>
 
@@ -116,7 +114,7 @@ This peripheral can be used to get data on nearby entities, including players.
             Fires when an entity dies or leaves the range
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'removed' - event name
+<pre><code class="language-json">1: 'removedEntity' - event name
 2: array: {
   i: {
     "uuid": string,
