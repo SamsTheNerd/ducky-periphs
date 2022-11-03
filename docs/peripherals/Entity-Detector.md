@@ -1,4 +1,4 @@
-<img  align="right" width=350 src="images/renders/EntityDetectorRenderPadded.png" alt="An isometric render of the entity detector block">
+<img  align="right" width=300 src="images/renders/EntityDetectorRenderPadded.png" alt="An isometric render of the entity detector block">
 
 <br clear="center">
 

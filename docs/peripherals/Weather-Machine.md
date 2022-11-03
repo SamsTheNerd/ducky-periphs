@@ -130,7 +130,7 @@ This peripheral can be used to get data on the current weather and biome.
             none
         </td>
         <td width=350>
-            int - 0 being cold, 4 being hottest.
+            int - 0 being cold, 1 being hottest.
         </td>
     </tr>
 </table>
