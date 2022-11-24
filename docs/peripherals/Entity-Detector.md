@@ -3,7 +3,7 @@
 <br clear="center">
 
 <p valign="left"> 
-This peripheral can be used to get data on nearby entities, including players.
+This peripheral can be used to get data on nearby entities, including players. Note that all coordinates are returned relative to the entity detector
 </p>
 
 <br clear="right">
@@ -89,7 +89,7 @@ This peripheral can be used to get data on nearby entities, including players.
             Fires when an entity spawns or enters the range
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'newEntity' - event name
+<pre><code class="language-json">1: 'new_entity' - event name
 2: array: {
   i: {
     "uuid": string,
@@ -114,7 +114,7 @@ This peripheral can be used to get data on nearby entities, including players.
             Fires when an entity dies or leaves the range
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'removedEntity' - event name
+<pre><code class="language-json">1: 'removed_entity' - event name
 2: array: {
   i: {
     "uuid": string,
