@@ -68,7 +68,9 @@ public class WeatherMachineTile extends TileGeneric implements IPeripheralTile {
         World world = getWorld();
         BlockPos pos = getPos();
         BlockState state = world.getBlockState(pos);
-        world.setBlockState(pos, state.with(WeatherMachineBlock.TEMP, tempState).with(WeatherMachineBlock.TANK, tank), Block.NOTIFY_ALL);
+        if(state.getBlock() instanceof WeatherMachineBlock){
+            world.setBlockState(pos, state.with(WeatherMachineBlock.TEMP, tempState).with(WeatherMachineBlock.TANK, tank), Block.NOTIFY_ALL);
+        }
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, WeatherMachineTile wm_tile){
