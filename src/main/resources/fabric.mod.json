@@ -3,18 +3,19 @@
   "id": "ducky-periphs",
   "version": "${version}",
 
-  "name": "ducky-periphs",
-  "description": "Adding CC access to as much of the game as we can",
+  "name": "Ducky Peripherals",
+  "description": "Adds a variety of peripheral addons for ComputerCraft Restitched",
   "authors": [
-    "Me!"
+    "samsthenerd"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/SamsTheNerd/ducky-periphs",
+    "sources": "https://github.com/SamsTheNerd/ducky-periphs",
+    "issues": "https://github.com/SamsTheNerd/ducky-periphs/issues"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "lgpl-3",
+  "icon": "assets/ducky-periphs/DuckyPeriphsIconLarge.png",
 
   "environment": "*",
   "entrypoints": {
@@ -23,6 +24,9 @@
     ],
     "client": [
       "net.fabricmc.duckyperiphs.DuckyPeriphClientInit"
+    ],
+    "rei_client": [
+      "net.fabricmc.duckyperiphs.compat.REI.REIPlugin"
     ]
   },
   "mixins": [
@@ -33,9 +37,7 @@
     "fabricloader": ">=0.14.6",
     "fabric": "*",
     "minecraft": "~1.18.2",
+    "computercraft": ">=1.100.5",
     "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

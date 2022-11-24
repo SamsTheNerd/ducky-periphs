@@ -85,7 +85,7 @@ public class DuckyPeriph implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
+		// LOGGER.info("Hello Fabric world!");
 
 		WEATHER_MACHINE_TILE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:weather_machine_tile",
 				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new WeatherMachineTile(WEATHER_MACHINE_TILE, blockPos, blockState), WEATHER_MACHINE_BLOCK).build(null));

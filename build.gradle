@@ -18,9 +18,9 @@ repositories {
 	// for more information about repositories.
 	maven { url 'https://jitpack.io' }
 	maven { url "https://squiddev.cc/maven" }
-    maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/" }
 	maven { url "https://maven.terraformersmc.com/releases" }
+    maven { url "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -35,6 +35,14 @@ dependencies {
 	// for CC: R
 	modImplementation "com.github.cc-tweaked:cc-restitched:${project.cc_version}"
 	// modAPI "com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.8-ccr"
+
+	// for REI, making sure it doesn't pop up with the keyboard
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
+	// modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // just so it's installed for testing
+	// modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // just so it's installed for testing
 }
 
 processResources {
