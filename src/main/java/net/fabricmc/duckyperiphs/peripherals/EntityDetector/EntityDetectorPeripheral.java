@@ -11,6 +11,7 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
 public class EntityDetectorPeripheral implements IPeripheral {
@@ -46,6 +47,8 @@ public class EntityDetectorPeripheral implements IPeripheral {
         @SuppressWarnings("unchecked") // make vscode shut up about unchecked typecast juice.
         Map<String, Object>[] entityMaps = (Map<String, Object>[]) new Map[entities.size()];
 
+        BlockPos edPos = edTile.getPos();
+
         // for each entity, make a map, add relevant values, add it to array
         for(int e = 0; e < entities.size(); e++){
             Entity entity = entities.get(e);
@@ -55,9 +58,9 @@ public class EntityDetectorPeripheral implements IPeripheral {
             boolean isPlayer = entity.isPlayer();
             entityMap.put("isPlayer", isPlayer);
             entityMap.put("type", entity.getType().getName().getString());
-            entityMap.put("x", entity.getX());
-            entityMap.put("y", entity.getY());
-            entityMap.put("z", entity.getZ());
+            entityMap.put("x", entity.getX() - edPos.getX());
+            entityMap.put("y", entity.getY() - edPos.getY());
+            entityMap.put("z", entity.getZ() - edPos.getZ());
             // feel free to add more here I suppose. I didn't think anything else was super relevant for most use cases?
             entityMaps[e] = entityMap;
         }
@@ -77,32 +80,34 @@ public class EntityDetectorPeripheral implements IPeripheral {
     }
 
     public void newEntityEvent(Entity entity){
+        BlockPos edPos = edTile.getPos();
         Map<String, Object> entityMap = new HashMap<String, Object>();
         entityMap.put("uuid", entity.getUuid().toString());
         entityMap.put("name", entity.getName().getString());
         boolean isPlayer = entity.isPlayer();
         entityMap.put("isPlayer", isPlayer);
         entityMap.put("type", entity.getType().getName().getString());
-        entityMap.put("x", entity.getX());
-        entityMap.put("y", entity.getY());
-        entityMap.put("z", entity.getZ());
+        entityMap.put("x", entity.getX() - edPos.getX());
+        entityMap.put("y", entity.getY() - edPos.getY());
+        entityMap.put("z", entity.getZ() - edPos.getZ());
         for(IComputerAccess computer : computers){
-            computer.queueEvent("newEntity", entityMap);
+            computer.queueEvent("new_entity", entityMap);
         }
     }
 
     public void removedEntityEvent(Entity entity){
+        BlockPos edPos = edTile.getPos();
         Map<String, Object> entityMap = new HashMap<String, Object>();
         entityMap.put("uuid", entity.getUuid().toString());
         entityMap.put("name", entity.getName().getString());
         boolean isPlayer = entity.isPlayer();
         entityMap.put("isPlayer", isPlayer);
         entityMap.put("type", entity.getType().getName().getString());
-        entityMap.put("x", entity.getX());
-        entityMap.put("y", entity.getY());
-        entityMap.put("z", entity.getZ());
+        entityMap.put("x", entity.getX() - edPos.getX());
+        entityMap.put("y", entity.getY() - edPos.getY());
+        entityMap.put("z", entity.getZ() - edPos.getZ());
         for(IComputerAccess computer : computers){
-            computer.queueEvent("removedEntity", entityMap);
+            computer.queueEvent("removed_entity", entityMap);
         }
     }
 
