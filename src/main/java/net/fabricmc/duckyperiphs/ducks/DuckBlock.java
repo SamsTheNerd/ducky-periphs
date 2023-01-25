@@ -139,11 +139,10 @@ public class DuckBlock extends Block implements BlockEntityProvider {
         }
         boolean bl = world.isReceivingRedstonePower(pos);
         if (bl != state.get(POWERED)) {
-            if (bl) {
+            if(bl) {
                 this.quack(world, pos);
-            } else {
-                world.setBlockState(pos, (BlockState)state.with(POWERED, bl), Block.NOTIFY_ALL);
             }
+            world.setBlockState(pos, (BlockState)state.with(POWERED, bl), Block.NOTIFY_ALL);
         }
     }
 
