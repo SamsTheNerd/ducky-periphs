@@ -10,7 +10,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 
@@ -34,7 +33,7 @@ public class DuckBlockEntity extends BlockEntity implements Nameable{
         if (this.customName != null) {
             return this.customName;
         }
-        return new TranslatableText("block.minecraft.duck"); // i have no idea if this is right ??
+        return Text.translatable("block.minecraft.duck"); // i have no idea if this is right ??
 
     }
 

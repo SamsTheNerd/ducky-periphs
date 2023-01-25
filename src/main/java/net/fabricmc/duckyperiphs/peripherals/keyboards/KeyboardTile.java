@@ -21,7 +21,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Nameable;
@@ -68,7 +67,7 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTile, Extend
 
     @Override
     public Text getDisplayName(){
-       return new TranslatableText( getCachedState().getBlock().getTranslationKey() );
+       return Text.translatable( getCachedState().getBlock().getTranslationKey() );
     }
 
     public void setCustomName(Text customName) {
@@ -80,7 +79,7 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTile, Extend
         if (this.customName != null) {
             return this.customName;
         }
-        return new TranslatableText("block.minecraft.duck"); // i have no idea if this is right ??
+        return Text.translatable("block.minecraft.duck"); // i have no idea if this is right ??
 
     }
 
@@ -120,7 +119,7 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTile, Extend
     public static void keyUp(BlockPos pos, World world, int key, int scancode, int modifiers){
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
-            kbTileTry.kbPeriph.sendKey(key, false);
+            kbTileTry.kbPeriph.sendKeyUp(key);
         }
     }
 

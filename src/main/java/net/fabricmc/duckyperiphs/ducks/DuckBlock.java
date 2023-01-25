@@ -1,8 +1,8 @@
 package net.fabricmc.duckyperiphs.ducks;
 
-import java.util.Random;
 
 import net.fabricmc.duckyperiphs.DuckyPeriph;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -25,6 +25,7 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -37,7 +38,7 @@ public class DuckBlock extends Block implements BlockEntityProvider {
 
 
     
-    public DuckBlock(Settings settings) {
+    public DuckBlock(AbstractBlock.Settings settings) {
         super(settings.nonOpaque());
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH).with(POWERED, false));
     }
@@ -140,8 +141,9 @@ public class DuckBlock extends Block implements BlockEntityProvider {
         if (bl != state.get(POWERED)) {
             if (bl) {
                 this.quack(world, pos);
+            } else {
+                world.setBlockState(pos, (BlockState)state.with(POWERED, bl), Block.NOTIFY_ALL);
             }
-            world.setBlockState(pos, (BlockState)state.with(POWERED, bl), Block.NOTIFY_ALL);
         }
     }
 

@@ -29,17 +29,23 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	compileOnly 'com.google.code.findbugs:jsr305:+' // for @Nonnull
+
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// for CC: R
 	modImplementation "com.github.cc-tweaked:cc-restitched:${project.cc_version}"
 	// modAPI "com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.8-ccr"
+	
+	modLocalRuntime("dev.architectury:architectury-fabric:6.2.43") // because REI is compiled for 1.19 ?
 
 	// for REI, making sure it doesn't pop up with the keyboard
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+
+	
 	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
 	// modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // just so it's installed for testing
 	// modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // just so it's installed for testing

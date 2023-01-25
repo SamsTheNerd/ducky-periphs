@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import net.fabricmc.duckyperiphs.DuckyPeriph;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
@@ -33,6 +34,11 @@ public class KeyboardScreenHandler extends ScreenHandler{
         // maybe have a check in our blockentity for if anyone is currently using it?
         // ooh or could add a lock feature to it?
         return true;
+    }
+
+    @Override
+    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+        return ItemStack.EMPTY;
     }
 
     // // should be able to call through KeyboardScreen 
