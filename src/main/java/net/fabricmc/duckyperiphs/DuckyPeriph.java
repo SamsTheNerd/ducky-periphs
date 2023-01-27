@@ -17,6 +17,8 @@ import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardItem;
 import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardScreenHandler;
 import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardTile;
 import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardUtils;
+import net.fabricmc.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
+import net.fabricmc.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -66,11 +68,9 @@ public class DuckyPeriph implements ModInitializer {
 	// Keyboard Registering - may end up having more keyboards here later
 	public static BlockEntityType<KeyboardTile> KEYBOARD_TILE;
 	public static final KeyboardBlock KEYBOARD_BLOCK = new KeyboardBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.7));
-	// public static final BlockItem KEYBOARD_ITEM = new BlockItem(KEYBOARD_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 	public static final KeyboardItem KEYBOARD_ITEM = new KeyboardItem(KEYBOARD_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 	public static final ScreenHandlerType<KeyboardScreenHandler> KEYBOARD_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(KeyboardScreenHandler::new);
 	public static final Identifier KEYBOARD_PRESS_PACKET_ID = new Identifier(MOD_ID, "keyboard_press");
-
 
 	//duck time !
 	public static BlockEntityType<DuckBlockEntity> DUCK_BLOCK_ENTITY;
@@ -78,18 +78,30 @@ public class DuckyPeriph implements ModInitializer {
 	public static final DuckItem DUCK_ITEM = new DuckItem(DUCK_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 	public static SoundEvent QUACK_SOUND_EVENT = new SoundEvent(new Identifier(MOD_ID, "quack"));
 
+	// sculkophone
+	public static BlockEntityType<SculkophoneBlockEntity> SCULKOPHONE_BLOCK_ENTITY;
+	public static final SculkophoneBlock SCULKOPHONE_BLOCK = new SculkophoneBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.2));
+	public static final BlockItem SCULKOPHONE_ITEM = new BlockItem(SCULKOPHONE_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		registerWeatherMachine();
+		registerEntityDetector();
+		registerKeyboard();
+		registerDucks();
+		registerSculkophone();
 
-		// LOGGER.info("Hello Fabric world!");
+		DPRecipeSerializer.init();
 
+	}
+
+	private void registerWeatherMachine(){
 		WEATHER_MACHINE_TILE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:weather_machine_tile",
-				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new WeatherMachineTile(WEATHER_MACHINE_TILE, blockPos, blockState), WEATHER_MACHINE_BLOCK).build(null));
-		
+		FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new WeatherMachineTile(WEATHER_MACHINE_TILE, blockPos, blockState), WEATHER_MACHINE_BLOCK).build(null));
+
 		Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "weather_machine_block"), WEATHER_MACHINE_BLOCK);
 		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "weather_machine_block"), WEATHER_MACHINE_ITEM);
 
@@ -102,20 +114,23 @@ public class DuckyPeriph implements ModInitializer {
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			return GrassColors.getColor(0.5, 1.0);
 		}, WEATHER_MACHINE_ITEM);
-		
-		
-		// entity detector registering
+	}
+
+	private void registerEntityDetector(){
 		ENTITY_DETECTOR_TILE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:entity_detector_tile",
 				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new EntityDetectorTile(ENTITY_DETECTOR_TILE, blockPos, blockState), ENTITY_DETECTOR_BLOCK).build(null));
 		Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "entity_detector_block"), ENTITY_DETECTOR_BLOCK);
 		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "entity_detector_block"), ENTITY_DETECTOR_ITEM);
+	}
 
-		//keyboard registering + screen stuff for it
+	private void registerKeyboard(){
+		// main stuff
 		KEYBOARD_TILE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:keyboard_tile",
 				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new KeyboardTile(KEYBOARD_TILE, blockPos, blockState), KEYBOARD_BLOCK).build(null));
 		Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "keyboard_block"), KEYBOARD_BLOCK);
 		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "keyboard_block"), KEYBOARD_ITEM);
 		Registry.register(Registry.SCREEN_HANDLER, new Identifier("ducky-periphs", "keyboard_screen_handler"), KEYBOARD_SCREEN_HANDLER);
+		// keycap color provider
 		ColorProviderRegistry.BLOCK.register((state,view,pos,tintIndex)->{
 			if(view == null || pos == null){
 				return DyeColor.BLUE.getFireworkColor();
@@ -126,6 +141,8 @@ public class DuckyPeriph implements ModInitializer {
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			return KeyCaps.fromItemStack(stack).getZoneColor(tintIndex);
 		}, KEYBOARD_ITEM);
+
+		// network packet stuff 
 
 		// for key presses
 		ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "key_press_packet"), 
@@ -141,12 +158,15 @@ public class DuckyPeriph implements ModInitializer {
 		// for chars typed
 		ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "event_sent_packet"), 
         (server, player, handler, buf, responseSender) -> KeyboardUtils.eventShortcutHandler(server, player, handler, buf, responseSender));
-		
-		// duck registering time
+	}
+
+	private void registerDucks(){
+		// block/entity stuff
 		DUCK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:duck_block_entity",
 				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new DuckBlockEntity(blockPos, blockState), DUCK_BLOCK).build(null));
 		Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "duck_block"), DUCK_BLOCK);
 		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "duck_block"), DUCK_ITEM);
+
 		// duck color providers
 		ColorProviderRegistry.BLOCK.register((state,view,pos, tintIndex) -> {
 			return DUCK_BLOCK.getColor(view, pos);
@@ -157,14 +177,19 @@ public class DuckyPeriph implements ModInitializer {
 			}
 			return DUCK_ITEM.getColor(stack);
 		}, DUCK_ITEM);
+
 		// quack
 		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "quack"), QUACK_SOUND_EVENT);
 
-		DPRecipeSerializer.init();
-
 		// so we can dye it - hopefully this overrides block placing behavior?
 		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM, CauldronBehavior.CLEAN_DYEABLE_ITEM);
+	}
 
-		
+	private void registerSculkophone(){
+		// default
+		SCULKOPHONE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:sculkophone_block_entity",
+				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new SculkophoneBlockEntity(blockPos, blockState), SCULKOPHONE_BLOCK).build(null));
+		Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "sculkophone_block"), SCULKOPHONE_BLOCK);
+		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "sculkophone_block"), SCULKOPHONE_ITEM);
 	}
 }
