@@ -84,7 +84,9 @@ implements VibrationListener.Callback, IPeripheralTile{
         if (SculkophoneBlock.isInactive(blockState)) {
             // this is where we'd fire the event
             // Math.sqrt( pos.getSquaredDistance(sourceEntity.getPos()))
-            sculkPeriph.vibrationEvent(event, distance);
+            if(sculkPeriph != null){
+                sculkPeriph.vibrationEvent(event, distance);
+            }
             SculkophoneBlock.setActive(entity, world, this.pos, blockState);
         }
     }
