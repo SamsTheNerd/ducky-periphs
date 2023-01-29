@@ -4,5 +4,17 @@
         "sounds": [
             "ducky-periphs:quack"
         ]
+    },
+    "sculkophone_clicking_stop": {
+        "subtitle": "subtitles.ducky-periphs.sculkophone_clicking_stop",
+        "sounds": [
+            "ducky-periphs:sculkophone_clicking_stop"
+        ]
+    },
+    "sculkophone_clicking": {
+        "subtitle": "subtitles.ducky-periphs.sculkophone_clicking",
+        "sounds": [
+            "ducky-periphs:sculkophone_clicking"
+        ]
     }
 }

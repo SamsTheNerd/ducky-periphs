@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "side": "ducky-periphs:block/sculkophone/sculkophone_side_inactive",
+        "top": "ducky-periphs:block/defaults/bottom",
+        "bottom": "ducky-periphs:block/defaults/bottom"
+    }
+}

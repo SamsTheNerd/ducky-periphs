@@ -127,6 +127,7 @@ public class DuckBlock extends Block implements BlockEntityProvider {
     public void quack(World world, BlockPos pos){
         if(!world.isClient){
             float pitch = (float) (Math.random() * 0.2 + 0.9);
+            world.emitGameEvent(null, DuckyPeriph.QUACK_GAME_EVENT, pos); // remove this when we're done testing
             world.playSound(null, pos, DuckyPeriph.QUACK_SOUND_EVENT, SoundCategory.BLOCKS, 1f, pitch);
         }
     }

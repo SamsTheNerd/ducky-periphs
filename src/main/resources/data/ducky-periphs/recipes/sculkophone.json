@@ -1,0 +1,22 @@
+{
+    "type": "crafting_shaped",
+    "pattern": [
+        "TTT",
+        "TST",
+        "TRT"
+    ],
+    "key": {
+        "T": {
+            "item": "minecraft:stone"
+        },
+        "S": {
+            "item": "minecraft:sculk_sensor"
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:sculkophone_block"
+    }
+}

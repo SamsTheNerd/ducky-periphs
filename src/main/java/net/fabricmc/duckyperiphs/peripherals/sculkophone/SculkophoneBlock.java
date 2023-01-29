@@ -9,7 +9,6 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -20,24 +19,20 @@ import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.listener.GameEventListener;
 
 public class SculkophoneBlock extends BlockWithEntity{
     public static final int field_31239 = 40;
     public static final int field_31240 = 1;
     public static final EnumProperty<SculkSensorPhase> SCULK_SENSOR_PHASE = Properties.SCULK_SENSOR_PHASE;
-    protected static final VoxelShape OUTLINE_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
     private final int range;
 
     public SculkophoneBlock(AbstractBlock.Settings settings) {
@@ -127,11 +122,6 @@ public class SculkophoneBlock extends BlockWithEntity{
         return BlockRenderType.MODEL;
     }
 
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return OUTLINE_SHAPE;
-    }
-
     public static SculkSensorPhase getPhase(BlockState state) {
         return state.get(SCULK_SENSOR_PHASE);
     }
@@ -143,16 +133,16 @@ public class SculkophoneBlock extends BlockWithEntity{
     public static void setCooldown(World world, BlockPos pos, BlockState state) {
         world.setBlockState(pos, ((BlockState)state.with(SCULK_SENSOR_PHASE, SculkSensorPhase.COOLDOWN)), Block.NOTIFY_ALL);
         world.createAndScheduleBlockTick(pos, state.getBlock(), 1);
-        world.playSound(null, pos, SoundEvents.BLOCK_SCULK_SENSOR_CLICKING_STOP, SoundCategory.BLOCKS, 1.0f, world.random.nextFloat() * 0.2f + 0.8f);
+        world.playSound(null, pos, DuckyPeriph.SCULKOPHONE_CLICKING_STOP_EVENT, SoundCategory.BLOCKS, 0.25f, world.random.nextFloat() * 0.2f + 0.8f);
         SculkophoneBlock.updateNeighbors(world, pos);
     }
 
     public static void setActive(@Nullable Entity entity, World world, BlockPos pos, BlockState state) {
         world.setBlockState(pos, ((BlockState)state.with(SCULK_SENSOR_PHASE, SculkSensorPhase.ACTIVE)), Block.NOTIFY_ALL);
-        world.createAndScheduleBlockTick(pos, state.getBlock(), 40); // not sure if this is just for animation or for cooldown?
+        world.createAndScheduleBlockTick(pos, state.getBlock(), 20); // not sure if this is just for animation or for cooldown?
         SculkophoneBlock.updateNeighbors(world, pos);
-        world.emitGameEvent(entity, GameEvent.SCULK_SENSOR_TENDRILS_CLICKING, pos); // remove this when we're done testing
-        world.playSound(null, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, SoundEvents.BLOCK_SCULK_SENSOR_CLICKING, SoundCategory.BLOCKS, 1.0f, world.random.nextFloat() * 0.2f + 0.8f);
+        // world.emitGameEvent(entity, DuckyPeriph.SCULKOPHONE_CLICKING_GAME_EVENT, pos); // remove this when we're done testing
+        world.playSound(null, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, DuckyPeriph.SCULKOPHONE_CLICKING_EVENT, SoundCategory.BLOCKS, 0.25f, world.random.nextFloat() * 0.2f + 0.8f);
     }
 
     @Override

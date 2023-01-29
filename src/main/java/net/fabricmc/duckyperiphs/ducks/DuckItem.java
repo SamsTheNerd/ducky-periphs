@@ -48,6 +48,7 @@ public class DuckItem extends BlockItem implements DyeableItem{
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if(!world.isClient){
             float pitch = (float) (Math.random() * 0.2 + 0.9);
+            world.emitGameEvent(player, DuckyPeriph.QUACK_GAME_EVENT, player.getPos());
             world.playSound(null, player.getBlockPos(), DuckyPeriph.QUACK_SOUND_EVENT, SoundCategory.BLOCKS, 1f, pitch);
         }
         // return super.use(world, player, hand);

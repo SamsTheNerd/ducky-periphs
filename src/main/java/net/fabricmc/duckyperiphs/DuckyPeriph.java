@@ -39,6 +39,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.event.GameEvent;
 
 public class DuckyPeriph implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -77,11 +78,16 @@ public class DuckyPeriph implements ModInitializer {
 	public static final DuckBlock DUCK_BLOCK = new DuckBlock(FabricBlockSettings.of(Material.WOOL).hardness((float)0.2));
 	public static final DuckItem DUCK_ITEM = new DuckItem(DUCK_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 	public static SoundEvent QUACK_SOUND_EVENT = new SoundEvent(new Identifier(MOD_ID, "quack"));
+	public static GameEvent QUACK_GAME_EVENT = new GameEvent("ducky-periphs:quack", 16);
 
 	// sculkophone
 	public static BlockEntityType<SculkophoneBlockEntity> SCULKOPHONE_BLOCK_ENTITY;
 	public static final SculkophoneBlock SCULKOPHONE_BLOCK = new SculkophoneBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.2));
 	public static final BlockItem SCULKOPHONE_ITEM = new BlockItem(SCULKOPHONE_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
+	public static SoundEvent SCULKOPHONE_CLICKING_EVENT = new SoundEvent(new Identifier(MOD_ID, "sculkophone_clicking"));
+	public static SoundEvent SCULKOPHONE_CLICKING_STOP_EVENT = new SoundEvent(new Identifier(MOD_ID, "sculkophone_clicking_stop"));
+	// public static GameEvent SCULKOPHONE_CLICKING_GAME_EVENT;
+
 
 	@Override
 	public void onInitialize() {
@@ -180,6 +186,7 @@ public class DuckyPeriph implements ModInitializer {
 
 		// quack
 		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "quack"), QUACK_SOUND_EVENT);
+		Registry.register(Registry.GAME_EVENT, "ducky-periphs:quack", QUACK_GAME_EVENT);
 
 		// so we can dye it - hopefully this overrides block placing behavior?
 		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM, CauldronBehavior.CLEAN_DYEABLE_ITEM);
@@ -191,5 +198,10 @@ public class DuckyPeriph implements ModInitializer {
 				FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new SculkophoneBlockEntity(blockPos, blockState), SCULKOPHONE_BLOCK).build(null));
 		Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "sculkophone_block"), SCULKOPHONE_BLOCK);
 		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "sculkophone_block"), SCULKOPHONE_ITEM);
+
+		// sound events
+		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking"), SCULKOPHONE_CLICKING_EVENT);
+		// Registry.register(Registry.GAME_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking"), SCULKOPHONE_CLICKING_GAME_EVENT);
+		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking_stop"), SCULKOPHONE_CLICKING_STOP_EVENT);
 	}
 }

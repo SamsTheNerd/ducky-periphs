@@ -11,6 +11,12 @@
     "itemGroup.ducky-periphs.general": "Ducky Peripherals",
 
     "block.ducky-periphs.keyboard_block": "Keyboard",
-    "item.ducky-periphs.keyboard_block": "Keyboard"
+    "item.ducky-periphs.keyboard_block": "Keyboard",
+
+    "block.ducky-periphs.sculkophone_block": "Sculkophone",
+    "item.ducky-periphs.sculkophone_block": "Sculkophone",
+
+    "subtitles.ducky-periphs.sculkophone_clicking": "Sculkophone Clicks",
+    "subtitles.ducky-periphs.sculkophone_clicking_stop": "Sculkophone Stops Clicks"
     
 }
