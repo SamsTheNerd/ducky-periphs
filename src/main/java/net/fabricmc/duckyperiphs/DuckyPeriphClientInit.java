@@ -26,6 +26,8 @@ public class DuckyPeriphClientInit implements ClientModInitializer {
 
         HandledScreens.register(DuckyPeriph.KEYBOARD_SCREEN_HANDLER, KeyboardScreen::new);
 
+        registerColorProviders();
+
         // register our packet handlers
         // ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "key_press_packet"), 
         // // MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender
