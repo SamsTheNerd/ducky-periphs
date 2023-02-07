@@ -7,6 +7,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.duckyperiphs.ducks.DuckBlock;
 import net.fabricmc.duckyperiphs.ducks.DuckBlockEntity;
 import net.fabricmc.duckyperiphs.ducks.DuckItem;
+import net.fabricmc.duckyperiphs.hexcasting.DuckyCasting;
 import net.fabricmc.duckyperiphs.peripherals.EntityDetector.EntityDetectorBlock;
 import net.fabricmc.duckyperiphs.peripherals.EntityDetector.EntityDetectorTile;
 import net.fabricmc.duckyperiphs.peripherals.WeatherMachine.WeatherMachineBlock;
@@ -23,6 +24,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Material;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.entity.BlockEntityType;
@@ -77,11 +79,13 @@ public class DuckyPeriph implements ModInitializer {
 
 	// sculkophone
 	public static BlockEntityType<SculkophoneBlockEntity> SCULKOPHONE_BLOCK_ENTITY;
-	public static final SculkophoneBlock SCULKOPHONE_BLOCK = new SculkophoneBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.2));
+	public static final SculkophoneBlock SCULKOPHONE_BLOCK = new SculkophoneBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.7));
 	public static final BlockItem SCULKOPHONE_ITEM = new BlockItem(SCULKOPHONE_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 	public static SoundEvent SCULKOPHONE_CLICKING_EVENT = new SoundEvent(new Identifier(MOD_ID, "sculkophone_clicking"));
 	public static SoundEvent SCULKOPHONE_CLICKING_STOP_EVENT = new SoundEvent(new Identifier(MOD_ID, "sculkophone_clicking_stop"));
 	// public static GameEvent SCULKOPHONE_CLICKING_GAME_EVENT;
+
+	
 
 
 	@Override
@@ -96,6 +100,10 @@ public class DuckyPeriph implements ModInitializer {
 		registerSculkophone();
 
 		DPRecipeSerializer.init();
+
+		if(FabricLoader.getInstance().isModLoaded("hexcasting")){
+			DuckyCasting.init();
+		}
 
 	}
 
