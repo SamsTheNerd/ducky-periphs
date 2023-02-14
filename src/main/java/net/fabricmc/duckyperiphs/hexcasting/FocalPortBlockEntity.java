@@ -38,10 +38,6 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
     // not sure if this is quite right
     public void spawnWrapperEntity(BlockPos pos){
         // check that we have a server world and that we don't already have a wrapper entity
-        // if(world==null){
-        //     DuckyPeriph.LOGGER.info("FocalPortWrapperEntity spawned on null world");
-        //     return;
-        // }
         if(world instanceof ServerWorld == false){
             return;
         }
@@ -51,19 +47,10 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(wrapperEntity != null){
             return;
         }
-
-
-        // if(world.isClient()){
-        //     DuckyPeriph.LOGGER.info("FocalPortWrapperEntity spawned on client");
-        // } else {
-        //     DuckyPeriph.LOGGER.info("FocalPortWrapperEntity spawned on server");
-        // }
-
         wrapperEntity = new FocalPortWrapperEntity(DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY, world);
         wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.spawn((ServerWorld)world, null, null, null, pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
         wrapperEntityUUID = wrapperEntity.getUuid();
         this.markDirty();
-        DuckyPeriph.LOGGER.info("FocalPortWrapperEntity spawned at BlockPos: " + wrapperEntity.getBlockPos().toString() + " | Pos: " + wrapperEntity.getPos().toString());
     }
 
     public void despawnWrapperEntity(){
@@ -73,15 +60,6 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(wrapperEntity != null){
             wrapperEntity.discard();
             wrapperEntity = null;
-            // if(world==null){
-            //     DuckyPeriph.LOGGER.info("FocalPortWrapperEntity despawned on null world");
-            //     return;
-            // }
-            // if(world.isClient()){
-            //     DuckyPeriph.LOGGER.info("FocalPortWrapperEntity despawned on client");
-            // } else {
-            //     DuckyPeriph.LOGGER.info("FocalPortWrapperEntity despawned on server");
-            // }
         }
         
     }
@@ -116,13 +94,10 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
             wrapperEntityUUID = nbt.getUuid("wrapperEntityUUID");
         }
         if (nbt != null && nbt.contains("innerIota", 10)) {
-            DuckyPeriph.LOGGER.info("Reading innerIota from NBT " + nbt.toString());
             this.innerIotaTag = nbt.getCompound("innerIota");
             if(getWorld() instanceof ServerWorld){
                 this.innerIota = HexIotaTypes.deserialize(innerIotaTag,(ServerWorld)getWorld());
             }
-        } else {
-            DuckyPeriph.LOGGER.info("No innerIota found in NBT " + nbt.toString() + " - contains('innerIota'): " + nbt.contains("innerIota", 10) + " - getWorld() instanceof ServerWorld: " + (getWorld() instanceof ServerWorld));
         }
     }
 
@@ -134,12 +109,8 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         }
         if (this.innerIota != null) {
             nbt.put("innerIota", HexIotaTypes.serialize(innerIota));
-            DuckyPeriph.LOGGER.info("Writing innerIota to NBT " + nbt.toString());
         } else if(this.innerIotaTag != null){
             nbt.put("innerIota", innerIotaTag);
-            DuckyPeriph.LOGGER.info("Writing innerIotaTag to NBT " + nbt.toString());
-        } else {
-            DuckyPeriph.LOGGER.info("No innerIota or innerIotaTag to write to NBT " + nbt.toString());
         }
     }
 

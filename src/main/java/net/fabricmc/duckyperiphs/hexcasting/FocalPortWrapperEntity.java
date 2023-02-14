@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import at.petrak.hexcasting.fabric.cc.adimpl.CCIotaHolder;
-import net.fabricmc.duckyperiphs.DuckyPeriph;
 import net.fabricmc.duckyperiphs.utils.EntityFromBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
@@ -17,21 +16,17 @@ public class FocalPortWrapperEntity extends EntityFromBlockEntity implements CCI
         super(entityType, world, FocalPortBlockEntity.class);
     }
 
-
-
     @Override
     public NbtCompound readIotaTag(){
         if(hasBlockEntity()){
             return ((FocalPortBlockEntity)parentBlockEntity).readIotaTag();
         }
-        DuckyPeriph.LOGGER.info("readIotaTag: no block entity");
         return null;
     }
 
     @Override
     public Iota readIota(ServerWorld world) {
         var tag = readIotaTag();
-        DuckyPeriph.LOGGER.info("FocalPortWrapperEntity readIota: ".concat(tag.toString()));
         if (tag != null) {
             return HexIotaTypes.deserialize(tag, world);
         }
