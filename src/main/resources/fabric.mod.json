@@ -25,6 +25,9 @@
     "client": [
       "net.fabricmc.duckyperiphs.DuckyPeriphClientInit"
     ],
+    "cardinal-components": [
+      "net.fabricmc.duckyperiphs.hexcasting.DuckyCastingCC"
+    ],
     "rei_client": [
       "net.fabricmc.duckyperiphs.compat.REI.REIPlugin"
     ]

@@ -19,6 +19,7 @@ import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardTile;
 import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardUtils;
 import net.fabricmc.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
 import net.fabricmc.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
+import net.fabricmc.duckyperiphs.utils.EntityFromBlockEntity;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -28,6 +29,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Material;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -85,6 +87,8 @@ public class DuckyPeriph implements ModInitializer {
 	public static SoundEvent SCULKOPHONE_CLICKING_STOP_EVENT = new SoundEvent(new Identifier(MOD_ID, "sculkophone_clicking_stop"));
 	// public static GameEvent SCULKOPHONE_CLICKING_GAME_EVENT;
 
+	// it's just helpful - using it mainly for focal port hex casting rn but not unique to it
+	public static EntityType<EntityFromBlockEntity> ENTITY_FROM_BLOCK_ENTITY;
 	
 
 

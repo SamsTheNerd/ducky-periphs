@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.duckyperiphs.hexcasting.DuckyCastingClient;
 import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyCaps;
 import net.fabricmc.duckyperiphs.peripherals.keyboards.KeyboardScreen;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -27,6 +29,10 @@ public class DuckyPeriphClientInit implements ClientModInitializer {
         HandledScreens.register(DuckyPeriph.KEYBOARD_SCREEN_HANDLER, KeyboardScreen::new);
 
         registerColorProviders();
+
+        if(FabricLoader.getInstance().isModLoaded("hexcasting")){
+            DuckyCastingClient.init();
+        }
 
         // register our packet handlers
         // ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "key_press_packet"), 

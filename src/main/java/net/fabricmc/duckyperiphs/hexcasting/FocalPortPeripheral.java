@@ -10,6 +10,7 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import net.minecraft.server.world.ServerWorld;
 
 public class FocalPortPeripheral implements IPeripheral{
     private final FocalPortBlockEntity fpTile;
@@ -49,5 +50,23 @@ public class FocalPortPeripheral implements IPeripheral{
         Iota iota = fpTile.getIota();
         Object luaObject = IotaLuaUtils.getLuaObject(iota);
         return MethodResult.of(luaObject);
+    }
+
+    @LuaFunction
+    public final MethodResult writeIota(Object luaObject){
+        if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
+            return MethodResult.of(false);
+        }
+        Iota iota = IotaLuaUtils.getIota(luaObject, (ServerWorld)fpTile.getWorld());
+        return MethodResult.of(fpTile.writeIota(iota, false));
+    }
+
+    @LuaFunction
+    public final MethodResult canWriteIota(Object luaObject){
+        if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
+            return MethodResult.of(false);
+        }
+        Iota iota = IotaLuaUtils.getIota(luaObject, (ServerWorld)fpTile.getWorld());
+        return MethodResult.of(fpTile.writeIota(iota, true));
     }
 }
