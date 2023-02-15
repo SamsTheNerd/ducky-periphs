@@ -17,6 +17,10 @@
     "item.ducky-periphs.sculkophone_block": "Sculkophone",
 
     "subtitles.ducky-periphs.sculkophone_clicking": "Sculkophone Clicks",
-    "subtitles.ducky-periphs.sculkophone_clicking_stop": "Sculkophone Stops Clicks"
+    "subtitles.ducky-periphs.sculkophone_clicking_stop": "Sculkophone Stops Clicks",
+
+    "block.ducky-periphs.focal_port_block": "Focal Port",
+    "item.ducky-periphs.focal_port_block": "Focal Port",
+    "entity.ducky-periphs.focal_port_wrapper_entity": "Focal Port"
     
 }

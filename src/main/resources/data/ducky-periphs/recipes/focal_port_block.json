@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "EAE",
+        "YFY",
+        "SCS"
+    ],
+    "key": {
+        "E": {
+            "item": "hexcasting:edified_planks"
+        },
+        "A": {
+            "item": "hexcasting:charged_amethyst"
+        },
+        "Y":{
+            "item": "minecraft:amethyst_shard"
+        },
+        "F":{
+            "item": "hexcasting:focus"
+        },
+        "S":{
+            "item": "hexcasting:slate_block"
+        },
+        "C":{
+            "item": "computercraft:computer_advanced"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:focal_port_block"
+    }
+}
