@@ -7,7 +7,7 @@
     ],
     "key": {
         "E": {
-            "item": "hexcasting:edified_planks"
+            "tag": "hexcasting:edified_planks"
         },
         "A": {
             "item": "hexcasting:charged_amethyst"
