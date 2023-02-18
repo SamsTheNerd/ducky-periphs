@@ -45,9 +45,6 @@ public class IotaLuaUtils {
         if(LuaObject instanceof Map){
             // no way for it to be not strings, I think
             Map<String, Object> table = (Map) LuaObject;
-            if(table.containsKey("player")){
-                // handle player 
-            }
 
             // handle vec3
             if(table.size() == 3 && table.containsKey("x") && table.containsKey("y") && table.containsKey("z")){
@@ -93,6 +90,9 @@ public class IotaLuaUtils {
                     Entity ent = world.getEntity(UUID.fromString(uuidString));
                     if(ent == null){
                         return new GarbageIota();
+                    }
+                    if(ent.isPlayer()){
+                        return new NullIota();
                     }
                     return new EntityIota(ent);
                 }
@@ -143,6 +143,9 @@ public class IotaLuaUtils {
         if(iota instanceof EntityIota){
             // need to add in player handling here later
             Entity ent = ((EntityIota)iota).getEntity();
+            if(ent.isPlayer()){
+                return null;
+            }
             Map<String, Object> entTable = new HashMap<String, Object>();
             entTable.put("uuid", ent.getUuidAsString());
             entTable.put("name", ent.getName().getString());
