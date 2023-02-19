@@ -125,6 +125,17 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         }
     }
 
+    // fromHex is true if we're writing from hex casting, false if we're writing from CC
+    public boolean writeIota(@Nullable Iota iota, boolean simulate, boolean fromHex){
+        boolean result = writeIota(iota, simulate);
+        if(!simulate && result){
+            if(fromHex){
+                fpPeriph.updateIota();
+            }
+        }
+        return result;
+    }
+
     @Override
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
         if(iota == null){
@@ -133,9 +144,12 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(!simulate){
             this.innerIota = iota;
             this.markDirty();
+            
         }
         return true;
     }
+
+    
 
     public Iota getIota(){
         if(this.innerIota != null){

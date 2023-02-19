@@ -46,7 +46,7 @@ public class FocalPortPeripheral implements IPeripheral{
     }
 
     @LuaFunction
-    public final MethodResult getIota(){
+    public final MethodResult readIota(){
         Iota iota = fpTile.getIota();
         Object luaObject = IotaLuaUtils.getLuaObject(iota);
         return MethodResult.of(luaObject);
@@ -68,5 +68,11 @@ public class FocalPortPeripheral implements IPeripheral{
         }
         Iota iota = IotaLuaUtils.getIota(luaObject, (ServerWorld)fpTile.getWorld());
         return MethodResult.of(fpTile.writeIota(iota, true));
+    }
+
+    public void updateIota(){
+        for(IComputerAccess computer : computers){
+            computer.queueEvent("new_iota", computer.getAttachmentName());
+        }
     }
 }

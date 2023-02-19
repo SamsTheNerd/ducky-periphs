@@ -44,7 +44,7 @@ public class FocalPortWrapperEntity extends EntityFromBlockEntity implements CCI
     @Override
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
         if(hasBlockEntity()){
-            return ((FocalPortBlockEntity)parentBlockEntity).writeIota(iota, simulate);
+            return ((FocalPortBlockEntity)parentBlockEntity).writeIota(iota, simulate, true);
         }
         return false;
     }

@@ -294,7 +294,7 @@ public class IotaLuaUtils {
 
     private static Object getHexalObject(Iota iota){
         if(iota instanceof IotaTypeIota){
-            IotaType type = ((IotaTypeIota)iota).getType();
+            IotaType<?> type = ((IotaTypeIota)iota).getType();
             Map<String, Object> typeTable = new HashMap<String, Object>();
             Optional<RegistryKey<IotaType<?>>> typeLoc = HexIotaTypes.REGISTRY.getKey(type);
             if(typeLoc.isPresent()){
