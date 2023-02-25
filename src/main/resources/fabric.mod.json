@@ -42,5 +42,9 @@
     "minecraft": "~1.19.2",
     "computercraft": ">=1.101.2",
     "java": ">=17"
+  },
+  "suggests":{
+	  "hexcasting": ">=0.10.3",
+    "hexal": ">=0.2.10"
   }
 }
