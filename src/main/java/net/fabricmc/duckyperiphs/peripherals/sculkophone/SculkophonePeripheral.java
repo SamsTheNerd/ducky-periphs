@@ -43,7 +43,7 @@ public class SculkophonePeripheral  implements IPeripheral {
 
     public void vibrationEvent(GameEvent vibrationEvent, double distance){
         for(IComputerAccess computer : computers){
-            computer.queueEvent("vibration", vibrationEvent.getId(), distance);
+            computer.queueEvent("vibration", computer.getAttachmentName(), vibrationEvent.getId(), distance);
         }
     }
 

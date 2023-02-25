@@ -91,7 +91,7 @@ public class EntityDetectorPeripheral implements IPeripheral {
         entityMap.put("y", entity.getY() - edPos.getY());
         entityMap.put("z", entity.getZ() - edPos.getZ());
         for(IComputerAccess computer : computers){
-            computer.queueEvent("new_entity", entityMap);
+            computer.queueEvent("new_entity", computer.getAttachmentName(), entityMap);
         }
     }
 
@@ -107,7 +107,7 @@ public class EntityDetectorPeripheral implements IPeripheral {
         entityMap.put("y", entity.getY() - edPos.getY());
         entityMap.put("z", entity.getZ() - edPos.getZ());
         for(IComputerAccess computer : computers){
-            computer.queueEvent("removed_entity", entityMap);
+            computer.queueEvent("removed_entity", computer.getAttachmentName(), entityMap);
         }
     }
 

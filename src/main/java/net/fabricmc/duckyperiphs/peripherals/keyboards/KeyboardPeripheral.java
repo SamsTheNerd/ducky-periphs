@@ -43,47 +43,47 @@ public class KeyboardPeripheral implements IPeripheral {
     public void sendKey(int key, Boolean repeat) {
         for (IComputerAccess computer : computers) {
             // computer.queueEvent("key", key);
-            computer.queueEvent("key", new Object[] { key, repeat});
+            computer.queueEvent("key", new Object[] { key, repeat}, computer.getAttachmentName());
         }
     }
 
     public void sendKeyUp(int key){
         for (IComputerAccess computer : computers) {
             // computer.queueEvent("key", key);
-            computer.queueEvent("key_up", new Object[] { key});
+            computer.queueEvent("key_up", new Object[] { key}, computer.getAttachmentName());
         }
     }
 
     public void sendChar(char c){
         String stringyChar = Character.toString(c);
         for (IComputerAccess computer : computers) {
-            computer.queueEvent("char", stringyChar);
+            computer.queueEvent("char", stringyChar, computer.getAttachmentName());
         }
     }
 
     public void sendPaste(String text){
         for (IComputerAccess computer : computers) {
-            computer.queueEvent("paste", text);
+            computer.queueEvent("paste", text, computer.getAttachmentName());
         }
     }
 
     public void sendTerminate(){
         for (IComputerAccess computer : computers) {
-            computer.queueEvent("terminate");
+            computer.queueEvent("terminate", computer.getAttachmentName());
         }
     }
 
     public void sendShutdown(){
         for (IComputerAccess computer : computers) {
             ComputerCraft.serverComputerRegistry.lookup(computer.getID()).shutdown();;
-            computer.queueEvent("shutdown");
+            computer.queueEvent("shutdown", computer.getAttachmentName());
         }
     }
 
     public void sendReboot(){
         for (IComputerAccess computer : computers) {
             ComputerCraft.serverComputerRegistry.lookup(computer.getID()).reboot();;
-            computer.queueEvent("reboot");
+            computer.queueEvent("reboot", computer.getAttachmentName());
         }
     }
 
