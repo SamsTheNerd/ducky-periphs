@@ -10,7 +10,9 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import net.fabricmc.duckyperiphs.DuckyPeriph;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 public class FocalPortPeripheral implements IPeripheral{
     private final FocalPortBlockEntity fpTile;
@@ -48,7 +50,16 @@ public class FocalPortPeripheral implements IPeripheral{
     @LuaFunction
     public final MethodResult readIota(){
         Iota iota = fpTile.getIota();
-        Object luaObject = IotaLuaUtils.getLuaObject(iota);
+        World world = fpTile.getWorld();
+        Object luaObject;
+        if(world instanceof ServerWorld){
+            ServerWorld sworld = (ServerWorld)world;
+            luaObject = IotaLuaUtils.getLuaObject(iota, sworld);
+        } else {
+            // I guess pass null ? maybe shouldn't pass anything
+            DuckyPeriph.LOGGER.info("reading iota in client world");
+            luaObject = IotaLuaUtils.getLuaObject(iota, null);
+        }
         return MethodResult.of(luaObject);
     }
 

@@ -35,6 +35,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import ram.talia.hexal.api.spell.iota.EntityTypeIota;
+import ram.talia.hexal.api.spell.iota.GateIota;
 import ram.talia.hexal.api.spell.iota.IotaTypeIota;
 import ram.talia.hexal.api.spell.iota.ItemTypeIota;
 
@@ -43,7 +44,7 @@ import ram.talia.hexal.api.spell.iota.ItemTypeIota;
  */
 public class IotaLuaUtils {
     // Convert a Lua object to an Iota
-    // needs world for entity. If you're absolutely sure you're not passing an entity, you can pass null
+    // needs world for entity and gate. If you're absolutely sure you're not passing an entity or gate, you can pass null
     public static Iota getIota(Object LuaObject, ServerWorld world){
         if(LuaObject == null){
             return new NullIota();
@@ -126,7 +127,8 @@ public class IotaLuaUtils {
         return new GarbageIota();
     }
 
-    public static Object getLuaObject(Iota iota){
+    // server world is only used for gates
+    public static Object getLuaObject(Iota iota, ServerWorld world){
         if(iota instanceof NullIota){
             return null;
         }
@@ -156,7 +158,7 @@ public class IotaLuaUtils {
             SpellList list = ((ListIota)iota).getList();
             List<Object> luaList = new ArrayList<Object>();
             for(Iota i : list){
-                luaList.add(getLuaObject(i));
+                luaList.add(getLuaObject(i, world));
             }
             return luaList;
         }
@@ -183,7 +185,7 @@ public class IotaLuaUtils {
         }
 
         if(FabricLoader.getInstance().isModLoaded("hexal")){
-            Object hexalIota = getHexalObject(iota);
+            Object hexalIota = getHexalObject(iota, world);
             if(hexalIota != null){
                 return hexalIota;
             }
@@ -283,18 +285,27 @@ public class IotaLuaUtils {
                     }
                     return new ItemTypeIota(type);
                 }
+            }
 
-                // need to handle gate iota's - not really sure how to do that.
-                
+            if(table.containsKey("gate") && table.get("gate") instanceof String){
+                if(world != null){
+                    HexalGateMapState gateMap = HexalGateMapState.getServerState(((ServerWorld)world).getServer());
+                    UUID gateUUID = UUID.fromString((String)table.get("gate"));
+                    Integer gateInt = gateMap.getGateInt(gateUUID);
+                    if(gateInt != null){
+                        return new GateIota(gateInt);
+                    }
+                }
+                return new NullIota();
             }
         }
-
+        
         return new GarbageIota();
     }
 
-    private static Object getHexalObject(Iota iota){
+    private static Object getHexalObject(Iota iota, ServerWorld world){
         if(iota instanceof IotaTypeIota){
-            IotaType<?> type = ((IotaTypeIota)iota).getType();
+            IotaType<?> type = ((IotaTypeIota)iota).getIotaType();
             Map<String, Object> typeTable = new HashMap<String, Object>();
             Optional<RegistryKey<IotaType<?>>> typeLoc = HexIotaTypes.REGISTRY.getKey(type);
             if(typeLoc.isPresent()){
@@ -344,6 +355,19 @@ public class IotaLuaUtils {
                 }
             }
             return typeTable;
+        }
+
+        if(iota instanceof GateIota){
+            if(world != null){
+                GateIota gateIota = (GateIota)iota;
+                int gateIndex = gateIota.getGateIndex();
+                // check if we have the uuid
+                Map<String, String> gateTable = new HashMap<String, String>();
+                UUID thisGateUUID = HexalGateMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateGateUUID(gateIndex);
+                gateTable.put("gate", thisGateUUID.toString());
+                return gateTable;
+            }
+            return null;
         }
 
         return null;
