@@ -61,7 +61,14 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
             wrapperEntity.discard();
             wrapperEntity = null;
         }
-        
+    }
+
+    public void resetWrapperEntity(){
+        if(wrapperEntity != null){
+            BlockPos goalPos = getPos().subtract(new Vec3i(0, 1, 0));
+            wrapperEntity.setPosition(goalPos.getX()+0.5, goalPos.getY(), goalPos.getZ()+0.5);
+            DuckyPeriph.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + wrapperEntity.getPos().toString());
+        }
     }
 
     @Override

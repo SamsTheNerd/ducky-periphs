@@ -63,26 +63,33 @@ public class EntityFromBlockEntity extends Entity{
     protected void initDataTracker() {
     }
 
-    // deal with safely despawning -- i think we don't want this actually. Game should deal with loading/unloading entities for us
-    // @Override
-    // public void tick(){
-    //     World world = getWorld();
-    //     if(world==null){
-    //         return;
-    //     }
-    //     if (parentBlockEntity == null){
-    //         parentBlockEntity = world.getBlockEntity(getBlockPos());
-    //     }
-    //     if (parentBlockEntity == null){
-    //         this.remove(RemovalReason.DISCARDED);
-    //         if(world.isClient()){
-    //             DuckyPeriph.LOGGER.info("despawn entityFromBlockEntity on client");
-    //         } else {
-    //             DuckyPeriph.LOGGER.info("despawn entityFromBlockEntity on server");
-    //         }
-    //         return;
-    //     }
-    // }
+    // make sure we don't accidentally move somehow
+    @Override
+    public void tick(){
+        World world = getWorld();
+        if(world==null){
+            return;
+        }
+        if (parentBlockEntity == null){ // don't have a BE for some reason
+            parentBlockEntity = world.getBlockEntity(getBlockPos()); // try to find it
+            if(!parentBlockEntityType.isInstance(parentBlockEntity)){ // remove if wrong type or didn't get one
+                this.remove(RemovalReason.DISCARDED);
+                if(world.isClient()){
+                    DuckyPeriph.LOGGER.info("despawn entityFromBlockEntity on client");
+                } else {
+                    DuckyPeriph.LOGGER.info("despawn entityFromBlockEntity on server");
+                }
+                return;
+            }
+        }
+        // guaranteed to have a proper block entity one way or another
+        BlockPos bePos = parentBlockEntity.getPos();
+        if(!bePos.equals(getBlockPos())){ // if we're not with the block entity anymore, fix that
+            BlockPos goalPos = bePos;
+            this.setPosition(goalPos.getX()+0.5, goalPos.getY(), goalPos.getZ()+0.5);
+            DuckyPeriph.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + this.getPos().toString());
+        }
+    }
 
     @Override
     public Packet<?> createSpawnPacket() {
