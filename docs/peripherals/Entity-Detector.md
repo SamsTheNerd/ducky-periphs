@@ -83,7 +83,7 @@ This peripheral can be used to get data on nearby entities, including players. N
     </tr>
     <tr>
         <td>
-            newEntity
+            new_entity
         </td>
         <td width = 200>
             Fires when an entity spawns or enters the range
@@ -109,7 +109,7 @@ This peripheral can be used to get data on nearby entities, including players. N
     </tr>
     <tr>
         <td>
-            removedEntity
+            removed_entity
         </td>
         <td width = 200>
             Fires when an entity dies or leaves the range
