@@ -3,7 +3,9 @@
 <br clear="center">
 
 <p valign="left"> 
-This peripheral lets you read and write between <a href="https://modrinth.com/mod/hex-casting/">Hex Casting</a> and ComputerCraft. On the hex casting side this will act just like a focus in an item frame. On the computercraft side you can use <a href="#readIota">readIota()</a> and <a href="writeIota">writeIota()</a> to work with the data.
+This peripheral lets you read and write between <a href="https://modrinth.com/mod/hex-casting/">Hex Casting</a> and ComputerCraft. On the hex casting side this will act just like a focus in an item frame. On the computercraft side you can use readIota() and writeIota() to work with the data.
+
+<b>This block requires Hex Casting to be installed. It will not show up without it.</b>
 </p>
 
 <br clear="right">
@@ -11,7 +13,7 @@ This peripheral lets you read and write between <a href="https://modrinth.com/mo
 ## Crafting
 
 
-<img align=center width=400 src="images/recipes/focal_port_recipe.gif" alt="crafting recipe for the entity detector block. In english reading order the recipe is: edified wood, charged amethyst, edified wood / amethyst, focus, amethyst / block of slate, advanced computer, block of slate">
+<img align=center width=400 src="images/recipes/focal_port_recipe.png" alt="crafting recipe for the entity detector block. In english reading order the recipe is: edified wood, charged amethyst, edified wood / amethyst, focus, amethyst / block of slate, advanced computer, block of slate">
 
 
 <br>
