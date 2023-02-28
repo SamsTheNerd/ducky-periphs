@@ -90,7 +90,8 @@ This peripheral can be used to get data on nearby entities, including players. N
         </td>
         <td width=350>
 <pre><code class="language-json">1: 'new_entity' - event name
-2: array: {
+2: string: peripheral name/side,
+3: array: {
   i: {
     "uuid": string,
     "name": string, //entity name
