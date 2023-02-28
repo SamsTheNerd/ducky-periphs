@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.1.2
+
+### Fixed
+- Prevent focal port entity from being teleported or moved
+
+### Changed
+- Added peripheral name to event return values as the 2nd return value. Everything else moves down as a result. Check wiki for more details.
+
+## 1.1.1
+
+### Added
+- Focal Port Peripheral to interface between CC and hex casting
+- Hexal Support
+
+### Fixed
+- Color provider reregistered (it got removed in an earlier code rework)
+
+## 1.1.0
+
+### Added
+- MC Version 1.19.2 support
+- Sculkohpone peripheral
+
+### Fixed
+- Ducks not quacking properly with redstone
+- Keyboard sending double presses
+
 ## 1.0.2
 
 ### Added
