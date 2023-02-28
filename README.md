@@ -3,6 +3,8 @@ A general peripheral addon mod for ComputerCraft Restitched.
 
 [![Modrinth](https://github.com/modrinth/art/blob/main/Branding/Badge/badge-dark.svg)](https://modrinth.com/mod/ducky-periphs)
 
+[![curseforge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/ducky-periphs)
+
 # Features
 - Weather Machine 
 - Entity Radar
