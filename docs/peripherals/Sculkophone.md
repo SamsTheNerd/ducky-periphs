@@ -11,7 +11,7 @@ This peripheral works like a more detailed sculk sensor that can tell you the ex
 ## Crafting
 
 
-<img align=center width=400 src="images/recipes/sculkophone_recipe.gif" alt="crafting recipe for the entity detector block. In english reading order the recipe is: stone, any glass pane, stone / observer, eye of ender, observer / stone, redstone, stone">
+<img align=center width=400 src="images/recipes/sculkophone_recipe.png" alt="crafting recipe for the entity detector block. In english reading order the recipe is: stone, stone, stone / stone, sculk sensor, stone / stone, redstone, stone">
 
 
 ## Events

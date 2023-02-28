@@ -4,6 +4,8 @@
 - [[Entity Detector | Entity-Detector]]
 - [[Weather Machine| Weather-Machine]]
 - [[Keyboard | Keyboard]]
+- [[Sculkophone | Sculkophone]]
+- [[Focal Port | Focal-Port]]
 
 ## Misc
 - [[Rubber Ducky | Rubber-Ducky]]
