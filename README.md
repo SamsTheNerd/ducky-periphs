@@ -1,10 +1,7 @@
 # Ducky Peripherals
 A general peripheral addon mod for ComputerCraft Restitched.
 
-
 [![Modrinth](https://github.com/modrinth/art/blob/main/Branding/Badge/badge-dark.svg)](https://modrinth.com/mod/ducky-periphs)
-
-<br>
 
 # Features
 - Weather Machine 
@@ -16,7 +13,7 @@ A general peripheral addon mod for ComputerCraft Restitched.
 
 <br>
 
-# Downloads
+# Direct Downloads
 
 | Download | MC Version | Fabric Version | CC:R Version | HexCasting Version |
 | --- | --- | --- | --- | --- |
