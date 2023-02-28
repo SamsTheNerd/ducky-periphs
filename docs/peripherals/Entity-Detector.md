@@ -114,8 +114,9 @@ This peripheral can be used to get data on nearby entities, including players. N
             Fires when an entity dies or leaves the range
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'removed_entity' - event name
-2: array: {
+<pre><code class="language-json">1: 'removed_entity' - event name,
+2: string: peripheral name/side,
+3: array: {
   i: {
     "uuid": string,
     "name": string, //entity name

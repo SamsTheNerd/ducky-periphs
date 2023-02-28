@@ -45,9 +45,10 @@ Right click on the keyboard to start typing and press ESC to exit.
         <td width=350>
 <pre><code class="language-json">1: 'key' - event name
 2: {
-    1: key_code - int
+    1: key_code - int,
     2: repeat - boolean
 }
+3: string: peripheral name/side,
 </code></pre>
     </tr>
     <tr>
@@ -59,7 +60,9 @@ Right click on the keyboard to start typing and press ESC to exit.
         </td>
         <td width=350>
 <pre><code class="language-json">1: 'key_up' - event name
-2: key_code - int
+2: key_code - int,
+3: string: peripheral name/side
+
 </code></pre>
 </tr>
     <tr>
@@ -71,7 +74,8 @@ Right click on the keyboard to start typing and press ESC to exit.
         </td>
         <td width=350>
 <pre><code class="language-json">1: 'char' - event name
-2: char - string
+2: char - string,
+3: string: peripheral name/side
 </code></pre>
     </tr>
     <tr>
@@ -83,7 +87,8 @@ Right click on the keyboard to start typing and press ESC to exit.
         </td>
         <td width=350>
 <pre><code class="language-json">1: 'paste' - event name
-2: text - string
+2: text - string,
+3: string: peripheral name/side
 </code></pre></tr>
 <tr>
         <td>
@@ -93,7 +98,8 @@ Right click on the keyboard to start typing and press ESC to exit.
             Fires when you use the terminate shortcut
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'terminate' - event name
+<pre><code class="language-json">1: 'terminate' - event name,
+2: string: peripheral name/side
 </code></pre></tr>
 <tr>
         <td>
@@ -103,7 +109,8 @@ Right click on the keyboard to start typing and press ESC to exit.
             Fires when you use the shutdown shortcut
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'shutdown' - event name
+<pre><code class="language-json">1: 'shutdown' - event name,
+2: string: peripheral name/side
 </code></pre></tr>
 <tr>
         <td>
@@ -113,7 +120,8 @@ Right click on the keyboard to start typing and press ESC to exit.
             Fires when you use the reboot shortcut
         </td>
         <td width=350>
-<pre><code class="language-json">1: 'reboot' - event name
+<pre><code class="language-json">1: 'reboot' - event name,
+2: string: peripheral name/side
 </code></pre></tr>
 </table>
 
