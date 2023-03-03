@@ -62,6 +62,11 @@ public class IotaLuaUtils {
             // no way for it to be not strings, I think
             Map<String, Object> table = (Map) LuaObject;
 
+            // return an empty list if we get handed an empty map
+            if(table.size() == 0){
+                return new ListIota(new ArrayList<Iota>());
+            }
+
             // handle vec3
             if(table.size() == 3 && table.containsKey("x") && table.containsKey("y") && table.containsKey("z")){
                 double x;
@@ -113,6 +118,14 @@ public class IotaLuaUtils {
                     return new EntityIota(ent);
                 }
                 return new GarbageIota();
+            }
+
+            if(table.containsKey("1")){
+                // probably a list
+                ListIota list = tryMakeListIota(table, world);
+                if(list != null){
+                    return list;
+                }
             }
         }
 
@@ -230,6 +243,18 @@ public class IotaLuaUtils {
             default:
                 return null;
         }
+    }
+
+    private static ListIota tryMakeListIota(Map<String, Object> luaTable, ServerWorld world){
+        int keyCount = luaTable.size();
+        List<Iota> iotaList = new ArrayList<Iota>(keyCount);
+        for(int i = 1; i <= keyCount; i++){
+            if(!luaTable.containsKey(Integer.toString(i))){
+                return null;
+            }
+            iotaList.add(i-1, getIota(luaTable.get(Integer.toString(i)), world));
+        }
+        return new ListIota(iotaList);
     }
 
     // just putting it in a separate function for neatness
