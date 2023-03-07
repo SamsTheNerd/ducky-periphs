@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
+import org.jblas.DoubleMatrix;
+
 import com.mojang.datafixers.util.Either;
 
 import at.petrak.hexcasting.api.spell.SpellList;
@@ -23,7 +27,9 @@ import at.petrak.hexcasting.api.spell.iota.Vec3Iota;
 import at.petrak.hexcasting.api.spell.math.HexAngle;
 import at.petrak.hexcasting.api.spell.math.HexDir;
 import at.petrak.hexcasting.api.spell.math.HexPattern;
+import at.petrak.hexcasting.api.spell.mishaps.MishapInvalidIota;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
+import net.fabricmc.duckyperiphs.DuckyPeriph;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -38,6 +44,8 @@ import ram.talia.hexal.api.spell.iota.EntityTypeIota;
 import ram.talia.hexal.api.spell.iota.GateIota;
 import ram.talia.hexal.api.spell.iota.IotaTypeIota;
 import ram.talia.hexal.api.spell.iota.ItemTypeIota;
+import ram.talia.moreiotas.api.spell.iota.MatrixIota;
+import ram.talia.moreiotas.api.spell.iota.StringIota;
 
 /*
  * Functions to help with translating between Lua and Iotas
@@ -49,7 +57,7 @@ public class IotaLuaUtils {
         if(LuaObject == null){
             return new NullIota();
         }
-        
+
         if(LuaObject instanceof Number){
             return new DoubleIota(((Number)LuaObject).doubleValue());
         }
@@ -59,72 +67,87 @@ public class IotaLuaUtils {
         }
 
         if(LuaObject instanceof Map){
-            // no way for it to be not strings, I think
-            Map<String, Object> table = (Map) LuaObject;
+            @SuppressWarnings("unchecked")
+            Map<?, Object> rawTable = (Map<?, Object>) LuaObject;
 
-            // return an empty list if we get handed an empty map
-            if(table.size() == 0){
-                return new ListIota(new ArrayList<Iota>());
+            if(rawTable.isEmpty()){
+                return new ListIota(new ArrayList<Iota>()); // sure ?
             }
 
-            // handle vec3
-            if(table.size() == 3 && table.containsKey("x") && table.containsKey("y") && table.containsKey("z")){
-                double x;
-                double y;
-                double z;
-                if(table.get("x") instanceof Number && table.get("y") instanceof Number && table.get("z") instanceof Number){
-                    x = ((Number)table.get("x")).doubleValue();
-                    y = ((Number)table.get("y")).doubleValue();
-                    z = ((Number)table.get("z")).doubleValue();
-                    return new Vec3Iota(new Vec3d(x,y,z));
-                }
-                return new GarbageIota();
-            }
+            // check what type the keys are - assuming it doesn't mix types ? seems reasonable?
+            Class<?> keyClass = rawTable.keySet().iterator().next().getClass();
 
-            
-            // handle spell pattern
-            if(table.size() == 2 && table.containsKey("startDir") && table.containsKey("angles")){
-                String startDirRaw;
-                String anglesSeqRaw;
-                if(table.get("startDir") instanceof String && table.get("angles") instanceof String){
-                    startDirRaw = (String)table.get("startDir");
-                    anglesSeqRaw = (String)table.get("angles");
-                    HexDir startDir = HexDir.fromString(startDirRaw);
-                    List<HexAngle> anglesSeq = stringToAngleSeq(anglesSeqRaw);
-                    if(startDir == null || anglesSeq == null){
-                        return new GarbageIota();
-                    }
-                    HexPattern pat = new HexPattern(startDir, anglesSeq);
-                    return new PatternIota(pat);
-                }
-                return new GarbageIota();
-            }
-
-            // handle non player entities
-            if(table.containsKey("uuid")){
-                String uuidString;
-                if(table.get("uuid") instanceof String){
-                    uuidString = (String)table.get("uuid");
-                    if(uuidString == null){
-                        return new GarbageIota();
-                    }
-                    Entity ent = world.getEntity(UUID.fromString(uuidString));
-                    if(ent == null){
-                        return new GarbageIota();
-                    }
-                    if(ent.isPlayer()){
-                        return new NullIota();
-                    }
-                    return new EntityIota(ent);
-                }
-                return new GarbageIota();
-            }
-
-            if(table.containsKey("1")){
-                // probably a list
-                ListIota list = tryMakeListIota(table, world);
+            // is an array 
+            if(keyClass == Double.class){
+                @SuppressWarnings("unchecked")
+                Map<Double, Object> tableArray = (Map<Double, Object>) rawTable;
+                ListIota list = tryMakeListIota(tableArray, world);
                 if(list != null){
                     return list;
+                }
+            }
+
+            // is a string keyed table
+            if(keyClass == String.class){
+                @SuppressWarnings("unchecked")
+                Map<String, Object> table = (Map<String, Object>) rawTable;
+
+                // return an empty list if we get handed an empty map
+                if(table.size() == 0){
+                    return new ListIota(new ArrayList<Iota>());
+                }
+
+                // handle vec3
+                if(table.size() == 3 && table.containsKey("x") && table.containsKey("y") && table.containsKey("z")){
+                    double x;
+                    double y;
+                    double z;
+                    if(table.get("x") instanceof Number && table.get("y") instanceof Number && table.get("z") instanceof Number){
+                        x = ((Number)table.get("x")).doubleValue();
+                        y = ((Number)table.get("y")).doubleValue();
+                        z = ((Number)table.get("z")).doubleValue();
+                        return new Vec3Iota(new Vec3d(x,y,z));
+                    }
+                    return new GarbageIota();
+                }
+
+                
+                // handle spell pattern
+                if(table.size() == 2 && table.containsKey("startDir") && table.containsKey("angles")){
+                    String startDirRaw;
+                    String anglesSeqRaw;
+                    if(table.get("startDir") instanceof String && table.get("angles") instanceof String){
+                        startDirRaw = (String)table.get("startDir");
+                        anglesSeqRaw = (String)table.get("angles");
+                        HexDir startDir = HexDir.fromString(startDirRaw);
+                        List<HexAngle> anglesSeq = stringToAngleSeq(anglesSeqRaw);
+                        if(startDir == null || anglesSeq == null){
+                            return new GarbageIota();
+                        }
+                        HexPattern pat = new HexPattern(startDir, anglesSeq);
+                        return new PatternIota(pat);
+                    }
+                    return new GarbageIota();
+                }
+
+                // handle non player entities
+                if(table.containsKey("uuid")){
+                    String uuidString;
+                    if(table.get("uuid") instanceof String){
+                        uuidString = (String)table.get("uuid");
+                        if(uuidString == null){
+                            return new GarbageIota();
+                        }
+                        Entity ent = world.getEntity(UUID.fromString(uuidString));
+                        if(ent == null){
+                            return new GarbageIota();
+                        }
+                        if(ent.isPlayer()){
+                            return new NullIota();
+                        }
+                        return new EntityIota(ent);
+                    }
+                    return new GarbageIota();
                 }
             }
         }
@@ -135,6 +158,14 @@ public class IotaLuaUtils {
                 return hexalIota;
             }
         }
+
+        if(FabricLoader.getInstance().isModLoaded("moreiotas")){
+            Iota moreIotasIota = getMoreIotasIota(LuaObject);
+            if(moreIotasIota != null){
+                return moreIotasIota;
+            }
+        }
+
 
         // couldn't find anything useful from it (this also handles purposeful garbage)
         return new GarbageIota();
@@ -204,6 +235,13 @@ public class IotaLuaUtils {
             }
         }
 
+        if(FabricLoader.getInstance().isModLoaded("moreiotas")){
+            Object moreIotasObject = getMoreIotasObject(iota);
+            if(moreIotasObject != null){
+                return moreIotasObject;
+            }
+        }
+
         // couldn't find anything useful from it
         return null;
     }
@@ -245,14 +283,14 @@ public class IotaLuaUtils {
         }
     }
 
-    private static ListIota tryMakeListIota(Map<String, Object> luaTable, ServerWorld world){
+    private static ListIota tryMakeListIota(Map<Double, Object> luaTable, ServerWorld world){
         int keyCount = luaTable.size();
         List<Iota> iotaList = new ArrayList<Iota>(keyCount);
         for(int i = 1; i <= keyCount; i++){
-            if(!luaTable.containsKey(Integer.toString(i))){
+            if(!luaTable.containsKey((double) i)){
                 return null;
             }
-            iotaList.add(i-1, getIota(luaTable.get(Integer.toString(i)), world));
+            iotaList.add(i-1, getIota(luaTable.get((double) i), world));
         }
         return new ListIota(iotaList);
     }
@@ -325,7 +363,7 @@ public class IotaLuaUtils {
             }
         }
         
-        return new GarbageIota();
+        return null;
     }
 
     private static Object getHexalObject(Iota iota, ServerWorld world){
@@ -395,6 +433,67 @@ public class IotaLuaUtils {
             return null;
         }
 
+        return null;
+    }
+
+    @Nullable
+    private static Iota getMoreIotasIota(Object luaObject){
+        if(luaObject instanceof String){
+            String string = (String)luaObject;
+            if(string != null){
+                try{
+                    return new StringIota(string);
+                } catch (MishapInvalidIota e){
+                    DuckyPeriph.LOGGER.info("Invalid string iota (too long): " + string);
+                    return new GarbageIota();
+                }
+            }
+        }
+        if(luaObject instanceof Map){
+            Map<String, Object> table = (Map) luaObject;
+
+            if(table.containsKey("col") && table.get("col") instanceof Number
+                && table.containsKey("row") && table.get("row") instanceof Number
+                && table.containsKey("matrix") && table.get("matrix") instanceof Map){
+                int col = ((Number)table.get("col")).intValue();
+                int row = ((Number)table.get("row")).intValue();
+                // should just default to full of 0?
+                DoubleMatrix matrix = new DoubleMatrix(row, col);
+                Map<Double, Object> matrixTable = (Map)table.get("matrix");
+                // just check for each, ignore extra and keep zero if 
+                for(int i = 1; i <= col*row; i++){
+                    if(matrixTable.containsKey((double) i) && matrixTable.get((double) i) instanceof Number){
+                        matrix.put(i-1, ((Number)matrixTable.get((double) i)).doubleValue());
+                    }
+                }
+                try{
+                    return new MatrixIota(matrix);
+                } catch (MishapInvalidIota e){
+                    DuckyPeriph.LOGGER.info("Invalid matrix iota (too big?): " + matrix);
+                    return new GarbageIota();
+                }
+            }
+        }
+        return null; // not a moreIotas object
+    }
+
+    @Nullable
+    private static Object getMoreIotasObject(Iota iota){
+        if(iota instanceof StringIota){
+            return ((StringIota)iota).getString();
+        }
+        if(iota instanceof MatrixIota){
+            DoubleMatrix matrix = ((MatrixIota)iota).getMatrix();
+            Map<String, Object> matrixTable = new HashMap<String, Object>();
+            matrixTable.put("col", matrix.columns);
+            matrixTable.put("row", matrix.rows);
+            Map<Double, Object> matrixData = new HashMap<Double, Object>();
+            for(int i = 1; i <= matrix.columns*matrix.rows; i++){
+                matrixData.put((double) i , matrix.get(i-1));
+            }
+            matrixTable.put("matrix", matrixData);
+            return matrixTable;
+        }
         return null;
     }
 }
