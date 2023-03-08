@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.3
+
+### Fixed
+
+- Focal Port Writing Lists
+- Gem demoted ducks from omnipotent 6th dimensional entity status (made quack mono and quieter)
+
+### Added
+
+- moreIotas string and matrix support
+
 ## 1.1.2
 
 ### Fixed
