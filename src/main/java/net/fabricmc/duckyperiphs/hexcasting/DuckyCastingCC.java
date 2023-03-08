@@ -1,6 +1,5 @@
 package net.fabricmc.duckyperiphs.hexcasting;
 
-import at.petrak.hexcasting.fabric.cc.HexCardinalComponents;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import net.fabricmc.duckyperiphs.DuckyPeriph;
@@ -18,7 +17,8 @@ public class DuckyCastingCC implements EntityComponentInitializer{
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         if(FabricLoader.getInstance().isModLoaded("hexcasting")){
             DuckyPeriph.LOGGER.info("Registering FocalPortWrapperEntity as CC");
-            registry.registerFor(FocalPortWrapperEntity.class, HexCardinalComponents.IOTA_HOLDER, e -> e);
+            // registry.registerFor(FocalPortWrapperEntity.class, HexCardinalComponents.IOTA_HOLDER, e -> e);
+            DuckyCastingCCQuaratined.quarantinedRegisterEntityComponentFactories(registry);
         }
     }
 
