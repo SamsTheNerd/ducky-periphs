@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.4
+
+### Fixed
+
+- Crash when using cardinal components without hex casting.
+
 ## 1.1.3
 
 ### Fixed
