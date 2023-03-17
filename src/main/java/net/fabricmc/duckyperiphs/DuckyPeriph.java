@@ -8,6 +8,7 @@ import net.fabricmc.duckyperiphs.ducks.DuckBlock;
 import net.fabricmc.duckyperiphs.ducks.DuckBlockEntity;
 import net.fabricmc.duckyperiphs.ducks.DuckItem;
 import net.fabricmc.duckyperiphs.hexcasting.DuckyCasting;
+import net.fabricmc.duckyperiphs.misc.DuckyBanners;
 import net.fabricmc.duckyperiphs.peripherals.EntityDetector.EntityDetectorBlock;
 import net.fabricmc.duckyperiphs.peripherals.EntityDetector.EntityDetectorTile;
 import net.fabricmc.duckyperiphs.peripherals.WeatherMachine.WeatherMachineBlock;
@@ -30,6 +31,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.BannerPatternItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -89,6 +91,9 @@ public class DuckyPeriph implements ModInitializer {
 
 	// it's just helpful - using it mainly for focal port hex casting rn but not unique to it
 	public static EntityType<EntityFromBlockEntity> ENTITY_FROM_BLOCK_ENTITY;
+
+	// Banners
+	public static final BannerPatternItem DUCKY_PATTERN_ITEM = new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).group(ItemGroup.MISC));
 	
 
 
@@ -102,6 +107,7 @@ public class DuckyPeriph implements ModInitializer {
 		registerKeyboard();
 		registerDucks();
 		registerSculkophone();
+		registerBanners();
 
 		DPRecipeSerializer.init();
 
@@ -182,5 +188,10 @@ public class DuckyPeriph implements ModInitializer {
 		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking"), SCULKOPHONE_CLICKING_EVENT);
 		// Registry.register(Registry.GAME_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking"), SCULKOPHONE_CLICKING_GAME_EVENT);
 		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking_stop"), SCULKOPHONE_CLICKING_STOP_EVENT);
+	}
+
+	private void registerBanners(){
+		DuckyBanners.registerBannerPatterns();
+		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "ducky_banner_pattern"), DUCKY_PATTERN_ITEM);
 	}
 }
