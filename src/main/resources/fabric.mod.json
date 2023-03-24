@@ -20,16 +20,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.duckyperiphs.DuckyPeriph"
+      "com.samsthenerd.duckyperiphs.DuckyPeriph"
     ],
     "client": [
-      "net.fabricmc.duckyperiphs.DuckyPeriphClientInit"
+      "com.samsthenerd.duckyperiphs.DuckyPeriphClientInit"
     ],
     "cardinal-components": [
-      "net.fabricmc.duckyperiphs.hexcasting.DuckyCastingCC"
+      "com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingCC"
     ],
     "rei_client": [
-      "net.fabricmc.duckyperiphs.compat.REI.REIPlugin"
+      "com.samsthenerd.duckyperiphs.compat.REI.REIPlugin"
     ]
   },
   "mixins": [

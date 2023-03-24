@@ -88,6 +88,11 @@ dependencies {
 	modImplementation "maven.modrinth:hexal:${hexalVersion}"
 	modImplementation "maven.modrinth:moreiotas:${moreIotasVersion}"
 
+	modImplementation "maven.modrinth:sodium:${sodiumVersion}"
+	// for sodium matrices?
+	implementation group: "org.joml", name: "joml", version: "1.10.5"
+	include group: "org.joml", name: "joml", version: "1.10.5"
+
 	// for moreIotas matrices
 	implementation group: "org.jblas", name: "jblas", version: "1.2.5"
     include group: "org.jblas", name: "jblas", version: "1.2.5"
