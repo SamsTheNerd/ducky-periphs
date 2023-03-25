@@ -24,6 +24,22 @@
     "entity.ducky-periphs.focal_port_wrapper_entity": "Focal Port",
 
     "item.ducky-periphs.ducky_banner_pattern": "Banner Pattern",
-    "item.ducky-periphs.ducky_banner_pattern.desc": "Ducky Banner Pattern"
+    "item.ducky-periphs.ducky_banner_pattern.desc": "Ducky Banner Pattern",
     
+    "block.minecraft.banner.ducky-periphs.ducky.white": "White Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.orange": "Orange Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.magenta": "Magenta Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.light_blue": "Light Blue Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.yellow": "Yellow Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.lime": "Lime Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.pink": "Pink Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.gray": "Gray Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.light_gray": "Light Gray Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.cyan": "Cyan Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.purple": "Purple Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.blue": "Blue Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.brown": "Brown Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.green": "Green Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.red": "Red Ducky",
+    "block.minecraft.banner.ducky-periphs.ducky.black": "Black Ducky"
 }

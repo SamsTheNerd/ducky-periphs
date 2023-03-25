@@ -1,5 +1,6 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +11,7 @@ import com.samsthenerd.duckyperiphs.DuckyPeriph;
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import at.petrak.hexcasting.api.spell.iota.NullIota;
+import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralTile;
@@ -19,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -26,6 +29,9 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
@@ -33,10 +39,8 @@ import net.minecraft.world.World;
 
 public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile, ADIotaHolder, RenderAttachmentBlockEntity, Inventory{
     private FocalPortPeripheral fpPeriph;
-    private Iota innerIota;
     private ItemStack innerFocusStack;
     private int iotaColor;
-    private NbtCompound innerIotaTag; // just so that we can read stuff in before we get a proper serverworld.
     private FocalPortWrapperEntity wrapperEntity;
     private UUID wrapperEntityUUID;
 
@@ -113,12 +117,8 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(nbt.contains("wrapperEntityUUID")){
             wrapperEntityUUID = nbt.getUuid("wrapperEntityUUID");
         }
-        if (nbt != null && nbt.contains("innerIota", 10)) {
-            this.innerIotaTag = nbt.getCompound("innerIota");
-            if(getWorld() instanceof ServerWorld){
-                this.innerIota = HexIotaTypes.deserialize(innerIotaTag,(ServerWorld)getWorld());
-                // setColor(innerIota.getType().color());
-            }
+        if (nbt != null && nbt.contains("innerFocusStack", 10)) {
+            this.innerFocusStack = ItemStack.fromNbt(nbt.getCompound("innerFocusStack"));
         }
         if(nbt != null && nbt.contains("iotaColor", 3)){
             setColor(nbt.getInt("iotaColor"));
@@ -136,25 +136,17 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(wrapperEntityUUID != null){
             nbt.putUuid("wrapperEntityUUID", wrapperEntityUUID);
         }
-        if (this.innerIota != null) {
-            nbt.put("innerIota", HexIotaTypes.serialize(innerIota));
-        } else if(this.innerIotaTag != null){
-            nbt.put("innerIota", innerIotaTag);
-        }
         if((Integer)this.iotaColor != null){
             nbt.putInt("iotaColor", iotaColor);
+        }
+        if(this.innerFocusStack != null){
+            nbt.put("innerFocusStack", innerFocusStack.writeNbt(new NbtCompound()));
         }
     }
 
     @Override
     public NbtCompound readIotaTag() {
-        if(this.innerIota != null){
-            return HexIotaTypes.serialize(innerIota);
-        } else if(this.innerIotaTag != null){
-            return this.innerIotaTag;
-        } else {
-            return HexIotaTypes.serialize(new NullIota());
-        }
+        return HexItems.FOCUS.readIotaTag(innerFocusStack);
     }
 
     // fromHex is true if we're writing from hex casting, false if we're writing from CC
@@ -170,12 +162,13 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
     @Override
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
-        if(iota == null){
+        if(iota == null || innerFocusStack.isEmpty()
+        || !HexItems.FOCUS.canWrite(innerFocusStack, iota)){
             return false;
         }
         if(!simulate){
-            this.innerIota = iota;
-            setColor(innerIota.getType().color());
+            HexItems.FOCUS.writeDatum(innerFocusStack, iota);
+            setColor(iota.getType().color());
             this.markDirty();
             
         }
@@ -183,15 +176,16 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
     }
 
     public Iota getIota(){
-        if(this.innerIota != null){
-            return innerIota;
-        } else if(innerIotaTag != null && getWorld() instanceof ServerWorld){
-            this.innerIota = HexIotaTypes.deserialize(innerIotaTag,(ServerWorld)getWorld());
-            setColor(innerIota.getType().color());
-            return innerIota;
-        } else {
-            return new NullIota();
+        Iota iota = new NullIota();
+        if(!innerFocusStack.isEmpty() && getWorld() instanceof ServerWorld){
+            return HexIotaTypes.deserialize(readIotaTag(),(ServerWorld)getWorld());
         }
+        setColor(iota.getType().color());
+        return iota;
+    }
+
+    public boolean hasFocus(){
+        return !innerFocusStack.isEmpty();
     }
 
     private void setColor(int color){
@@ -200,11 +194,16 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(world != null && !world.isClient){
             world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_LISTENERS);
         }
-        if(world != null)
-        DuckyPeriph.LOGGER.info("set color: " + this.iotaColor + " on " + (world.isClient ? "client" : "server"));
+    }
+
+    public void updateColor(){
+        setColor(getIota().getType().color());
     }
 
     public int getColor(){
+        if(innerFocusStack.isEmpty()){
+            return 0xFF808080; // like a really dark gray/light black
+        }
         return this.iotaColor;
     }
 
@@ -239,6 +238,80 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
 
     // inventory methods:
-    
+    @Override public int size() { return 1; }
 
+    @Override public boolean isEmpty() { return innerFocusStack.isEmpty(); }
+
+    @Override public ItemStack getStack(int slot) { 
+        if(slot == 0)
+        return innerFocusStack; 
+        // else
+        return ItemStack.EMPTY;
+    }
+
+    @Override public ItemStack removeStack(int slot, int amount) {
+        if(slot != 0 || amount != 1){
+            return ItemStack.EMPTY;
+        }
+        return removeStack(slot);
+    }
+
+    @Override public ItemStack removeStack(int slot) {
+        ItemStack result = innerFocusStack;
+        innerFocusStack = ItemStack.EMPTY;
+        updateColor();
+        markDirty();
+        return result;
+    }
+
+    @Override public void setStack(int slot, ItemStack stack) {
+        if(slot != 0){
+            return;
+        }
+        innerFocusStack = stack;
+        updateColor();
+        markDirty();
+    }
+
+    @Override public void clear() {
+        innerFocusStack = ItemStack.EMPTY;
+        updateColor();
+        markDirty();
+    }
+
+    @Override public boolean canPlayerUse(PlayerEntity player) {
+        return false;
+    }
+
+
+    @Override
+    public ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit) {
+        Optional<FocalPortBlockEntity> beOpt = world.getBlockEntity(pos, DuckyCasting.FOCAL_PORT_BLOCK_ENTITY);
+        if(beOpt.isPresent()){
+            FocalPortBlockEntity be = beOpt.get();
+            if(be.hasFocus()){
+                ItemStack oldFocusStack = be.removeStack(0);
+                ItemStack newFocusStack = player.getStackInHand(hand);
+                if(newFocusStack.getItem() == HexItems.FOCUS && !newFocusStack.isEmpty()){
+                    be.setStack(0, newFocusStack);
+                    player.setStackInHand(hand, ItemStack.EMPTY);
+                }
+                if (!player.getInventory().insertStack(oldFocusStack)) {
+                    player.dropItem(oldFocusStack, false);
+                }
+                ActionResult.success(world.isClient);
+            } else {
+                ItemStack focusStack = player.getStackInHand(hand);
+                if(focusStack.getItem() != HexItems.FOCUS){
+                    return ActionResult.PASS;
+                }
+                if(!focusStack.isEmpty()){
+                    be.setStack(0, focusStack);
+                    player.setStackInHand(hand, ItemStack.EMPTY);
+                }
+                ActionResult.success(world.isClient);
+            }
+        }
+        return ActionResult.CONSUME;
+    }
 }
