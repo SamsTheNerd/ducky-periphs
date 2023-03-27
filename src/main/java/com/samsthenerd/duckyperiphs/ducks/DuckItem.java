@@ -56,6 +56,13 @@ public class DuckItem extends BlockItem implements DyeableItem{
         return TypedActionResult.success(player.getStackInHand(hand)); // for squeeze 
     }
 
+    public static ItemStack getDuckItemStack(int color){
+        ItemStack stack = new ItemStack(DuckyPeriph.DUCK_ITEM);
+        NbtCompound nbtCompound = stack.getOrCreateSubNbt(DISPLAY_KEY);
+        nbtCompound.putInt(COLOR_KEY, color);
+        return stack;
+    }
+
     // // static so we can get it from block
     // public static int getColor(ItemStack itemStack) {
 

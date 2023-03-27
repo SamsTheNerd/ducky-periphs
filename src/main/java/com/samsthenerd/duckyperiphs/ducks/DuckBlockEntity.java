@@ -6,6 +6,7 @@ import com.samsthenerd.duckyperiphs.DuckyPeriph;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -22,6 +23,10 @@ public class DuckBlockEntity extends BlockEntity implements Nameable{
 
     public DuckBlockEntity(BlockPos pos, BlockState state) {
         super(DuckyPeriph.DUCK_BLOCK_ENTITY, pos, state);
+    }
+
+    public DuckBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     

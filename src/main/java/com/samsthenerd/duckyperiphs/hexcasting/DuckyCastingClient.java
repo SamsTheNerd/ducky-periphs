@@ -7,6 +7,7 @@ import com.samsthenerd.duckyperiphs.DuckyPeriph;
 import at.petrak.hexcasting.api.client.ScryingLensOverlayRegistry;
 import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
+import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -23,6 +24,9 @@ public class DuckyCastingClient {
     public static void init(){
         EntityRendererRegistry.register( DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY, EmptyEntityRenderer::new);
         BlockRenderLayerMap.INSTANCE.putBlock(DuckyCasting.FOCAL_PORT_BLOCK, RenderLayer.getTranslucent());
+
+        BlockRenderLayerMap.INSTANCE.putBlock(DuckyCasting.CONJURED_DUCKY_BLOCK, RenderLayer.getTranslucent());
+        BlockEntityRendererRegistry.register(DuckyCasting.CONJURED_DUCKY_BLOCK_ENTITY, ConjuredDuckyBER::new);
 
         setupColorProviders();
         setupScryingDisplayers();

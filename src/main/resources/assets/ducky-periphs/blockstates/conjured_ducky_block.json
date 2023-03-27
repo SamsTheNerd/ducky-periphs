@@ -1,0 +1,20 @@
+{
+    "multipart": [
+        { 
+            "when": {"facing": "north"},
+            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 270}
+        },
+        {
+            "when": {"facing": "south"},
+            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 90}
+        },
+        {
+            "when": {"facing": "west"},
+            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 180}
+        },
+        {
+            "when": {"facing": "east"},
+            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 0}
+        }
+    ]
+}

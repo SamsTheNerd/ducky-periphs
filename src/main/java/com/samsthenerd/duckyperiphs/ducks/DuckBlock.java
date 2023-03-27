@@ -99,7 +99,7 @@ public class DuckBlock extends Block implements BlockEntityProvider {
     protected static final VoxelShape rw_shape = Block.createCuboidShape(5D, 1D, 4D, 11D, 4D, 5D);
     protected static final VoxelShape lw_shape = Block.createCuboidShape(5D, 1D, 11D, 11D, 4D, 12D);
     protected static final VoxelShape nose_shape = Block.createCuboidShape(13D, 4D, 7D, 14D, 5D, 9D);
-    protected static final VoxelShape SHAPE = VoxelShapes.union(head_shape, body_shape, rw_shape, lw_shape, nose_shape);
+    public static final VoxelShape SHAPE = VoxelShapes.union(head_shape, body_shape, rw_shape, lw_shape, nose_shape);
 
     // thanks SkylorBeck#7700 on fabric discord for this one (also your videos are cool <3)
     public static VoxelShape rotateShape(Direction from, Direction to, VoxelShape shape) {
