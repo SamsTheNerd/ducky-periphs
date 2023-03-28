@@ -9,10 +9,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gl.SimpleFramebuffer;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.ColorHelper.Argb;
 
 public class RenderUtils{
     // public static int initialFrameBuffer;
@@ -30,11 +31,17 @@ public class RenderUtils{
 
     public static void drawFrameBuffer(MatrixStack matrices, int argb, Framebuffer readFromBuffer, int writeToBufferId){
         GlStateManager._glBindFramebuffer(GL30.GL_FRAMEBUFFER, writeToBufferId);
-        RenderSystem.setShaderColor(Argb.getRed(argb)/255f, Argb.getGreen(argb)/255f, Argb.getBlue(argb)/255f, Argb.getAlpha(argb)/255f);
+        // RenderSystem.setShaderColor(Argb.getRed(argb)/255f, Argb.getGreen(argb)/255f, Argb.getBlue(argb)/255f, Argb.getAlpha(argb)/255f);
+        RenderSystem.setShaderColor(1f,1f,1f,1f);
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableCull();
+        RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+        // RenderSystem.defaultBlendFunc();
+        // RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+        // RenderSystem.disableCull();
+
         RenderSystem.setShaderTexture(0, readFromBuffer.getColorAttachment());
+
+        // RenderSystem.setShaderTexture(0, DefaultSkinHelper.getTexture());
 
         Window window = MinecraftClient.getInstance().getWindow();
         DrawableHelper.drawTexture(matrices, 0, 0,
@@ -44,6 +51,24 @@ public class RenderUtils{
             readFromBuffer.textureWidth, readFromBuffer.textureHeight);
         RenderSystem.disableBlend();
         RenderSystem.enableCull();
-        RenderSystem.setShaderColor(1,1,1,1);
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShaderColor(1f,1f,1f,1f);
+    }
+
+    public static void restoreFrameBuffer(int writeToBufferId){
+        GlStateManager._glBindFramebuffer(GL30.GL_FRAMEBUFFER, writeToBufferId);
+    }
+
+
+    public static void drawFrameBufferToBufferTranslucent(int argb, Framebuffer readFromBuffer, BufferBuilder writeToBuffer){
+        RenderSystem.setShader(GameRenderer::getRenderTypeTranslucentShader);
+        Window window = MinecraftClient.getInstance().getWindow();
+        int rfBufWidth = readFromBuffer.textureWidth;
+        int rfBufHeight = readFromBuffer.textureHeight;
+        RenderSystem.setShaderTexture(0, readFromBuffer.getColorAttachment());
+        writeToBuffer.vertex(0, window.getHeight(), 0).color(argb).texture(0, rfBufHeight).light(255).normal(0,0,1).next();
+        writeToBuffer.vertex(window.getWidth(), window.getHeight(), 0).color(argb).texture(rfBufWidth, rfBufHeight).light(255).normal(0,0,1).next();
+        writeToBuffer.vertex(window.getWidth(), 0, 0).color(argb).texture(rfBufWidth, 0).light(255).normal(0,0,1).next();
+        writeToBuffer.vertex(0, 0, 0).color(argb).texture(0,0).light(255).normal(0,0,1).next();
     }
 }

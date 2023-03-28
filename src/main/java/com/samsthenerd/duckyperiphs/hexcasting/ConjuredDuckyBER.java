@@ -1,5 +1,6 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.samsthenerd.duckyperiphs.utils.RenderUtils;
 
 import net.fabricmc.api.EnvType;
@@ -16,7 +17,10 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.util.ScreenshotRecorder;
+import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper.Argb;
@@ -41,6 +45,8 @@ public class ConjuredDuckyBER implements BlockEntityRenderer<ConjuredDuckyBlockE
 
             Pair<Integer, Framebuffer> frameBuffersObj = RenderUtils.setupNewFrameBuffer();
 
+            MatrixStack cleanMatrices = new MatrixStack();
+
             BlockState duckyVisibleState = DuckyCasting.CONJURED_DUCKY_BLOCK.getDefaultState().with(ConjuredDuckyBlock.VISIBLE, true);
 
             Tessellator tessellator = Tessellator.getInstance();
@@ -57,30 +63,46 @@ public class ConjuredDuckyBER implements BlockEntityRenderer<ConjuredDuckyBlockE
             BlockPos camPos = mcClient.getCameraEntity().getBlockPos();
             RenderLayer.getTranslucent().draw(bufferBuilder, camPos.getX(), camPos.getY(), camPos.getZ());
 
+            // RenderSystem.setShader(GameRenderer::getRenderTypeTranslucentShader);
+            // RenderSystem.enableBlend();
+            // RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+
+            // BufferRenderer.drawWithShader(bufferBuilder.end());
+
+            // bufferBuilder = tessellator.getBuffer();
+
+            // bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+
+
+
             BlockPos pos = blockEntity.getPos();
             int color = blockEntity.getColorizer().getColor(blockEntity.getWorld().getTime(), new Vec3d(pos.getX() + RANDOM.nextFloat(), 
                 pos.getY() + RANDOM.nextFloat(), pos.getZ() + RANDOM.nextFloat()).multiply(
                 RANDOM.nextFloat() * 3));
-            color = Argb.getArgb(32, 255, Argb.getGreen(color), Argb.getBlue(color));
-
-            MatrixStack cleanMatrices = new MatrixStack();
+            color = Argb.getArgb(128, 255, Argb.getGreen(color), Argb.getBlue(color));
 
 
-            // bufferBuilder = tessellator.getBuffer();
-            // bufferBuilder.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
-
-            // int w = mcClient.getWindow().getScaledWidth();
-            // int h = mcClient.getWindow().getScaledHeight();
-
-            // bufferBuilder.vertex(w*0.5, h*0.5, 0).color(255, 255, 255, 255).next();
-            // bufferBuilder.vertex(w*0.7, h*0.7, 0).color(255, 255, 255, 255).next();
-            // bufferBuilder.vertex(w*0.7, h*0.5, 0).color(255, 255, 255, 255).next();
-            // bufferBuilder.vertex(w*0.6, h*0.3, 0).color(255, 255, 255, 255).next();
-
-
-
+            ScreenshotRecorder.saveScreenshot(mcClient.runDirectory, frameBuffersObj.getRight(), message -> mcClient.execute(() -> mcClient.inGameHud.getChatHud().addMessage((Text)message)));
+            
             RenderUtils.drawFrameBuffer(cleanMatrices, color, frameBuffersObj.getRight(), frameBuffersObj.getLeft());
-            // GlStateManager._glBindFramebuffer(GL30.GL_FRAMEBUFFER, frameBuffersObj.getLeft());
+
+            // RenderUtils.restoreFrameBuffer(frameBuffersObj.getLeft());
+            
+            // RenderUtils.drawFrameBufferToBufferTranslucent(color, frameBuffersObj.getRight(), bufferBuilder);
+            
+            
+            Window window = mcClient.getWindow();
+            // RenderLayer.getTranslucent().draw(bufferBuilder, camPos.getX(), camPos.getY(), camPos.getZ());
+
+            // RenderLayer.getTranslucent().draw(bufferBuilder, window.getWidth()/2, window.getHeight()/2, 0);
+            
+            ScreenshotRecorder.saveScreenshot(mcClient.runDirectory, mcClient.getFramebuffer(), message -> mcClient.execute(() -> mcClient.inGameHud.getChatHud().addMessage((Text)message)));
+            
+            RenderSystem.setShaderColor(1f,1f,1f,1f);
+
+
+
+
 
             matrices.pop();
     }
