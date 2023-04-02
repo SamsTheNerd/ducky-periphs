@@ -2,19 +2,19 @@
     "multipart": [
         { 
             "when": {"facing": "north"},
-            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 270}
+            "apply": {"model": "ducky-periphs:block/duck/duck_base_flat", "y": 270}
         },
         {
             "when": {"facing": "south"},
-            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 90}
+            "apply": {"model": "ducky-periphs:block/duck/duck_base_flat", "y": 90}
         },
         {
             "when": {"facing": "west"},
-            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 180}
+            "apply": {"model": "ducky-periphs:block/duck/duck_base_flat", "y": 180}
         },
         {
             "when": {"facing": "east"},
-            "apply": {"model": "ducky-periphs:block/duck/duck_base", "y": 0}
+            "apply": {"model": "ducky-periphs:block/duck/duck_base_flat", "y": 0}
         }
     ]
 }

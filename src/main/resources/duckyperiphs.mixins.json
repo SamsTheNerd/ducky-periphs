@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "SodiumBiomeBlendMixin"
+    "SodiumBiomeBlendMixin",
+    "CallRenderLayer"
   ],
   "plugin": "SodiumMixinPlugin",
   "injectors": {

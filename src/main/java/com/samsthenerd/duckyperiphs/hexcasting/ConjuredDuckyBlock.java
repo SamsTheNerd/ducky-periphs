@@ -50,17 +50,7 @@ public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
     }
 
     @Override
-    public boolean isTranslucent(@NotNull BlockState pState, @NotNull BlockView pLevel,
-        @NotNull BlockPos pPos) {
-        return true;
-    }
-
-    @Override
     public @NotNull BlockRenderType getRenderType(@NotNull BlockState state) {
-        if(state.get(VISIBLE)){
-            return BlockRenderType.MODEL;
-        } else {
-            return BlockRenderType.INVISIBLE;
-        }
+        return BlockRenderType.MODEL;
     }
 }
