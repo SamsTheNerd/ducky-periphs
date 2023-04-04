@@ -1,14 +1,23 @@
 package com.samsthenerd.duckyperiphs.ducks;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.samsthenerd.duckyperiphs.DuckyPeriph;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -61,6 +70,14 @@ public class DuckItem extends BlockItem implements DyeableItem{
         NbtCompound nbtCompound = stack.getOrCreateSubNbt(DISPLAY_KEY);
         nbtCompound.putInt(COLOR_KEY, color);
         return stack;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        
+        if(FabricLoader.getInstance().isModLoaded("hexcasting")){
+            tooltip.add(((MutableText)Text.of("I have the strangest urge to cast scribe's reflection?")).formatted(Formatting.ITALIC));
+        }
     }
 
     // // static so we can get it from block

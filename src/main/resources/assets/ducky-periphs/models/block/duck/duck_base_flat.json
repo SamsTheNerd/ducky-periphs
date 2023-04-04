@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"head": "ducky-periphs:block/duck/duck_head_flat",
+		"head": "ducky-periphs:block/duck/flat_duck_head",
 		"wing": "ducky-periphs:block/duck/duck_wing",
 		"body": "ducky-periphs:block/duck/duck_body",
 		"nose": "ducky-periphs:block/duck/nose",
@@ -71,14 +71,6 @@
 				"west": {"uv": [0, 1, 2, 2], "texture": "#nose"},
 				"up": {"uv": [1, 4, 0, 2], "texture": "#nose"},
 				"down": {"uv": [3, 0, 2, 2], "texture": "#nose"}
-			}
-		},
-		{
-			"name": "Eyes",
-			"from": [13, 3, 6],
-			"to": [13, 7, 10],
-			"faces": {
-				"east": {"uv": [0, 4, 4, 8], "texture": "#eyes"}
 			}
 		}
 	],

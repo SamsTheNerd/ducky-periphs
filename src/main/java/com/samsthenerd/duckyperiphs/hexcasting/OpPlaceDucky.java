@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriph;
-import com.samsthenerd.duckyperiphs.ducks.DuckItem;
 
 import at.petrak.hexcasting.api.misc.FrozenColorizer;
 import at.petrak.hexcasting.api.misc.MediaConstants;
@@ -59,6 +58,16 @@ public class OpPlaceDucky implements SpellAction{
         BlockPos pos = OperatorUtils.getBlockPos(args, 0, getArgc());
         context.assertVecInRange(pos);
 
+        Vec3d dirVec = OperatorUtils.getVec3(args, 1, getArgc());
+        DuckyPeriph.LOGGER.info("vec3d input: " + dirVec.toString());
+        Direction dir = Direction.getFacing(dirVec.x, 0, dirVec.z);
+        DuckyPeriph.LOGGER.info("Ducky was facing: " + dir.toString());
+        if(dir == Direction.UP || dir == Direction.DOWN){
+            dir = Direction.NORTH;
+        }
+        DuckyPeriph.LOGGER.info("Ducky is facing: " + dir.toString());
+
+
         DuckyPeriph.LOGGER.info(context.getCaster().getName().toString() + " casted a duck at " + pos.toShortString());
 
         if (!context.getWorld().canPlayerModifyAt(context.getCaster(), pos))
@@ -76,7 +85,7 @@ public class OpPlaceDucky implements SpellAction{
         particles.add(ParticleSpray.cloud(Vec3d.ofCenter(pos), 1.0, 1));
 
         return new Triple<RenderedSpell, Integer, List<ParticleSpray>>(
-            new Spell(pos, 15),
+            new Spell(pos, dir),
             MediaConstants.DUST_UNIT,
             particles
         );
@@ -88,10 +97,10 @@ public class OpPlaceDucky implements SpellAction{
 
     private class Spell implements RenderedSpell {
         BlockPos pos;
-        int light;
-        public Spell(BlockPos pos, int light) {
+        Direction direction;
+        public Spell(BlockPos pos, Direction direction) {
             this.pos = pos;
-            this.light = light;
+            this.direction = direction;
         }
 
         @Override
@@ -100,33 +109,28 @@ public class OpPlaceDucky implements SpellAction{
             if (!context.canEditBlockAt(pos))
                 return;
             
-            Block block = DuckyPeriph.DUCK_BLOCK;
+            Block block = DuckyCasting.CONJURED_DUCKY_BLOCK;
 
             FrozenColorizer colorizer = IXplatAbstractions.INSTANCE.getColorizer(context.getCaster());
 
-            int color = colorizer.getColor(context.getWorld().getTime(), new Vec3d(pos.getX() + RANDOM.nextFloat(), 
-                pos.getY() + RANDOM.nextFloat(), pos.getZ() + RANDOM.nextFloat()).multiply(
-                RANDOM.nextFloat() * 3));
-
+            ItemStack duckyItemStack = new ItemStack(DuckyCasting.CONJURED_DUCKY_ITEM);
 
             ItemPlacementContext placeContext = new ItemPlacementContext(context.getWorld(), context.getCaster(), 
-                context.getCastingHand(), DuckItem.getDuckItemStack(color), new BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false));
+                context.getCastingHand(), duckyItemStack, new BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false));
 
 
             BlockState worldState = context.getWorld().getBlockState(pos);
             if (worldState.canReplace(placeContext)) {
-
-                
-                if (!IXplatAbstractions.INSTANCE.isPlacingAllowed(context.getWorld(), pos, DuckItem.getDuckItemStack(color), context.getCaster()))
+                if (!IXplatAbstractions.INSTANCE.isPlacingAllowed(context.getWorld(), pos, new ItemStack(DuckyCasting.CONJURED_DUCKY_ITEM), context.getCaster()))
                     return;
 
-                BlockState state = block.getPlacementState(placeContext);
+                BlockState state = block.getPlacementState(placeContext).with(ConjuredDuckyBlock.FACING, direction);
                 if (state != null) {
                     context.getWorld().setBlockState(pos, state);
 
-                    // if (context.getWorld().getBlockState(pos).getBlock() instanceof BlockConjured) {
-                    //     BlockConjured.setColor(context.getWorld(), pos, colorizer)
-                    // }
+                    if (context.getWorld().getBlockState(pos).getBlock() instanceof ConjuredDuckyBlock) {
+                        ConjuredDuckyBlock.setColor(context.getWorld(), pos, colorizer);
+                    }
                 }
             }
         }

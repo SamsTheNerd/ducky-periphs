@@ -4,12 +4,15 @@ import org.jetbrains.annotations.NotNull;
 
 import com.samsthenerd.duckyperiphs.ducks.DuckBlock;
 
+import at.petrak.hexcasting.api.misc.FrozenColorizer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -18,6 +21,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldAccess;
 
 public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
     public static final DirectionProperty FACING = FacingBlock.FACING;
@@ -51,6 +55,31 @@ public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
 
     @Override
     public @NotNull BlockRenderType getRenderType(@NotNull BlockState state) {
-        return BlockRenderType.MODEL;
+        if(state.get(VISIBLE)){
+            return BlockRenderType.MODEL;
+        } else {
+            return BlockRenderType.INVISIBLE;
+        }
+    }
+
+    @Override
+    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+        return true;
+    }
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        Direction direction = ctx.getPlayerFacing().getOpposite();
+        if(direction == Direction.DOWN || direction == Direction.UP)
+            direction = Direction.NORTH;
+        return (BlockState)this.getDefaultState().with(FACING, direction);
+    }
+
+    // taken from BlockConjured
+    public static void setColor(WorldAccess pLevel, BlockPos pPos, FrozenColorizer colorizer) {
+        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+        if (blockentity instanceof ConjuredDuckyBlockEntity tile) {
+            tile.setColorizer(colorizer);
+        }
     }
 }
