@@ -23,6 +23,7 @@ import com.samsthenerd.duckyperiphs.utils.EntityFromBlockEntity;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -37,6 +38,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -109,6 +112,7 @@ public class DuckyPeriph implements ModInitializer {
 		registerDucks();
 		registerSculkophone();
 		registerBanners();
+		registerLoot();
 
 		DPRecipeSerializer.init();
 
@@ -194,5 +198,21 @@ public class DuckyPeriph implements ModInitializer {
 	private void registerBanners(){
 		DuckyBanners.registerBannerPatterns();
 		Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "ducky_banner_pattern"), DUCKY_PATTERN_ITEM);
+	}
+
+
+	private final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
+	private void registerLoot(){
+		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+			if (source.isBuiltin() && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)
+			|| LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) || LootTables.DESERT_PYRAMID_CHEST.equals(id)
+			|| LootTables.WOODLAND_MANSION_CHEST.equals(id) || LootTables.JUNGLE_TEMPLE_CHEST.equals(id))) {
+				LootPool[] pools = lootManager.getTable(keyboardLootTable).pools;
+				if(pools.length > 0){
+					LootPool pool= pools[0];
+					tableBuilder.pool(pool);
+				}
+			}
+		});
 	}
 }

@@ -2,8 +2,8 @@
     "type": "minecraft:crafting_shaped",
     "pattern": [
         "EAE",
-        "YFY",
-        "SCS"
+        "YDY",
+        "SGS"
     ],
     "key": {
         "E": {
@@ -15,14 +15,14 @@
         "Y":{
             "item": "minecraft:amethyst_shard"
         },
-        "F":{
-            "item": "hexcasting:focus"
+        "D":{
+            "item": "computercraft:disk_drive"
         },
         "S":{
             "item": "hexcasting:slate_block"
         },
-        "C":{
-            "item": "computercraft:computer_advanced"
+        "G":{
+            "item": "minecraft:gold_ingot"
         }
     },
     "result": {

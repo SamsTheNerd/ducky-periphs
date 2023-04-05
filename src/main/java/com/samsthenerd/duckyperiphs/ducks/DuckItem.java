@@ -74,9 +74,8 @@ public class DuckItem extends BlockItem implements DyeableItem{
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        
         if(FabricLoader.getInstance().isModLoaded("hexcasting")){
-            tooltip.add(((MutableText)Text.of("I have the strangest urge to cast scribe's reflection?")).formatted(Formatting.ITALIC));
+            tooltip.add(((MutableText)Text.of("I have the strangest urge to cast scribe's reflection?")).formatted(Formatting.ITALIC, Formatting.GRAY));
         }
     }
 

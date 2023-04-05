@@ -41,5 +41,38 @@
     "block.minecraft.banner.ducky-periphs.ducky.brown": "Brown Ducky",
     "block.minecraft.banner.ducky-periphs.ducky.green": "Green Ducky",
     "block.minecraft.banner.ducky-periphs.ducky.red": "Red Ducky",
-    "block.minecraft.banner.ducky-periphs.ducky.black": "Black Ducky"
+    "block.minecraft.banner.ducky-periphs.ducky.black": "Black Ducky",
+
+
+    "ducky-periphs.keycraftingzone.esc": "Esc",
+    "ducky-periphs.keycraftingzone.fn_left": "FN Left",
+    "ducky-periphs.keycraftingzone.fn_right": "FN Right",
+    "ducky-periphs.keycraftingzone.fn_main": "FN Main",
+    "ducky-periphs.keycraftingzone.screen_keys": "Screen Keys",
+    "ducky-periphs.keycraftingzone.tab": "Tab",
+    "ducky-periphs.keycraftingzone.wasd": "WASD",
+    "ducky-periphs.keycraftingzone.num_row": "Num Row",
+    "ducky-periphs.keycraftingzone.backspace": "Backspace",
+    "ducky-periphs.keycraftingzone.side_top": "Side Top",
+    "ducky-periphs.keycraftingzone.caps": "Caps",
+    "ducky-periphs.keycraftingzone.main": "Main",
+    "ducky-periphs.keycraftingzone.Keyboard": "Keyboard",
+    "ducky-periphs.keycraftingzone.enter": "Enter",
+    "ducky-periphs.keycraftingzone.side_mid": "Side Middle",
+    "ducky-periphs.keycraftingzone.lshift": "Left Shift",
+    "ducky-periphs.keycraftingzone.util_keys": "Util Keys",
+    "ducky-periphs.keycraftingzone.space": "Space",
+    "ducky-periphs.keycraftingzone.arrows": "Arrow Keys",
+    "ducky-periphs.keycraftingzone.rshift": "Right Shift",
+    "ducky-periphs.keycraftingzone.left_modifiers": "Left Modifiers",
+    "ducky-periphs.keycraftingzone.right_modifiers": "Right Modifiers",
+    "ducky-periphs.keycraftingzone.case_left": "Case Left",
+    "ducky-periphs.keycraftingzone.case_right": "Case Right",
+    "ducky-periphs.keycraftingzone.case_main": "Case Main"
+
+
+
+
+
+
 }

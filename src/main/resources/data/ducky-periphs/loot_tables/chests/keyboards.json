@@ -1,0 +1,125 @@
+{
+    "type": "minecraft:chest",
+    "pools": [
+      {
+        "rolls": {
+          "type": "minecraft:binomial",
+          "n": 1,
+          "p": 0.3
+        },
+        "bonus_rolls": 0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "ducky-periphs:keyboard_block",
+            "functions": [
+              {
+                "function": "minecraft:set_nbt",
+                "tag": "{key_caps: {crafting_values: [I; 0, 0, 3847130, 0, 0, 0, 3847130, 15961002, 3847130, 0, 0, 16383998, 0, 0, 0, 0, 15961002, 15961002, 3847130, 0, 3847130, 15961002, 3847130, 15961002, 16383998], crafting_nulls: 32967108}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "name": "ducky-periphs:keyboard_block",
+            "functions": [
+              {
+                "function": "minecraft:set_nbt",
+                "tag": "{key_caps: {crafting_nulls: 4589633, crafting_values: [I; 16351261, 0, 0, 0, 0, 0, 16351261, 0, 0, 0, 0, 16701501, 0, 0, 0, 0, 0, 16351261, 16351261, 0, 0, 0, 16701501, 0, 0]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "name": "ducky-periphs:keyboard_block",
+            "functions": [
+              {
+                "function": "minecraft:set_nbt",
+                "tag": "{display: {Name: '{\"text\":\"[object Keyboard]\"}'}, key_caps: {crafting_nulls: 14878724, crafting_values: [I; 0, 0, 1908001, 0, 0, 0, 0, 0, 0, 0, 0, 3898306, 0, 0, 0, 0, 1908001, 1908001, 0, 0, 0, 2664379, 3847130, 3898306, 0]}}"
+              }
+            ]
+          },
+          {
+            "type": "minecraft:item",
+            "name": "ducky-periphs:keyboard_block",
+            "functions": [
+              {
+                "function": "minecraft:set_nbt",
+                "tag": "{display: {Name: '{\"text\":\"stygian\"}'}, key_caps: {crafting_values: [I; 11546150, 3898306, 11546150, 3898306, 11546150, 0, 0, 0, 0, 0, 0, 3898306, 0, 0, 0, 0, 3949738, 0, 11546150, 0, 0, 0, 0, 0, 0], crafting_nulls: 329759}}"
+              }
+            ]
+          },
+          {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                  {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{key_caps: {crafting_nulls: 4196352, crafting_values: [I; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16383998, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16383998, 0, 0]}}"
+                    }
+                ]
+          },
+          {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                  {
+                      "function": "minecraft:set_nbt",
+                      "tag": "{key_caps: {crafting_nulls: 4196352, crafting_values: [I; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1612748, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1612748, 0, 0]}}"
+                    }
+                ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                {
+                  "function": "minecraft:set_nbt",
+                  "tag": "{display: {Name: '{\"text\":\"Wintermute\"}'}, key_caps: {crafting_nulls: 731393, crafting_values: [I; 16351261, 0, 0, 0, 0, 0, 0, 0, 16710096, 0, 0, 16710096, 0, 16710096, 0, 0, 2109240, 16351261, 0, 16710096, 0, 0, 0, 0, 0]}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                {
+                  "function": "minecraft:set_nbt",
+                  "tag": "{display: {Name: '{\"text\":\"Grassy Board\"}'}, key_caps: {crafting_values: [I; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8439583, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8606770, 0, 0], crafting_nulls: 4196352}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                {
+                  "function": "minecraft:set_nbt",
+                  "tag": "{display: {Name: '{\"text\":\"CMYKeyboard\"}'}, key_caps: {crafting_nulls: 15141194, crafting_values: [I; 0, 13061821, 0, 13061821, 0, 0, 13061821, 0, 13061821, 0, 0, 16701501, 0, 0, 0, 0, 1481884, 13061821, 16701501, 0, 0, 1481884, 16701501, 13061821, 0]}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                {
+                  "function": "minecraft:set_nbt",
+                  "tag": "{key_caps: {crafting_values: [I; 0, 0, 14511283, 0, 0, 0, 14511283, 0, 0, 0, 0, 12473544, 0, 14511283, 0, 0, 13408222, 0, 0, 0, 0, 13408222, 12473544, 13408222, 0], crafting_nulls: 14755908}}"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "ducky-periphs:keyboard_block",
+              "functions": [
+                {
+                  "function": "minecraft:set_nbt",
+                  "tag": "{key_caps: {crafting_values: [I; 8991416, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16383998, 0, 0, 0, 0, 16701501, 0, 16383998, 0, 0, 0, 12511416, 0, 0], crafting_nulls: 4524033}}"
+                }
+              ]
+            }
+        ]
+      }
+    ]
+  }

@@ -4,6 +4,9 @@ import com.samsthenerd.duckyperiphs.DuckyPeriph;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 // this will hold basically the same info as the keyboard NBT
 // put some helpful functions for NBT serialization/deserialization here
@@ -142,6 +145,25 @@ public class KeyCaps {
             }
         }
         return false;
+    }
+
+
+    public Text getDisplayText(KeyZone keyZone){
+        int keyColor = getZoneColor(keyZone);
+        if(keyColor == DEFAULT_COLOR){
+            return null;
+        }
+        return Text.translatable(keyZone.getName()).append(Text.of(": #")).append(Text.of(Integer.toHexString(keyColor)));
+    }
+
+    Text getDisplayText(KeyCraftingZone keyCraftingZone){
+        if(isDefault(keyCraftingZone)){
+            return null;
+        }
+        int keyColor = craftingValues[keyCraftingZone.id];
+        Text colorIndicatorText = Text.literal("♥").setStyle(Style.EMPTY.withColor(keyColor));
+        Text colorText = Text.literal(": #").append(Text.of(Integer.toHexString(keyColor))).formatted(Formatting.GRAY).append(colorIndicatorText);
+        return Text.translatable(keyCraftingZone.getNameKey()).formatted(Formatting.GRAY).append(colorText);
     }
 
 
