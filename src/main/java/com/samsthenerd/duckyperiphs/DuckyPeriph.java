@@ -19,6 +19,8 @@ import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardTile;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardUtils;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
+import com.samsthenerd.duckyperiphs.peripherals.strongModem.StrongModemBlock;
+import com.samsthenerd.duckyperiphs.peripherals.strongModem.StrongModemBlockEntity;
 import com.samsthenerd.duckyperiphs.utils.EntityFromBlockEntity;
 
 import net.fabricmc.api.ModInitializer;
@@ -99,6 +101,9 @@ public class DuckyPeriph implements ModInitializer {
 	// Banners
 	public static final BannerPatternItem DUCKY_PATTERN_ITEM = new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).group(ItemGroup.MISC));
 	
+	public static BlockEntityType<StrongModemBlockEntity> STRONG_MODEM_BLOCK_ENTITY;
+	public static final StrongModemBlock STRONG_MODEM_BLOCK=null; //= new StrongModemBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.7));
+	public static final BlockItem STRONG_MODEM_ITEM=null; //= new BlockItem(STRONG_MODEM_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 
 
 	@Override
@@ -194,6 +199,14 @@ public class DuckyPeriph implements ModInitializer {
 		// Registry.register(Registry.GAME_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking"), SCULKOPHONE_CLICKING_GAME_EVENT);
 		Registry.register(Registry.SOUND_EVENT, new Identifier("ducky-periphs", "sculkophone_clicking_stop"), SCULKOPHONE_CLICKING_STOP_EVENT);
 	}
+
+	// doesn't quite work yet - don't feel like working on it rn
+	// private void registerStrongModem(){
+	// 	STRONG_MODEM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "ducky-periphs:strong_modem_block_entity",
+	// 			FabricBlockEntityTypeBuilder.create((blockPos, blockState) -> new StrongModemBlockEntity(blockPos, blockState), STRONG_MODEM_BLOCK).build(null));
+	// 	Registry.register(Registry.BLOCK, new Identifier("ducky-periphs", "strong_modem_block"), STRONG_MODEM_BLOCK);
+	// 	Registry.register(Registry.ITEM, new Identifier("ducky-periphs", "strong_modem_block"), STRONG_MODEM_ITEM);
+	// }
 
 	private void registerBanners(){
 		DuckyBanners.registerBannerPatterns();
