@@ -19,9 +19,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
+import ram.talia.hexal.api.mediafieditems.MediafiedItemManager;
 import ram.talia.hexal.api.spell.iota.EntityTypeIota;
 import ram.talia.hexal.api.spell.iota.GateIota;
 import ram.talia.hexal.api.spell.iota.IotaTypeIota;
+import ram.talia.hexal.api.spell.iota.ItemIota;
 import ram.talia.hexal.api.spell.iota.ItemTypeIota;
 
 public class HexalIotaLuaUtils {
@@ -88,6 +90,18 @@ public class HexalIotaLuaUtils {
                     if(gateInt != null){
                         return new GateIota(gateInt);
                     }
+                }
+                return new NullIota();
+            }
+
+            if(table.containsKey("storageUuid") && table.get("storageUuid") instanceof String 
+            && table.containsKey("index") && table.get("index") instanceof Number){
+                UUID storageUUID = UUID.fromString((String)table.get("storageUuid"));
+                Integer index = ((Number)table.get("index")).intValue();
+                MediafiedItemManager manager = MediafiedItemManager.INSTANCE;
+                if(manager != null){
+                    MediafiedItemManager.Index mediafiedIndex = new MediafiedItemManager.Index(storageUUID, index);
+                    return new ItemIota(mediafiedIndex);
                 }
                 return new NullIota();
             }
@@ -161,6 +175,19 @@ public class HexalIotaLuaUtils {
                 return gateTable;
             }
             return null;
+        }
+
+        if(iota instanceof ItemIota){
+            MediafiedItemManager.Index itemIndex = ((ItemIota)iota).getItemIndex();
+            if(itemIndex == null){
+                return null;
+            }
+            UUID uuid = itemIndex.getStorage();
+            int index = itemIndex.getIndex();
+            Map<String, Object> itemTable = new HashMap<String, Object>();
+            itemTable.put("storageUuid", uuid.toString());
+            itemTable.put("index", index);
+            return itemTable;
         }
 
         return null;

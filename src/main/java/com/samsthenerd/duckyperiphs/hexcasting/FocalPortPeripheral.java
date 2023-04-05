@@ -82,9 +82,30 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(fpTile.writeIota(iota, true));
     }
 
+    @LuaFunction final MethodResult hasFocus(Object luaObject){
+        if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
+            return MethodResult.of(false);
+        }
+        return MethodResult.of(fpTile.hasFocus());
+    }
+
     public void updateIota(){
         for(IComputerAccess computer : computers){
             computer.queueEvent("new_iota", computer.getAttachmentName());
         }
     }
+
+    public void attachFocus(){
+        for(IComputerAccess computer : computers){
+            computer.queueEvent("focus_inserted", computer.getAttachmentName());
+        }
+    }
+
+    public void detachFocus(){
+        for(IComputerAccess computer : computers){
+            computer.queueEvent("focus_removed", computer.getAttachmentName());
+        }
+    }
+
+
 }

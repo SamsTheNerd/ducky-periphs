@@ -31,6 +31,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -90,6 +91,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
     @Override
     public void destroy(){
+        ItemScatterer.spawn(world, pos, (Inventory)((Object)this));
         despawnWrapperEntity();
         super.destroy();
     }
@@ -259,6 +261,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
     @Override public ItemStack removeStack(int slot) {
         ItemStack result = innerFocusStack;
         innerFocusStack = ItemStack.EMPTY;
+        fpPeriph.detachFocus();
         updateColor();
         markDirty();
         return result;
@@ -269,6 +272,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
             return;
         }
         innerFocusStack = stack;
+        fpPeriph.attachFocus();
         updateColor();
         markDirty();
     }
