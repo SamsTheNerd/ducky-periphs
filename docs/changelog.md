@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.1.5
+
+### Added
+
+- Ducky Banner Pattern
+- Conjurable ducky hexcasting spell.
+- Precustomized keyboards as dungeon loot
+
+### Changed
+
+- Focal ports reworked to allow swapping focus in and out.
+
+### Fixed
+
+- Sodium biome blending the ducks
+- Focal port not behaving without hexal/moreiotas
+
+
+
 ## 1.1.4
 
 ### Fixed
