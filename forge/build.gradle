@@ -1,0 +1,115 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+loom {
+    // accessWidenerPath = project(":common").loom.accessWidenerPath
+
+    forge {
+        // convertAccessWideners = true
+        // extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+        mixinConfig "ducky-periphs.mixins.json"
+    }
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
+// kotlin for forge - needed for hex
+// apply from: "https://raw.githubusercontent.com/thedarkcolour/KotlinForForge/site/thedarkcolour/kotlinforforge/gradle/kff-${kotlinForForgeVersion}.gradle"
+
+dependencies {
+    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    // Remove the next line if you don't want to depend on the API
+    // modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // // Vanilla (i.e. for multi-loader systems)
+    modCompileOnly "org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"
+
+    // // for HexCasting
+    modCompileOnly("at.petra-k.hexcasting:hexcasting-forge-${project.minecraft_version}:${project.hexcastingVersion}"){
+        transitive = false
+    }
+
+    // // Hex Casting Dependencies
+    modCompileOnly "at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucalVersion}"
+    modCompileOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}"
+
+    //  // Hex Optional interop
+
+    compileOnly "mezz.jei:jei-$minecraft_version-common-api:$jeiVersion"
+    compileOnly "mezz.jei:jei-$minecraft_version-forge-api:$jeiVersion"
+    runtimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
+
+    // compileOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion:api"
+    // runtimeOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion"
+
+    modApi "com.github.Virtuoel:Pehkui:${pehkuiVersion}-${minecraft_version}-forge"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+shadowJar {
+    exclude "fabric.mod.json"
+    exclude "architectury.common.json"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set "dev-shadow"
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier.set null
+}
+
+jar {
+    archiveClassifier.set "dev"
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+publishing {
+    publications {
+        mavenForge(MavenPublication) {
+            artifactId = rootProject.archives_base_name + "-" + project.name
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+    }
+}

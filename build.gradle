@@ -1,148 +1,87 @@
 plugins {
-	id 'fabric-loom' version '1.0-SNAPSHOT'
-	id 'maven-publish'
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+architectury {
+    minecraft = rootProject.minecraft_version
+}
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+subprojects {
+    apply plugin: "dev.architectury.loom"
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-	maven { url 'https://jitpack.io' }
-	maven { url "https://squiddev.cc/maven" }
-    maven { url "https://maven.terraformersmc.com/" }
-	maven { url "https://maven.terraformersmc.com/releases" }
-    maven { url "https://maven.shedaniel.me/" }
-	// Hex Casting Dependencies
-	maven { url "https://maven.blamejared.com/"}
-	maven {
-        name "entity reach"
-        url "https://maven.jamieswhiteshirt.com/libs-release/"
+    loom {
+        silentMojangMappingsLicense()
     }
-    maven { url "https://mvn.devos.one/snapshots/" }
-	maven {
-        url 'https://ladysnake.jfrog.io/artifactory/mods'
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        // The following line declares the mojmap mappings, you may use other mappings as well
+        // mappings loom.officialMojangMappings()
+        // The following line declares the yarn mappings you may select this one as well.
+        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+
+        // Required for mixin annotation processor
+        annotationProcessor "org.ow2.asm:asm:${project.asm_version}"
+        annotationProcessor "org.ow2.asm:asm-analysis:${project.asm_version}"
+        annotationProcessor "org.ow2.asm:asm-commons:${project.asm_version}"
+        annotationProcessor "org.ow2.asm:asm-tree:${project.asm_version}"
+        annotationProcessor "org.ow2.asm:asm-util:${project.asm_version}"
     }
-	exclusiveContent {
-        forRepository {
-            maven {
-                name = "Modrinth"
-                url = "https://api.modrinth.com/maven"
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    archivesBaseName = rootProject.archives_base_name
+    version = rootProject.mod_version
+    group = rootProject.maven_group
+
+    repositories {
+        // Add repositories to retrieve artifacts from in here.
+        // You should only use this when depending on other mods because
+        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+        // for more information about repositories.
+        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://squiddev.cc/maven/"
+        }
+        maven { url "https://maven.terraformersmc.com/" }
+        maven { url "https://maven.terraformersmc.com/releases" }
+        maven { url "https://maven.shedaniel.me/" }
+        // Hex Casting Dependencies
+        maven { url "https://maven.blamejared.com/"}
+        maven {
+            name "entity reach"
+            url "https://maven.jamieswhiteshirt.com/libs-release/"
+        }
+        maven { url "https://mvn.devos.one/snapshots/" }
+        maven {
+            url 'https://ladysnake.jfrog.io/artifactory/mods'
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = "https://api.modrinth.com/maven"
+                }
+            }
+            filter {
+                includeGroup "maven.modrinth"
             }
         }
-        filter {
-            includeGroup "maven.modrinth"
-        }
     }
-}
 
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
 
-	compileOnly 'com.google.code.findbugs:jsr305:+' // for @Nonnull
-
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	// for CC: R
-	modImplementation "com.github.cc-tweaked:cc-restitched:${project.cc_version}"
-	// modAPI "com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.8-ccr"
-	
-	modLocalRuntime("dev.architectury:architectury-fabric:6.2.43") // because REI is compiled for 1.19 ?
-
-	// for REI, making sure it doesn't pop up with the keyboard
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
-
-	// for HexCasting
-	modCompileOnly "at.petra-k.hexcasting:hexcasting-fabric-${project.minecraft_version}:${project.hexcasting_version}"
-
-	// Hex Casting Dependencies
-	modImplementation "at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucalVersion}"
-	modImplementation "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}-FABRIC"
-
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-api:${cardinalComponentsVersion}"
-
-    modImplementation "com.jamieswhiteshirt:reach-entity-attributes:${entityReachVersion}"
-    include "com.jamieswhiteshirt:reach-entity-attributes:${entityReachVersion}"
-
-    modImplementation "io.github.tropheusj:serialization-hooks:${serializationHooksVersion}"
-    include "io.github.tropheusj:serialization-hooks:${serializationHooksVersion}"
-
-	modImplementation "maven.modrinth:lithium:${lithiumVersion}"
-    modImplementation "maven.modrinth:phosphor:${phosphorVersion}"
-	modImplementation "maven.modrinth:gravity-api:${gravityApiVersion}"
-
-	modImplementation "maven.modrinth:hexal:${hexalVersion}"
-	modImplementation "maven.modrinth:moreiotas:${moreIotasVersion}"
-
-	modImplementation "maven.modrinth:sodium:${sodiumVersion}"
-	// for sodium matrices?
-	implementation group: "org.joml", name: "joml", version: "1.10.5"
-	include group: "org.joml", name: "joml", version: "1.10.5"
-
-	// for moreIotas matrices
-	implementation group: "org.jblas", name: "jblas", version: "1.2.5"
-    include group: "org.jblas", name: "jblas", version: "1.2.5"
-
-	// include "dev.onyxstudios.cardinal-components-api:cardinal-components-api:${cardinalComponentsVersion}"
-	
-	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
-	// modLocalRuntime "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // just so it's installed for testing
-	// modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version" // just so it's installed for testing
-}
-
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	it.options.release = 17
-}
-
-java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
-}
-
-jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
+    java {
+        withSourcesJar()
+    }
 }
