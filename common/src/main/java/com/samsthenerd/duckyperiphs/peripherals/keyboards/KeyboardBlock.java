@@ -3,7 +3,6 @@ package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 import com.samsthenerd.duckyperiphs.DuckyPeriph;
 
 import dan200.computercraft.shared.common.BlockGeneric;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
@@ -33,7 +32,7 @@ import net.minecraft.world.World;
 public class KeyboardBlock extends BlockGeneric {
     public static final DirectionProperty FACING = FacingBlock.FACING;
 
-    public KeyboardBlock(FabricBlockSettings settings) {
+    public KeyboardBlock(Block.Settings settings) {
         super(settings.nonOpaque(), () -> DuckyPeriph.KEYBOARD_TILE);
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
     }

@@ -11,13 +11,17 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     // Remove the next line if you don't want to depend on the API
-    // modApi "dev.architectury:architectury:${rootProject.architectury_version}"
+    modApi "dev.architectury:architectury:${rootProject.architectury_version}"
 
 	modCompileOnly 'com.google.code.findbugs:jsr305:+' // for @Nonnull
 
     modCompileOnly "at.petra-k.paucal:paucal-common-$minecraft_version:$paucalVersion"
     modCompileOnly "at.petra-k.hexcasting:hexcasting-common-$minecraft_version:$hexcastingVersion"
     modCompileOnly "vazkii.patchouli:Patchouli-xplat:$minecraft_version-$patchouliVersion"
+
+    // throw this in so that we have access to the api in common. inspired by techtactic's architectury setup on valkyrien computers
+	modImplementation "com.github.cc-tweaked:cc-restitched:${project.cc_version}"
+
 
      // for sodium matrices?
 	implementation group: "org.joml", name: "joml", version: "1.10.5"

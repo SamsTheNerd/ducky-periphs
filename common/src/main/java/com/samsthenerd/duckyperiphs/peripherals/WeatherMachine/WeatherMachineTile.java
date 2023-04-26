@@ -4,6 +4,8 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.samsthenerd.duckyperiphs.DuckyPeriph;
+
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralTile;
 import dan200.computercraft.shared.common.TileGeneric;
@@ -20,6 +22,10 @@ public class WeatherMachineTile extends TileGeneric implements IPeripheralTile {
     public WeatherMachineTile(BlockEntityType<WeatherMachineTile> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         wmPeriph = new WeatherMachinePeripheral(this);
+    }
+
+    public WeatherMachineTile(BlockPos pos, BlockState state) {
+        this(DuckyPeriph.WEATHER_MACHINE_TILE, pos, state);
     }
 
     @Nullable

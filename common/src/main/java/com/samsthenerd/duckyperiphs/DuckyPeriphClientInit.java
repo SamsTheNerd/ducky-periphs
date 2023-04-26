@@ -58,7 +58,7 @@ public class DuckyPeriphClientInit implements ClientModInitializer {
 		}, DuckyPeriph.WEATHER_MACHINE_BLOCK);
 		ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
 			return GrassColors.getColor(0.5, 1.0);
-		}, DuckyPeriph.WEATHER_MACHINE_ITEM);
+		}, DuckyPeriph.WEATHER_MACHINE_BLOCK.asItem());
 
         // keyboard 
         ColorProviderRegistry.BLOCK.register((state,view,pos,tintIndex)->{

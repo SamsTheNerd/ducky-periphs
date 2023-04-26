@@ -40,6 +40,10 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTile, Extend
         kbPeriph = new KeyboardPeripheral(this);
     }
 
+    public KeyboardTile(BlockPos pos, BlockState state) {
+        this(DuckyPeriph.KEYBOARD_TILE, pos, state);
+    }
+
     @Override
     public IPeripheral getPeripheral(Direction side) {
         if(kbPeriph == null)

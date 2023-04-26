@@ -2,7 +2,6 @@ package com.samsthenerd.duckyperiphs.peripherals.WeatherMachine;
 import com.samsthenerd.duckyperiphs.DuckyPeriph;
 
 import dan200.computercraft.shared.common.BlockGeneric;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
@@ -23,7 +22,7 @@ public class WeatherMachineBlock extends BlockGeneric{
     public static final IntProperty TEMP = IntProperty.of("temp", 0, 4);
     public static final IntProperty TANK = IntProperty.of("tank", 0, 4);
 
-    public WeatherMachineBlock(FabricBlockSettings settings) {
+    public WeatherMachineBlock(Block.Settings settings) {
         super(settings.nonOpaque(), () -> DuckyPeriph.WEATHER_MACHINE_TILE);
         setDefaultState( getStateManager().getDefaultState());
     }
