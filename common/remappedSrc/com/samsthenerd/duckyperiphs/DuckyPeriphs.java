@@ -27,6 +27,7 @@ import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
 import com.samsthenerd.duckyperiphs.utils.EntityFromBlockEntity;
 
+import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.menu.MenuRegistry;
@@ -35,7 +36,6 @@ import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.Registries;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -58,7 +58,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.event.GameEvent;
 
-public class DuckyPeriph implements ModInitializer {
+public class DuckyPeriphs implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
@@ -88,7 +88,7 @@ public class DuckyPeriph implements ModInitializer {
 
 	public static final ItemGroup CC_PERIPHS_GROUP = CreativeTabRegistry.create(
 		new Identifier("ducky-periphs", "general"),
-		() -> new ItemStack(DuckyPeriph.DUCK_ITEM));
+		() -> new ItemStack(DuckyPeriphs.DUCK_ITEM));
 
 	// Peripheral Registering
 
@@ -138,12 +138,8 @@ public class DuckyPeriph implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		// setup registries
-		items = REGISTRIES.get().get(Registry.ITEM_KEY);
-		blocks = REGISTRIES.get().get(Registry.BLOCK_KEY);
-		blockEntities = REGISTRIES.get().get(Registry.BLOCK_ENTITY_TYPE_KEY);
-
-		
+		setupNetworkStuff();
+		setupMisc();
 
 		DuckyBanners.registerBannerPatterns();
 		registerLoot();
@@ -159,19 +155,19 @@ public class DuckyPeriph implements ModInitializer {
 
 	private void setupNetworkStuff(){
 		// for key presses
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "key_press_packet"), 
-		(server, player, handler, buf, responseSender) -> KeyboardUtils.keyPressHandler(server, player, handler, buf, responseSender));
+		NetworkManager.registerReceiver(NetworkManager.Side.C2S, new Identifier(DuckyPeriphs.MOD_ID, "key_press_packet"), 
+		(buf, context) -> KeyboardUtils.keyPressHandler(buf, context));
 		// for key ups
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "key_up_packet"), 
-		(server, player, handler, buf, responseSender) -> KeyboardUtils.keyUpHandler(server, player, handler, buf, responseSender));
+		NetworkManager.registerReceiver(NetworkManager.Side.C2S, new Identifier(DuckyPeriphs.MOD_ID, "key_up_packet"), 
+		(buf, context) -> KeyboardUtils.keyUpHandler(buf, context));
 
 		// for chars typed
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "char_typed_packet"), 
-        (server, player, handler, buf, responseSender) -> KeyboardUtils.charTypedHandler(server, player, handler, buf, responseSender));
+		NetworkManager.registerReceiver(NetworkManager.Side.C2S, new Identifier(DuckyPeriphs.MOD_ID, "char_typed_packet"), 
+        (buf, context) -> KeyboardUtils.charTypedHandler(buf, context));
 
 		// for chars typed
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier(DuckyPeriph.MOD_ID, "event_sent_packet"), 
-        (server, player, handler, buf, responseSender) -> KeyboardUtils.eventShortcutHandler(server, player, handler, buf, responseSender));
+		NetworkManager.registerReceiver(NetworkManager.Side.C2S, new Identifier(DuckyPeriphs.MOD_ID, "event_sent_packet"), 
+        (buf, context) -> KeyboardUtils.eventShortcutHandler(buf, context));
 	}
 
 	private void setupMisc(){

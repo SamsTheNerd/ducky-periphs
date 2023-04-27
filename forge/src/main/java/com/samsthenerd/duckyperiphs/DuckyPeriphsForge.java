@@ -8,6 +8,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class DuckyPeriphsForge {
     public DuckyPeriphsForge(){
         // so that we can register properly with architectury
-        EventBuses.registerModEventBus(DuckyPeriph.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+        EventBuses.registerModEventBus(DuckyPeriphs.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
     }
 }

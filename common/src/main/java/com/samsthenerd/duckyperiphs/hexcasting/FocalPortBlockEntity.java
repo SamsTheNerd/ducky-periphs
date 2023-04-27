@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
 import at.petrak.hexcasting.api.spell.iota.Iota;
@@ -47,7 +47,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
     public FocalPortBlockEntity(BlockPos pos, BlockState state) {
         super(DuckyCasting.FOCAL_PORT_BLOCK_ENTITY, pos, state);
-        DuckyPeriph.LOGGER.info("FocalPortBlockEntity created at " + pos.toString());
+        DuckyPeriphs.LOGGER.info("FocalPortBlockEntity created at " + pos.toString());
         fpPeriph = new FocalPortPeripheral(this);
         iotaColor = NullIota.TYPE.color();
         innerFocusStack = ItemStack.EMPTY;
@@ -85,7 +85,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(wrapperEntity != null){
             BlockPos goalPos = getPos().subtract(new Vec3i(0, 1, 0));
             wrapperEntity.setPosition(goalPos.getX()+0.5, goalPos.getY(), goalPos.getZ()+0.5);
-            DuckyPeriph.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + wrapperEntity.getPos().toString());
+            DuckyPeriphs.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + wrapperEntity.getPos().toString());
         }
     }
 
@@ -127,7 +127,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
             markDirty();
             World world = getWorld();
             if(world != null){
-                DuckyPeriph.LOGGER.info("FocalPortBlockEntity: readNbt: iotaColor = " + iotaColor + " on " + (world.isClient ? "client" : "server"));
+                DuckyPeriphs.LOGGER.info("FocalPortBlockEntity: readNbt: iotaColor = " + iotaColor + " on " + (world.isClient ? "client" : "server"));
             }
         }
     }

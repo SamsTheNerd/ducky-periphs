@@ -63,6 +63,10 @@ allprojects {
         maven {
             url 'https://ladysnake.jfrog.io/artifactory/mods'
         }
+        maven {
+            name = 'Kotlin for Forge'
+            url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        }
         exclusiveContent {
             forRepository {
                 maven {

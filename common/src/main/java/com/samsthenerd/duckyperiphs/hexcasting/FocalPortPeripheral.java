@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import dan200.computercraft.api.lua.LuaFunction;
@@ -58,7 +58,7 @@ public class FocalPortPeripheral implements IPeripheral{
             luaObject = IotaLuaUtils.getLuaObject(iota, sworld);
         } else {
             // I guess pass null ? maybe shouldn't pass anything
-            DuckyPeriph.LOGGER.info("reading iota in client world");
+            DuckyPeriphs.LOGGER.info("reading iota in client world");
             luaObject = IotaLuaUtils.getLuaObject(iota, null);
         }
         return MethodResult.of(luaObject);

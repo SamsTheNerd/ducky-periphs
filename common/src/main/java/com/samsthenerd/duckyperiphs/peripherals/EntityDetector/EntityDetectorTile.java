@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralTile;
@@ -36,7 +36,7 @@ public class EntityDetectorTile extends TileGeneric implements IPeripheralTile {
     }
 
     public EntityDetectorTile(BlockPos pos, BlockState state) {
-        this(DuckyPeriph.ENTITY_DETECTOR_TILE, pos, state);
+        this(DuckyPeriphs.ENTITY_DETECTOR_TILE, pos, state);
     }
 
 

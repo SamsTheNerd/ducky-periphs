@@ -1,6 +1,6 @@
 package com.samsthenerd.duckyperiphs.utils;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -40,10 +40,10 @@ public class EntityFromBlockEntity extends Entity{
     public boolean hasBlockEntity(){
         if(parentBlockEntity == null){
             BlockPos pos = getBlockPos();
-            DuckyPeriph.LOGGER.info("hasBlockEntity: parentBlockEntity was null, getting from pos" + pos.toString());
+            DuckyPeriphs.LOGGER.info("hasBlockEntity: parentBlockEntity was null, getting from pos" + pos.toString());
             parentBlockEntity = world.getBlockEntity(pos);
         }
-        DuckyPeriph.LOGGER.info("hasBlockEntity: parentBlockEntity is type " + parentBlockEntity.getClass().getName());
+        DuckyPeriphs.LOGGER.info("hasBlockEntity: parentBlockEntity is type " + parentBlockEntity.getClass().getName());
         return parentBlockEntityType.isInstance(parentBlockEntity);
     }
 
@@ -76,9 +76,9 @@ public class EntityFromBlockEntity extends Entity{
             if(!parentBlockEntityType.isInstance(parentBlockEntity)){ // remove if wrong type or didn't get one
                 this.remove(RemovalReason.DISCARDED);
                 if(world.isClient()){
-                    DuckyPeriph.LOGGER.info("despawn entityFromBlockEntity on client");
+                    DuckyPeriphs.LOGGER.info("despawn entityFromBlockEntity on client");
                 } else {
-                    DuckyPeriph.LOGGER.info("despawn entityFromBlockEntity on server");
+                    DuckyPeriphs.LOGGER.info("despawn entityFromBlockEntity on server");
                 }
                 return;
             }
@@ -88,7 +88,7 @@ public class EntityFromBlockEntity extends Entity{
         if(!bePos.equals(getBlockPos())){ // if we're not with the block entity anymore, fix that
             BlockPos goalPos = bePos;
             this.setPosition(goalPos.getX()+0.5, goalPos.getY(), goalPos.getZ()+0.5);
-            DuckyPeriph.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + this.getPos().toString());
+            DuckyPeriphs.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + this.getPos().toString());
         }
     }
 

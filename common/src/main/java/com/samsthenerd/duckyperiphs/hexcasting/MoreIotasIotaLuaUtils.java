@@ -6,7 +6,7 @@ import java.util.Map;
 import org.jblas.DoubleMatrix;
 import org.jetbrains.annotations.Nullable;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import at.petrak.hexcasting.api.spell.iota.GarbageIota;
 import at.petrak.hexcasting.api.spell.iota.Iota;
@@ -23,7 +23,7 @@ public class MoreIotasIotaLuaUtils {
                 try{
                     return new StringIota(string);
                 } catch (MishapInvalidIota e){
-                    DuckyPeriph.LOGGER.info("Invalid string iota (too long): " + string);
+                    DuckyPeriphs.LOGGER.info("Invalid string iota (too long): " + string);
                     return new GarbageIota();
                 }
             }
@@ -48,7 +48,7 @@ public class MoreIotasIotaLuaUtils {
                 try{
                     return new MatrixIota(matrix);
                 } catch (MishapInvalidIota e){
-                    DuckyPeriph.LOGGER.info("Invalid matrix iota (too big?): " + matrix);
+                    DuckyPeriphs.LOGGER.info("Invalid matrix iota (too big?): " + matrix);
                     return new GarbageIota();
                 }
             }

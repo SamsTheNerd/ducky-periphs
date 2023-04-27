@@ -39,7 +39,9 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // // Vanilla (i.e. for multi-loader systems)
-    modCompileOnly "org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"
+    modCompileOnly("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
+        transitive = false
+    }
 
     // // for HexCasting
     modCompileOnly("at.petra-k.hexcasting:hexcasting-forge-${project.minecraft_version}:${project.hexcastingVersion}"){

@@ -40,12 +40,11 @@ dependencies {
 	// modAPI "com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.8-ccr"
 
 	// for REI, making sure it doesn't pop up with the keyboard
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 	// modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
 	// for HexCasting
-	modCompileOnly "at.petra-k.hexcasting:hexcasting-fabric-${project.minecraft_version}:${project.hexcastingVersion}"
+	modImplementation "at.petra-k.hexcasting:hexcasting-fabric-${project.minecraft_version}:${project.hexcastingVersion}"
 
 	// Hex Casting Dependencies
 	modImplementation "at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucalVersion}"

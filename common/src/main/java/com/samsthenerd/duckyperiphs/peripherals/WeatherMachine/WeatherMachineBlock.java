@@ -1,5 +1,5 @@
 package com.samsthenerd.duckyperiphs.peripherals.WeatherMachine;
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import dan200.computercraft.shared.common.BlockGeneric;
 import net.minecraft.block.Block;
@@ -23,7 +23,7 @@ public class WeatherMachineBlock extends BlockGeneric{
     public static final IntProperty TANK = IntProperty.of("tank", 0, 4);
 
     public WeatherMachineBlock(Block.Settings settings) {
-        super(settings.nonOpaque(), () -> DuckyPeriph.WEATHER_MACHINE_TILE);
+        super(settings.nonOpaque(), () -> DuckyPeriphs.WEATHER_MACHINE_TILE);
         setDefaultState( getStateManager().getDefaultState());
     }
 
@@ -42,7 +42,7 @@ public class WeatherMachineBlock extends BlockGeneric{
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
-        return checkType(type, DuckyPeriph.WEATHER_MACHINE_TILE, (worldin, pos, statein, be) -> WeatherMachineTile.tick(worldin, pos, statein, be));
+        return checkType(type, DuckyPeriphs.WEATHER_MACHINE_TILE, (worldin, pos, statein, be) -> WeatherMachineTile.tick(worldin, pos, statein, be));
     }
 
 }

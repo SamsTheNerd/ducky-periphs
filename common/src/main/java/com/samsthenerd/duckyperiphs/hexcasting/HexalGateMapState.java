@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
@@ -82,7 +82,7 @@ public class HexalGateMapState extends PersistentState{
         HexalGateMapState serverState = persistentStateManager.getOrCreate(
                 HexalGateMapState::createFromNbt,
                 HexalGateMapState::new,
-                DuckyPeriph.MOD_ID + ":hexal_gate_map"); 
+                DuckyPeriphs.MOD_ID + ":hexal_gate_map"); 
  
         serverState.markDirty(); // YOU MUST DO THIS!!!! Or data wont be saved correctly.
  

@@ -2,7 +2,7 @@ package com.samsthenerd.duckyperiphs.ducks;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriph;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,7 +22,7 @@ public class DuckBlockEntity extends BlockEntity implements Nameable{
     private int blockColor = 0;
 
     public DuckBlockEntity(BlockPos pos, BlockState state) {
-        super(DuckyPeriph.DUCK_BLOCK_ENTITY, pos, state);
+        super(DuckyPeriphs.DUCK_BLOCK_ENTITY, pos, state);
     }
 
     public DuckBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
