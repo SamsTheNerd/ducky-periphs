@@ -36,7 +36,7 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
-    forgeRuntimeLibrary(implementation(group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1')) // for @Nonnull
+    modCompileOnly(group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2') // for @Nonnull
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

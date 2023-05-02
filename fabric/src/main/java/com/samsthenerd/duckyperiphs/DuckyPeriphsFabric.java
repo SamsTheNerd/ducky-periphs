@@ -1,5 +1,10 @@
 package com.samsthenerd.duckyperiphs;
 
-public class DuckyPeriphsFabric {
-    
+import net.fabricmc.api.ModInitializer;
+
+public class DuckyPeriphsFabric implements ModInitializer {
+    @Override
+	public void onInitialize() {
+        DuckyPeriphs.onInitialize();
+    }
 }

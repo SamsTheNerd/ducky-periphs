@@ -34,7 +34,6 @@ import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.Registries;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.Block;
@@ -58,7 +57,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.event.GameEvent;
 
-public class DuckyPeriphs implements ModInitializer {
+public class DuckyPeriphs{
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
@@ -132,8 +131,7 @@ public class DuckyPeriphs implements ModInitializer {
 	// public static final BlockItem STRONG_MODEM_ITEM=null; //= new BlockItem(STRONG_MODEM_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
 
 
-	@Override
-	public void onInitialize() {
+	public static void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
@@ -153,7 +151,7 @@ public class DuckyPeriphs implements ModInitializer {
 		
 	}
 
-	private void setupNetworkStuff(){
+	private static void setupNetworkStuff(){
 		// for key presses
 		NetworkManager.registerReceiver(NetworkManager.Side.C2S, new Identifier(DuckyPeriphs.MOD_ID, "key_press_packet"), 
 		(buf, context) -> KeyboardUtils.keyPressHandler(buf, context));
@@ -170,7 +168,7 @@ public class DuckyPeriphs implements ModInitializer {
         (buf, context) -> KeyboardUtils.eventShortcutHandler(buf, context));
 	}
 
-	private void setupMisc(){
+	private static void setupMisc(){
 		screenHandlers.register(new Identifier("ducky-periphs", "keyboard_screen_handler"), () -> MenuRegistry.ofExtended(KeyboardScreenHandler::new));
 
 		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM, CauldronBehavior.CLEAN_DYEABLE_ITEM);
@@ -244,8 +242,8 @@ public class DuckyPeriphs implements ModInitializer {
 	}
 
 
-	private final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
-	private void registerLoot(){
+	private static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
+	private static void registerLoot(){
 		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
 			if (source.isBuiltin() && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)
 			|| LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) || LootTables.DESERT_PYRAMID_CHEST.equals(id)

@@ -20,10 +20,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.samsthenerd.duckyperiphs.DuckyPeriphFabric"
+      "com.samsthenerd.duckyperiphs.DuckyPeriphsFabric"
     ],
     "client": [
-      "com.samsthenerd.duckyperiphs.DuckyPeriphFabricClient"
+      "com.samsthenerd.duckyperiphs.DuckyPeriphsFabricClient"
     ],
     "cardinal-components": [
       "com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingCC"
