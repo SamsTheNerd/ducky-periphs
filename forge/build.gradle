@@ -36,12 +36,14 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
+    forgeRuntimeLibrary(implementation(group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1')) // for @Nonnull
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // // Vanilla (i.e. for multi-loader systems)
-    modCompileOnly("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
-        transitive = false
-    }
+    // modCompileOnly("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
+    //     transitive = false
+    // }
 
     // // for HexCasting
     modCompileOnly("at.petra-k.hexcasting:hexcasting-forge-${project.minecraft_version}:${project.hexcastingVersion}"){
@@ -54,9 +56,9 @@ dependencies {
 
     //  // Hex Optional interop
 
-    compileOnly "mezz.jei:jei-$minecraft_version-common-api:$jeiVersion"
-    compileOnly "mezz.jei:jei-$minecraft_version-forge-api:$jeiVersion"
-    runtimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
+    modCompileOnly "mezz.jei:jei-$minecraft_version-common-api:$jeiVersion"
+    modCompileOnly "mezz.jei:jei-$minecraft_version-forge-api:$jeiVersion"
+    modRuntimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
 
     // compileOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion:api"
     // runtimeOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion"
