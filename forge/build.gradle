@@ -13,7 +13,8 @@ loom {
     forge {
         // convertAccessWideners = true
         // extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-        mixinConfig "ducky-periphs.mixins.json"
+        // uncomment *and add the file* if we want forge-only mixins?
+        // mixinConfig "ducky-periphs.mixins.json"
     }
 }
 
@@ -58,19 +59,19 @@ dependencies {
 
     modCompileOnly "mezz.jei:jei-$minecraft_version-common-api:$jeiVersion"
     modCompileOnly "mezz.jei:jei-$minecraft_version-forge-api:$jeiVersion"
-    modRuntimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
+    // modRuntimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
 
     // compileOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion:api"
     // runtimeOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion"
 
-    modApi "com.github.Virtuoel:Pehkui:${pehkuiVersion}-${minecraft_version}-forge"
+    // modApi "com.github.Virtuoel:Pehkui:${pehkuiVersion}-${minecraft_version}-forge"
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "mod_version", project.mod_version
 
     filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+        expand "mod_version": project.mod_version
     }
 }
 

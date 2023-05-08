@@ -43,7 +43,7 @@ public class EntityDetectorTile extends TileGeneric implements IPeripheralTile {
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(edPeriph == null)
             edPeriph = new EntityDetectorPeripheral(this);
         return edPeriph;

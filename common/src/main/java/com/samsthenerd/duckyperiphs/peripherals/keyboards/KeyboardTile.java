@@ -45,14 +45,14 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTile, Extend
     }
 
     @Override
-    public IPeripheral getPeripheral(Direction side) {
+    public IPeripheral getPeripheral(@Nonnull Direction side) {
         if(kbPeriph == null)
             kbPeriph = new KeyboardPeripheral(this);
         return kbPeriph;
     }
 
     @Override
-    public ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit){
+    public @Nonnull ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit){
         World world = getWorld();
         // BlockState state = world.getBlockState(getPos());
         // if(!world.isClient){

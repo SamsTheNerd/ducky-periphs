@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
@@ -43,7 +44,7 @@ public class EntityDetectorTile extends TileGeneric implements IPeripheralTile {
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(edPeriph == null)
             edPeriph = new EntityDetectorPeripheral(this);
         return edPeriph;

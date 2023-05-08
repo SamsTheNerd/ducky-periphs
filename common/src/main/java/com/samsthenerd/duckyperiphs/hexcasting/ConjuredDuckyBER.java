@@ -34,8 +34,6 @@ public class ConjuredDuckyBER implements BlockEntityRenderer<ConjuredDuckyBlockE
             MinecraftClient mcClient = MinecraftClient.getInstance();
             BlockRenderManager brm = mcClient.getBlockRenderManager();
 
-            MatrixStack cleanMatrices = new MatrixStack();
-
             BlockPos pos = blockEntity.getPos();
             World world = blockEntity.getWorld();
             BlockState state = world.getBlockState(pos);

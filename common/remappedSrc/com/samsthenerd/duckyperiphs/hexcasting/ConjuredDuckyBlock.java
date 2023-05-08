@@ -54,7 +54,7 @@ public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
     }
 
     @Override
-    public @NotNull BlockRenderType getRenderType(@NotNull BlockState state) {
+    public @Nonnull BlockRenderType getRenderType(@Nonnull BlockState state) {
         if(state.get(VISIBLE)){
             return BlockRenderType.MODEL;
         } else {

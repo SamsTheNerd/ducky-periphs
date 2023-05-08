@@ -1,6 +1,6 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import com.samsthenerd.duckyperiphs.ducks.DuckBlock;
 
@@ -54,7 +54,7 @@ public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
     }
 
     @Override
-    public @NotNull BlockRenderType getRenderType(@NotNull BlockState state) {
+    public @Nonnull BlockRenderType getRenderType(BlockState state) {
         if(state.get(VISIBLE)){
             return BlockRenderType.MODEL;
         } else {

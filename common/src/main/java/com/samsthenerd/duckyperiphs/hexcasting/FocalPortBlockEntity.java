@@ -3,7 +3,8 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
@@ -98,7 +99,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(fpPeriph == null)
             fpPeriph = new FocalPortPeripheral(this);
         return fpPeriph;
@@ -289,7 +290,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
 
     @Override
-    public ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public @Nonnull ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit) {
         Optional<FocalPortBlockEntity> beOpt = world.getBlockEntity(pos, DuckyCasting.FOCAL_PORT_BLOCK_ENTITY);
         if(beOpt.isPresent()){
             FocalPortBlockEntity be = beOpt.get();

@@ -1,6 +1,7 @@
 package com.samsthenerd.duckyperiphs.peripherals.WeatherMachine;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IPeripheral;
@@ -27,7 +28,7 @@ public class WeatherMachinePeripheral implements IPeripheral{
     }
 
     @Override
-    public boolean equals( IPeripheral other )
+    public boolean equals(@Nullable IPeripheral other )
     {
         return this == other;
     }

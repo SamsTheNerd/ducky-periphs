@@ -1,4 +1,6 @@
-package com.samsthenerd.duckyperiphs;
+package com.samsthenerd.duckyperiphs.forge;
+
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.fml.common.Mod;

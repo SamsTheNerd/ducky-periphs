@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
@@ -27,17 +28,17 @@ public class SculkophonePeripheral  implements IPeripheral {
     }
     
     @Override
-    public boolean equals(IPeripheral other) {
+    public boolean equals(@Nullable IPeripheral other) {
         return this == other;
     }
 
     @Override
-    public void attach(IComputerAccess computer) {
+    public void attach(@Nonnull IComputerAccess computer) {
         computers.add(computer);
     }
 
     @Override
-    public void detach(IComputerAccess computer) {
+    public void detach(@Nonnull IComputerAccess computer) {
         computers.remove(computer);
     }
 

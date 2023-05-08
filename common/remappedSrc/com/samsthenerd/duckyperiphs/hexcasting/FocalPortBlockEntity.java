@@ -98,7 +98,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(fpPeriph == null)
             fpPeriph = new FocalPortPeripheral(this);
         return fpPeriph;

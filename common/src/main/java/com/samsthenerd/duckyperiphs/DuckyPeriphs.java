@@ -44,6 +44,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BannerPatternItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -138,6 +139,13 @@ public class DuckyPeriphs{
 
 		setupNetworkStuff();
 		setupMisc();
+
+		registerBlocks();
+		registerBlockItems();
+		registerItems();
+		registerBlockEntities();
+		registerSoundEvents();
+		registerGameEvents();
 
 		DuckyBanners.registerBannerPatterns();
 		registerLoot();
@@ -241,6 +249,41 @@ public class DuckyPeriphs{
 		return gameEvent;
 	}
 
+	private static void registerBlocks(){
+		for(Map.Entry<Identifier, Block> b : BLOCKS.entrySet()){
+			blocks.register(b.getKey(), () -> b.getValue());
+		}
+	}
+
+	private static void registerBlockItems(){
+		for(Map.Entry<Identifier, Pair<Block, Item.Settings>> b : BLOCK_ITEMS.entrySet()){
+			items.register(b.getKey(), () -> new BlockItem(b.getValue().getLeft(), b.getValue().getRight()));
+		}
+	}
+
+	private static void registerItems(){
+		for(Map.Entry<Identifier, Item> i : ITEMS.entrySet()){
+			items.register(i.getKey(), () -> i.getValue());
+		}
+	}
+
+	private static void registerBlockEntities(){
+		for(Map.Entry<Identifier, BlockEntityType<?>> be : BLOCK_ENTITIES.entrySet()){
+			blockEntities.register(be.getKey(), () -> be.getValue());
+		}
+	}
+
+	private static void registerSoundEvents(){
+		for(Map.Entry<Identifier, SoundEvent> se : SOUND_EVENTS.entrySet()){
+			sounds.register(se.getKey(), () -> se.getValue());
+		}
+	}
+
+	private static void registerGameEvents(){
+		for(Map.Entry<Identifier, GameEvent> ge : GAME_EVENTS.entrySet()){
+			gameEvents.register(ge.getKey(), () -> ge.getValue());
+		}
+	}
 
 	private static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
 	private static void registerLoot(){

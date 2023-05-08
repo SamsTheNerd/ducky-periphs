@@ -1,7 +1,8 @@
 package com.samsthenerd.duckyperiphs.peripherals.sculkophone;
 
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -98,7 +99,7 @@ implements VibrationListener.Callback, IPeripheralTile{
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(sculkPeriph == null)
             sculkPeriph = new SculkophonePeripheral(this);
         return sculkPeriph;

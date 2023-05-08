@@ -98,7 +98,7 @@ implements VibrationListener.Callback, IPeripheralTile{
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(sculkPeriph == null)
             sculkPeriph = new SculkophonePeripheral(this);
         return sculkPeriph;

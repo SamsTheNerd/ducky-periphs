@@ -1,8 +1,7 @@
 package com.samsthenerd.duckyperiphs.peripherals.WeatherMachine;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NotNull;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
@@ -30,7 +29,7 @@ public class WeatherMachineTile extends TileGeneric implements IPeripheralTile {
 
     @Nullable
     @Override
-    public IPeripheral getPeripheral(@NotNull Direction side){
+    public IPeripheral getPeripheral(@Nonnull Direction side){
         if(wmPeriph == null)
             wmPeriph = new WeatherMachinePeripheral(this);
         return wmPeriph;

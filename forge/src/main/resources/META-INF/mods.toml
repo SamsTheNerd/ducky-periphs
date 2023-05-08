@@ -1,0 +1,27 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+license = "LGPL-3.0-only"
+issueTrackerURL = "https://github.com/SamsTheNerd/ducky-periphs/issues"
+
+[[mods]]
+modId = "duckyperiphs"
+version = "${mod_version}"
+displayName = "Ducky Peripherals"
+displayURL = "https://github.com/SamsTheNerd/ducky-periphs"
+logoFile = "DuckyPeriphsIconLarge.png"
+authors = "samsthenerd"
+description = "Adds a variety of peripheral addons for ComputerCraft Tweaked"
+
+[[dependencies.ducky-periphs]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43,)"
+    ordering="NONE"
+    side="BOTH"
+
+  [[dependencies.ducky-periphs]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2]"
+    ordering="NONE"
+    side="BOTH"
