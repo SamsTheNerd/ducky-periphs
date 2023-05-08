@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import org.jetbrains.annotations.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
 import at.petrak.hexcasting.api.spell.iota.Iota;
@@ -15,7 +16,6 @@ import at.petrak.hexcasting.api.spell.iota.NullIota;
 import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralTile;
 import dan200.computercraft.shared.common.TileGeneric;
 import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import net.minecraft.block.Block;
@@ -39,7 +39,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile, ADIotaHolder, RenderAttachmentBlockEntity, Inventory{
+public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTileDucky, ADIotaHolder, RenderAttachmentBlockEntity, Inventory{
     private FocalPortPeripheral fpPeriph;
     private ItemStack innerFocusStack;
     private int iotaColor;

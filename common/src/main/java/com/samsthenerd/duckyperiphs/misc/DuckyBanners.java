@@ -9,10 +9,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class DuckyBanners {
-    public static final TagKey<BannerPattern> DUCKY_PATTERN_ITEM_KEY = TagKey.of(Registry.BANNER_PATTERN_KEY, new Identifier("ducky-periphs", "pattern_item/ducky"));
+    public static final TagKey<BannerPattern> DUCKY_PATTERN_ITEM_KEY = TagKey.of(Registry.BANNER_PATTERN_KEY, new Identifier("duckyperiphs", "pattern_item/ducky"));
     public static final Registrar<BannerPattern> BANNER_PATTERNS = DuckyPeriphs.REGISTRIES.get().get(Registry.BANNER_PATTERN_KEY);
 
     public static void registerBannerPatterns(){
-        BANNER_PATTERNS.register(new Identifier("ducky-periphs", "ducky"), () -> new BannerPattern("ducky"));
+        BANNER_PATTERNS.register(new Identifier("duckyperiphs", "ducky"), () -> new BannerPattern("ducky"));
     }
 }

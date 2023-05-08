@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -28,7 +28,7 @@ import net.minecraft.world.event.listener.VibrationListener;
 
 public class SculkophoneBlockEntity
 extends BlockEntity
-implements VibrationListener.Callback, IPeripheralTile{
+implements VibrationListener.Callback, IPeripheralTileDucky{
     private static final Logger LOGGER = LogUtils.getLogger();
     private VibrationListener listener;
     private int lastVibrationFrequency;

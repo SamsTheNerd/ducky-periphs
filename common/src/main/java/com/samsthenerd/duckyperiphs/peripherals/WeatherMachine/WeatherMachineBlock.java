@@ -1,9 +1,11 @@
 package com.samsthenerd.duckyperiphs.peripherals.WeatherMachine;
+import javax.annotation.Nullable;
+
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
-import dan200.computercraft.shared.common.BlockGeneric;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -12,18 +14,18 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-// based off of BlockSpeaker, idk how best practice this is for what I'm doing
-public class WeatherMachineBlock extends BlockGeneric{
+public class WeatherMachineBlock extends BlockWithEntity{
     // need a facing
     public static final DirectionProperty FACING = FacingBlock.FACING;
     public static final IntProperty TEMP = IntProperty.of("temp", 0, 4);
     public static final IntProperty TANK = IntProperty.of("tank", 0, 4);
 
     public WeatherMachineBlock(Block.Settings settings) {
-        super(settings.nonOpaque(), () -> DuckyPeriphs.WEATHER_MACHINE_TILE);
+        super(settings.nonOpaque());
         setDefaultState( getStateManager().getDefaultState());
     }
 
@@ -43,6 +45,13 @@ public class WeatherMachineBlock extends BlockGeneric{
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
         return checkType(type, DuckyPeriphs.WEATHER_MACHINE_TILE, (worldin, pos, statein, be) -> WeatherMachineTile.tick(worldin, pos, statein, be));
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state )
+    {
+        return new WeatherMachineTile(pos, state);
     }
 
 }

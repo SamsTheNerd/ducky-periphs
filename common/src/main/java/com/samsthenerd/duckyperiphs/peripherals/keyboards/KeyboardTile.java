@@ -5,9 +5,9 @@ import javax.annotation.Nonnull;
 import org.jetbrains.annotations.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralTile;
 import dan200.computercraft.shared.common.TileGeneric;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -30,7 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class KeyboardTile extends TileGeneric implements IPeripheralTile, ExtendedScreenHandlerFactory, Nameable {
+public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, ExtendedScreenHandlerFactory, Nameable {
     public KeyboardPeripheral kbPeriph;
     private Text customName;
     KeyCaps keyCaps;

@@ -19,7 +19,7 @@ import net.minecraft.util.DyeColor;
 
 @Environment (EnvType.CLIENT)
 public class DuckyPeriphsClientInit{
-	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
+	public static final Logger LOGGER = LoggerFactory.getLogger("duckyperiphs");
 
     public static void initClient() {
 		RenderTypeRegistry.register(RenderLayer.getTranslucent(), DuckyPeriphs.WEATHER_MACHINE_BLOCK,

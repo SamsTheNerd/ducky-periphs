@@ -14,7 +14,7 @@ loom {
         // convertAccessWideners = true
         // extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
         // uncomment *and add the file* if we want forge-only mixins?
-        // mixinConfig "ducky-periphs.mixins.json"
+        // mixinConfig "duckyperiphs.mixins.json"
     }
 }
 
@@ -42,9 +42,9 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // // Vanilla (i.e. for multi-loader systems)
-    // modCompileOnly("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
-    //     transitive = false
-    // }
+    modImplementation("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
+        transitive = false
+    }
 
     // // for HexCasting
     modCompileOnly("at.petra-k.hexcasting:hexcasting-forge-${project.minecraft_version}:${project.hexcastingVersion}"){

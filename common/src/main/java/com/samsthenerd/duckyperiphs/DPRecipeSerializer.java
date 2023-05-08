@@ -22,7 +22,7 @@ public class DPRecipeSerializer {
     public static void init(){}
 
     public static <S extends RecipeSerializer<T>, T extends Recipe<?>> RegistrySupplier<S> register(String id, S serializer) {
-        return recipeSerializers.register(new Identifier("ducky-periphs", id), () -> serializer);
+        return recipeSerializers.register(new Identifier(DuckyPeriphs.MOD_ID, id), () -> serializer);
     }
     
 }

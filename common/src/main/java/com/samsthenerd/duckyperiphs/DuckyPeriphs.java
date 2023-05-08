@@ -34,8 +34,6 @@ import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.Registries;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -48,8 +46,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTables;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -64,7 +60,7 @@ public class DuckyPeriphs{
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
-	public static final String MOD_ID = "ducky-periphs";
+	public static final String MOD_ID = "duckyperiphs";
 	public static final Supplier<Registries> REGISTRIES = Suppliers.memoize(() -> Registries.get(MOD_ID));
 
 	// various architectury registry wrappers - could maybe move each into their own files, we'll see.
@@ -87,7 +83,7 @@ public class DuckyPeriphs{
 
 
 	public static final ItemGroup CC_PERIPHS_GROUP = CreativeTabRegistry.create(
-		new Identifier("ducky-periphs", "general"),
+		new Identifier("duckyperiphs", "general"),
 		() -> new ItemStack(DuckyPeriphs.DUCK_ITEM));
 
 	// Peripheral Registering
@@ -104,7 +100,7 @@ public class DuckyPeriphs{
 	public static final KeyboardBlock KEYBOARD_BLOCK = blockNoItem("keyboard_block", new KeyboardBlock(peripheralBlockSettings().hardness((float)0.7)));
 	public static BlockEntityType<KeyboardTile> KEYBOARD_TILE = blockEntity("keyboard_tile", (blockPos, blockState) -> new KeyboardTile(blockPos, blockState), KEYBOARD_BLOCK);
 	public static final KeyboardItem KEYBOARD_ITEM = item("keyboard_block", new KeyboardItem(KEYBOARD_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP)));
-	public static final ScreenHandlerType<KeyboardScreenHandler> KEYBOARD_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(KeyboardScreenHandler::new);
+	public static final ScreenHandlerType<KeyboardScreenHandler> KEYBOARD_SCREEN_HANDLER = MenuRegistry.ofExtended(KeyboardScreenHandler::new);
 	public static final Identifier KEYBOARD_PRESS_PACKET_ID = new Identifier(MOD_ID, "keyboard_press");
 
 	//duck time !
@@ -148,7 +144,7 @@ public class DuckyPeriphs{
 		registerGameEvents();
 
 		DuckyBanners.registerBannerPatterns();
-		registerLoot();
+		// registerLoot();
 
 		DPRecipeSerializer.init();
 
@@ -177,7 +173,7 @@ public class DuckyPeriphs{
 	}
 
 	private static void setupMisc(){
-		screenHandlers.register(new Identifier("ducky-periphs", "keyboard_screen_handler"), () -> MenuRegistry.ofExtended(KeyboardScreenHandler::new));
+		screenHandlers.register(new Identifier("duckyperiphs", "keyboard_screen_handler"), () -> KEYBOARD_SCREEN_HANDLER);
 
 		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM, CauldronBehavior.CLEAN_DYEABLE_ITEM);
 	}
@@ -285,18 +281,18 @@ public class DuckyPeriphs{
 		}
 	}
 
-	private static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
-	private static void registerLoot(){
-		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-			if (source.isBuiltin() && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)
-			|| LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) || LootTables.DESERT_PYRAMID_CHEST.equals(id)
-			|| LootTables.WOODLAND_MANSION_CHEST.equals(id) || LootTables.JUNGLE_TEMPLE_CHEST.equals(id))) {
-				LootPool[] pools = lootManager.getTable(keyboardLootTable).pools;
-				if(pools.length > 0){
-					LootPool pool= pools[0];
-					tableBuilder.pool(pool);
-				}
-			}
-		});
-	}
+	private static final Identifier keyboardLootTable = new Identifier("duckyperiphs", "chests/keyboards");
+	// private static void registerLoot(){
+	// 	LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+	// 		if (source.isBuiltin() && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)
+	// 		|| LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) || LootTables.DESERT_PYRAMID_CHEST.equals(id)
+	// 		|| LootTables.WOODLAND_MANSION_CHEST.equals(id) || LootTables.JUNGLE_TEMPLE_CHEST.equals(id))) {
+	// 			LootPool[] pools = lootManager.getTable(keyboardLootTable).pools;
+	// 			if(pools.length > 0){
+	// 				LootPool pool= pools[0];
+	// 				tableBuilder.pool(pool);
+	// 			}
+	// 		}
+	// 	});
+	// }
 }
