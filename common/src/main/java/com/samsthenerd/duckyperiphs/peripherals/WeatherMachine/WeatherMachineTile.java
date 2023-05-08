@@ -10,21 +10,15 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class WeatherMachineTile extends BlockEntity implements IPeripheralTileDucky {
-    private WeatherMachinePeripheral wmPeriph;
-
-    public WeatherMachineTile(BlockEntityType<WeatherMachineTile> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
-        wmPeriph = new WeatherMachinePeripheral(this);
-    }
+    private WeatherMachinePeripheral wmPeriph = new WeatherMachinePeripheral(this);
 
     public WeatherMachineTile(BlockPos pos, BlockState state) {
-        this(DuckyPeriphs.WEATHER_MACHINE_TILE, pos, state);
+        super(DuckyPeriphs.WEATHER_MACHINE_TILE.get(), pos, state);
     }
 
     @Nullable

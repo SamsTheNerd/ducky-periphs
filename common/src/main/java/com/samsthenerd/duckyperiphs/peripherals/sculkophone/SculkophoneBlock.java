@@ -113,7 +113,7 @@ public class SculkophoneBlock extends BlockWithEntity{
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world2, BlockState state2, BlockEntityType<T> type) {
         if (!world2.isClient) {
-            return SculkophoneBlock.checkType(type, DuckyPeriphs.SCULKOPHONE_BLOCK_ENTITY, (world, pos, state, blockEntity) -> blockEntity.getEventListener().tick(world));
+            return SculkophoneBlock.checkType(type, DuckyPeriphs.SCULKOPHONE_BLOCK_ENTITY.get(), (world, pos, state, blockEntity) -> blockEntity.getEventListener().tick(world));
         }
         return null;
     }
@@ -134,7 +134,7 @@ public class SculkophoneBlock extends BlockWithEntity{
     public static void setCooldown(World world, BlockPos pos, BlockState state) {
         world.setBlockState(pos, ((BlockState)state.with(SCULK_SENSOR_PHASE, SculkSensorPhase.COOLDOWN)), Block.NOTIFY_ALL);
         world.createAndScheduleBlockTick(pos, state.getBlock(), 1);
-        world.playSound(null, pos, DuckyPeriphs.SCULKOPHONE_CLICKING_STOP_EVENT, SoundCategory.BLOCKS, 0.25f, world.random.nextFloat() * 0.2f + 0.8f);
+        world.playSound(null, pos, DuckyPeriphs.SCULKOPHONE_CLICKING_STOP_EVENT.get(), SoundCategory.BLOCKS, 0.25f, world.random.nextFloat() * 0.2f + 0.8f);
         SculkophoneBlock.updateNeighbors(world, pos);
     }
 
@@ -143,7 +143,7 @@ public class SculkophoneBlock extends BlockWithEntity{
         world.createAndScheduleBlockTick(pos, state.getBlock(), 20); // not sure if this is just for animation or for cooldown?
         SculkophoneBlock.updateNeighbors(world, pos);
         // world.emitGameEvent(entity, DuckyPeriph.SCULKOPHONE_CLICKING_GAME_EVENT, pos); // remove this when we're done testing
-        world.playSound(null, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, DuckyPeriphs.SCULKOPHONE_CLICKING_EVENT, SoundCategory.BLOCKS, 0.25f, world.random.nextFloat() * 0.2f + 0.8f);
+        world.playSound(null, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, DuckyPeriphs.SCULKOPHONE_CLICKING_EVENT.get(), SoundCategory.BLOCKS, 0.25f, world.random.nextFloat() * 0.2f + 0.8f);
     }
 
     @Override

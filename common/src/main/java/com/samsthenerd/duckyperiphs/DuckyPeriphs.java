@@ -1,7 +1,6 @@
 package com.samsthenerd.duckyperiphs;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -34,6 +33,7 @@ import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.Registries;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -49,7 +49,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.event.GameEvent;
@@ -60,68 +59,58 @@ public class DuckyPeriphs{
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
-	public static final String MOD_ID = "duckyperiphs";
+	public static final String MOD_ID = "ducky-periphs";
 	public static final Supplier<Registries> REGISTRIES = Suppliers.memoize(() -> Registries.get(MOD_ID));
 
 	// various architectury registry wrappers - could maybe move each into their own files, we'll see.
 	public static Registrar<Item> items = REGISTRIES.get().get(Registry.ITEM_KEY);
 	public static Registrar<Block> blocks = REGISTRIES.get().get(Registry.BLOCK_KEY);
-	public static Registrar<BlockEntityType<?>> blockEntities = REGISTRIES.get().get(Registry.BLOCK_ENTITY_TYPE_KEY);
+	public static DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(MOD_ID, Registry.BLOCK_ENTITY_TYPE_KEY);
 	public static Registrar<EntityType<?>> entities = REGISTRIES.get().get(Registry.ENTITY_TYPE_KEY);
 	public static final Registrar<SoundEvent> sounds = REGISTRIES.get().get(Registry.SOUND_EVENT_KEY);
 	public static final Registrar<GameEvent> gameEvents = REGISTRIES.get().get(Registry.GAME_EVENT_KEY);
 	public static final DeferredRegister<ScreenHandlerType<?> > screenHandlers = DeferredRegister.create(MOD_ID, Registry.MENU_KEY);
 
-	// maps of things we need to register. add them here so we can set things up before actually registering.
-	private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
-    private static final Map<Identifier, Pair<Block, Item.Settings>> BLOCK_ITEMS = new LinkedHashMap<>();
-	private static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
-	private static final Map<Identifier, BlockEntityType<?>> BLOCK_ENTITIES = new LinkedHashMap<>();
-	private static final Map<Identifier, EntityType<?>> ENTITIES = new LinkedHashMap<>();
-	private static final Map<Identifier, SoundEvent> SOUND_EVENTS = new LinkedHashMap<>();
-	private static final Map<Identifier, GameEvent> GAME_EVENTS = new LinkedHashMap<>();
-
-
 	public static final ItemGroup CC_PERIPHS_GROUP = CreativeTabRegistry.create(
-		new Identifier("duckyperiphs", "general"),
-		() -> new ItemStack(DuckyPeriphs.DUCK_ITEM));
+		new Identifier("ducky-periphs", "general"),
+		() -> new ItemStack(DuckyPeriphs.DUCK_ITEM.get()));
 
 	// Peripheral Registering
 
 	// Weather Machine Registering
-	public static WeatherMachineBlock WEATHER_MACHINE_BLOCK = blockItem("weather_machine_block", new WeatherMachineBlock(peripheralBlockSettings()));
-	public static BlockEntityType<WeatherMachineTile> WEATHER_MACHINE_TILE = blockEntity("weather_machine_tile", (blockPos, blockState) -> new WeatherMachineTile(blockPos, blockState), WEATHER_MACHINE_BLOCK);
+	public static RegistrySupplier<WeatherMachineBlock> WEATHER_MACHINE_BLOCK = blockItem("weather_machine_block", () -> new WeatherMachineBlock(peripheralBlockSettings()));
+	public static RegistrySupplier<BlockEntityType<WeatherMachineTile>> WEATHER_MACHINE_TILE = blockEntity("weather_machine_tile", (blockPos, blockState) -> new WeatherMachineTile(blockPos, blockState), WEATHER_MACHINE_BLOCK);
 
 	// Entity Detector Registering
-	public static final EntityDetectorBlock ENTITY_DETECTOR_BLOCK = blockItem("entity_detector_block", new EntityDetectorBlock(peripheralBlockSettings()));
-	public static BlockEntityType<EntityDetectorTile> ENTITY_DETECTOR_TILE = blockEntity("entity_detector_tile", (blockPos, blockState) -> new EntityDetectorTile(blockPos, blockState), ENTITY_DETECTOR_BLOCK);
+	public static final RegistrySupplier<EntityDetectorBlock> ENTITY_DETECTOR_BLOCK = blockItem("entity_detector_block", () -> new EntityDetectorBlock(peripheralBlockSettings()));
+	public static RegistrySupplier<BlockEntityType<EntityDetectorTile>> ENTITY_DETECTOR_TILE = blockEntity("entity_detector_tile", (blockPos, blockState) -> new EntityDetectorTile(blockPos, blockState), ENTITY_DETECTOR_BLOCK);
 
 	// Keyboard Registering - may end up having more keyboards here later
-	public static final KeyboardBlock KEYBOARD_BLOCK = blockNoItem("keyboard_block", new KeyboardBlock(peripheralBlockSettings().hardness((float)0.7)));
-	public static BlockEntityType<KeyboardTile> KEYBOARD_TILE = blockEntity("keyboard_tile", (blockPos, blockState) -> new KeyboardTile(blockPos, blockState), KEYBOARD_BLOCK);
-	public static final KeyboardItem KEYBOARD_ITEM = item("keyboard_block", new KeyboardItem(KEYBOARD_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP)));
+	public static final RegistrySupplier<KeyboardBlock> KEYBOARD_BLOCK = blockNoItem("keyboard_block", () -> new KeyboardBlock(peripheralBlockSettings().hardness((float)0.7)));
+	public static RegistrySupplier<BlockEntityType<KeyboardTile>> KEYBOARD_TILE = blockEntity("keyboard_tile", (blockPos, blockState) -> new KeyboardTile(blockPos, blockState), KEYBOARD_BLOCK);
+	public static final RegistrySupplier<KeyboardItem> KEYBOARD_ITEM = item("keyboard_block", () -> new KeyboardItem(KEYBOARD_BLOCK.get(), new Item.Settings().group(CC_PERIPHS_GROUP)));
 	public static final ScreenHandlerType<KeyboardScreenHandler> KEYBOARD_SCREEN_HANDLER = MenuRegistry.ofExtended(KeyboardScreenHandler::new);
 	public static final Identifier KEYBOARD_PRESS_PACKET_ID = new Identifier(MOD_ID, "keyboard_press");
 
 	//duck time !
-	public static final DuckBlock DUCK_BLOCK = blockNoItem("duck_block", new DuckBlock(Block.Settings.of(Material.WOOL).hardness((float)0.2)));
-	public static BlockEntityType<DuckBlockEntity> DUCK_BLOCK_ENTITY = blockEntity("duck_block_entity", (blockPos, blockState) -> new DuckBlockEntity(blockPos, blockState), DUCK_BLOCK);
-	public static final DuckItem DUCK_ITEM = item("duck_block", new DuckItem(DUCK_BLOCK, dpItemSettings()));
-	public static SoundEvent QUACK_SOUND_EVENT = soundEvent("quack");
-	public static GameEvent QUACK_GAME_EVENT = gameEvent("quack", 16);
+	public static final RegistrySupplier<DuckBlock> DUCK_BLOCK = blockNoItem("duck_block", () -> new DuckBlock(Block.Settings.of(Material.WOOL).hardness((float)0.2)));
+	public static RegistrySupplier<BlockEntityType<DuckBlockEntity>> DUCK_BLOCK_ENTITY = blockEntity("duck_block_entity", (blockPos, blockState) -> new DuckBlockEntity(blockPos, blockState), DUCK_BLOCK);
+	public static final RegistrySupplier<DuckItem> DUCK_ITEM = item("duck_block", () -> new DuckItem(DUCK_BLOCK.get(), dpItemSettings()));
+	public static RegistrySupplier<SoundEvent> QUACK_SOUND_EVENT = soundEvent("quack");
+	public static RegistrySupplier<GameEvent> QUACK_GAME_EVENT = gameEvent("quack", 16);
 
 	// sculkophone
-	public static final SculkophoneBlock SCULKOPHONE_BLOCK = blockItem("sculkophone_block", new SculkophoneBlock(peripheralBlockSettings().hardness((float)0.7)));
-	public static BlockEntityType<SculkophoneBlockEntity> SCULKOPHONE_BLOCK_ENTITY = blockEntity("sculkophone_block_entity", (blockPos, blockState) -> new SculkophoneBlockEntity(blockPos, blockState), SCULKOPHONE_BLOCK);
-	public static SoundEvent SCULKOPHONE_CLICKING_EVENT = soundEvent( "sculkophone_clicking");
-	public static SoundEvent SCULKOPHONE_CLICKING_STOP_EVENT = soundEvent("sculkophone_clicking_stop");
+	public static final RegistrySupplier<SculkophoneBlock> SCULKOPHONE_BLOCK = blockItem("sculkophone_block", () -> new SculkophoneBlock(peripheralBlockSettings().hardness((float)0.7)));
+	public static RegistrySupplier<BlockEntityType<SculkophoneBlockEntity>> SCULKOPHONE_BLOCK_ENTITY = blockEntity("sculkophone_block_entity", (blockPos, blockState) -> new SculkophoneBlockEntity(blockPos, blockState), SCULKOPHONE_BLOCK.get());
+	public static RegistrySupplier<SoundEvent> SCULKOPHONE_CLICKING_EVENT = soundEvent( "sculkophone_clicking");
+	public static RegistrySupplier<SoundEvent> SCULKOPHONE_CLICKING_STOP_EVENT = soundEvent("sculkophone_clicking_stop");
 	// public static GameEvent SCULKOPHONE_CLICKING_GAME_EVENT;
 
 	// it's just helpful - using it mainly for focal port hex casting rn but not unique to it
-	public static EntityType<EntityFromBlockEntity> ENTITY_FROM_BLOCK_ENTITY;
+	public static RegistrySupplier<EntityType<EntityFromBlockEntity>> ENTITY_FROM_BLOCK_ENTITY;
 
 	// Banners
-	public static final BannerPatternItem DUCKY_PATTERN_ITEM = item("ducky_banner_pattern", new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).group(ItemGroup.MISC)));
+	public static final RegistrySupplier<BannerPatternItem> DUCKY_PATTERN_ITEM = item("ducky_banner_pattern", () -> new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).group(ItemGroup.MISC)));
 	
 	// public static BlockEntityType<StrongModemBlockEntity> STRONG_MODEM_BLOCK_ENTITY;
 	// public static final StrongModemBlock STRONG_MODEM_BLOCK=null; //= new StrongModemBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.7));
@@ -135,13 +124,6 @@ public class DuckyPeriphs{
 
 		setupNetworkStuff();
 		setupMisc();
-
-		registerBlocks();
-		registerBlockItems();
-		registerItems();
-		registerBlockEntities();
-		registerSoundEvents();
-		registerGameEvents();
 
 		DuckyBanners.registerBannerPatterns();
 		// registerLoot();
@@ -173,9 +155,9 @@ public class DuckyPeriphs{
 	}
 
 	private static void setupMisc(){
-		screenHandlers.register(new Identifier("duckyperiphs", "keyboard_screen_handler"), () -> KEYBOARD_SCREEN_HANDLER);
+		screenHandlers.register(new Identifier("ducky-periphs", "keyboard_screen_handler"), () -> KEYBOARD_SCREEN_HANDLER);
 
-		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM, CauldronBehavior.CLEAN_DYEABLE_ITEM);
+		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM.get(), CauldronBehavior.CLEAN_DYEABLE_ITEM);
 	}
 
 
@@ -188,100 +170,39 @@ public class DuckyPeriphs{
 	}
 
 	// stealing from hex casting :D
-	private static <T extends Block> T blockNoItem(String name, T block) {
-        var old = BLOCKS.put(new Identifier(MOD_ID, name), block);
-        if (old != null) {
-            throw new IllegalArgumentException("Typo? Duplicate id " + name);
-        }
-        return block;
+	private static <T extends Block> RegistrySupplier<T> blockNoItem(String name, Supplier<T> block) {
+        return blocks.register(new Identifier(MOD_ID, name), block);
     }
 
-	private static <T extends Item> T item(String name, T item) {
-		var old = ITEMS.put(new Identifier(MOD_ID, name), item);
-		if (old != null) {
-			throw new IllegalArgumentException("Typo? Duplicate id " + name);
-		}
-		return item;
+	private static <T extends Item> RegistrySupplier<T> item(String name, Supplier<T> item) {
+		return items.register(new Identifier(MOD_ID, name), item);
 	}
 
-    private static <T extends Block> T blockItem(String name, T block) {
+    private static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block) {
         return blockItem(name, block, dpItemSettings());
     }
 
-    private static <T extends Block> T blockItem(String name, T block, Item.Settings props) {
-        blockNoItem(name, block);
-        var old = BLOCK_ITEMS.put(new Identifier(MOD_ID, name), new Pair<>(block, props));
-        if (old != null) {
-            throw new IllegalArgumentException("Typo? Duplicate id " + name);
-        }
-        return block;
+    private static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block, Item.Settings props) {
+		items.register(new Identifier(MOD_ID, name), () -> new BlockItem(block.get(), props));
+        return blockNoItem(name, block);
     }
 
-	private static <T extends BlockEntity> BlockEntityType<T> blockEntity(String id,
-        BiFunction<BlockPos, BlockState, T> func, Block... blocks) {
-		var be = BlockEntityType.Builder.create(func::apply, blocks).build(null);
-        var old = BLOCK_ENTITIES.put(new Identifier(MOD_ID, id), be);
-        if (old != null) {
-            throw new IllegalArgumentException("Duplicate id " + id);
-        }
-        return be;
+	private static <BET extends BlockEntity> RegistrySupplier<BlockEntityType<BET>> blockEntity(String id,
+        BiFunction<BlockPos, BlockState, BET> func, RegistrySupplier<Block>... blocks) {
+		return blockEntities.register(new Identifier(MOD_ID, id), 
+				() -> BlockEntityType.Builder.create(func::apply, Arrays.stream(blocks).map(RegistrySupplier::get).toArray(Block[]::new)).build(null));
     }
 
-	private static SoundEvent soundEvent(String id){
-		var soundEvent = new SoundEvent(new Identifier(MOD_ID, id));
-		var old = SOUND_EVENTS.put(new Identifier(MOD_ID, id), soundEvent);
-		if (old != null) {
-			throw new IllegalArgumentException("Duplicate id " + id);
-		}
-		return soundEvent;
+	private static RegistrySupplier<SoundEvent> soundEvent(String id){
+		return sounds.register(new Identifier(MOD_ID, id), () -> new SoundEvent(new Identifier(MOD_ID, id)));
 	}
 
-	private static GameEvent gameEvent(String id, int range){
-		var gameEvent = new GameEvent(new Identifier(MOD_ID, id).toString(), range);
-		var old = GAME_EVENTS.put(new Identifier(MOD_ID, id), gameEvent);
-		if (old != null) {
-			throw new IllegalArgumentException("Duplicate id " + id);
-		}
-		return gameEvent;
+	private static RegistrySupplier<GameEvent> gameEvent(String id, int range){
+		return gameEvents.register(new Identifier(MOD_ID, id), 
+				() -> new GameEvent(new Identifier(MOD_ID, id).toString(), range));
 	}
 
-	private static void registerBlocks(){
-		for(Map.Entry<Identifier, Block> b : BLOCKS.entrySet()){
-			blocks.register(b.getKey(), () -> b.getValue());
-		}
-	}
-
-	private static void registerBlockItems(){
-		for(Map.Entry<Identifier, Pair<Block, Item.Settings>> b : BLOCK_ITEMS.entrySet()){
-			items.register(b.getKey(), () -> new BlockItem(b.getValue().getLeft(), b.getValue().getRight()));
-		}
-	}
-
-	private static void registerItems(){
-		for(Map.Entry<Identifier, Item> i : ITEMS.entrySet()){
-			items.register(i.getKey(), () -> i.getValue());
-		}
-	}
-
-	private static void registerBlockEntities(){
-		for(Map.Entry<Identifier, BlockEntityType<?>> be : BLOCK_ENTITIES.entrySet()){
-			blockEntities.register(be.getKey(), () -> be.getValue());
-		}
-	}
-
-	private static void registerSoundEvents(){
-		for(Map.Entry<Identifier, SoundEvent> se : SOUND_EVENTS.entrySet()){
-			sounds.register(se.getKey(), () -> se.getValue());
-		}
-	}
-
-	private static void registerGameEvents(){
-		for(Map.Entry<Identifier, GameEvent> ge : GAME_EVENTS.entrySet()){
-			gameEvents.register(ge.getKey(), () -> ge.getValue());
-		}
-	}
-
-	private static final Identifier keyboardLootTable = new Identifier("duckyperiphs", "chests/keyboards");
+	private static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
 	// private static void registerLoot(){
 	// 	LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
 	// 		if (source.isBuiltin() && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)

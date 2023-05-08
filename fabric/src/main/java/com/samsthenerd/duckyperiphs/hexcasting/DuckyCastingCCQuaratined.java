@@ -17,7 +17,7 @@ public class DuckyCastingCCQuaratined {
     }
 
     public static void quarantinedRegisterItemsComponentFactories(ItemComponentFactoryRegistry registry){
-        registry.register(DuckyPeriphs.DUCK_ITEM, HexCardinalComponents.IOTA_HOLDER, stack -> new CCItemIotaHolder.Static(stack,
+        registry.register(DuckyPeriphs.DUCK_ITEM.get(), HexCardinalComponents.IOTA_HOLDER, stack -> new CCItemIotaHolder.Static(stack,
             s -> new PatternIota(HexPattern.fromAngles("aqadweeeede", HexDir.NORTH_EAST))));
     }
 }

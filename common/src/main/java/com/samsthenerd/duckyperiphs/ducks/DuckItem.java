@@ -58,15 +58,15 @@ public class DuckItem extends BlockItem implements DyeableItem{
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if(!world.isClient){
             float pitch = (float) (Math.random() * 0.2 + 0.9);
-            world.emitGameEvent(player, DuckyPeriphs.QUACK_GAME_EVENT, player.getPos());
-            world.playSound(null, player.getBlockPos(), DuckyPeriphs.QUACK_SOUND_EVENT, SoundCategory.BLOCKS, 1f, pitch);
+            world.emitGameEvent(player, DuckyPeriphs.QUACK_GAME_EVENT.get(), player.getPos());
+            world.playSound(null, player.getBlockPos(), DuckyPeriphs.QUACK_SOUND_EVENT.get(), SoundCategory.BLOCKS, 1f, pitch);
         }
         // return super.use(world, player, hand);
         return TypedActionResult.success(player.getStackInHand(hand)); // for squeeze 
     }
 
     public static ItemStack getDuckItemStack(int color){
-        ItemStack stack = new ItemStack(DuckyPeriphs.DUCK_ITEM);
+        ItemStack stack = new ItemStack(DuckyPeriphs.DUCK_ITEM.get());
         NbtCompound nbtCompound = stack.getOrCreateSubNbt(DISPLAY_KEY);
         nbtCompound.putInt(COLOR_KEY, color);
         return stack;

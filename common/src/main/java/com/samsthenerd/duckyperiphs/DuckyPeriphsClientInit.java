@@ -19,11 +19,11 @@ import net.minecraft.util.DyeColor;
 
 @Environment (EnvType.CLIENT)
 public class DuckyPeriphsClientInit{
-	public static final Logger LOGGER = LoggerFactory.getLogger("duckyperiphs");
+	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
     public static void initClient() {
-		RenderTypeRegistry.register(RenderLayer.getTranslucent(), DuckyPeriphs.WEATHER_MACHINE_BLOCK,
-					DuckyPeriphs.KEYBOARD_BLOCK, DuckyPeriphs.DUCK_BLOCK);
+		RenderTypeRegistry.register(RenderLayer.getTranslucent(), DuckyPeriphs.WEATHER_MACHINE_BLOCK.get(),
+					DuckyPeriphs.KEYBOARD_BLOCK.get(), DuckyPeriphs.DUCK_BLOCK.get());
 
         HandledScreens.register(DuckyPeriphs.KEYBOARD_SCREEN_HANDLER, KeyboardScreen::new);
 
@@ -42,11 +42,11 @@ public class DuckyPeriphsClientInit{
 				return GrassColors.getColor(0.5, 1.0);
             }
             return BiomeColors.getGrassColor(view, pos);
-		}, DuckyPeriphs.WEATHER_MACHINE_BLOCK);
+		}, DuckyPeriphs.WEATHER_MACHINE_BLOCK.get());
 
 		ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
 			return GrassColors.getColor(0.5, 1.0);
-		}, DuckyPeriphs.WEATHER_MACHINE_BLOCK.asItem());
+		}, DuckyPeriphs.WEATHER_MACHINE_BLOCK.get().asItem());
 
         // keyboard 
         ColorHandlerRegistry.registerBlockColors((state,view,pos,tintIndex)->{
@@ -54,7 +54,7 @@ public class DuckyPeriphsClientInit{
 				return DyeColor.BLUE.getFireworkColor();
 				// return KeyCaps.DEFAULT_COLOR;
 			}
-			return DuckyPeriphs.KEYBOARD_BLOCK.getKeyCaps(view, pos).getZoneColor(tintIndex);
+			return DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).getZoneColor(tintIndex);
 		}, DuckyPeriphs.KEYBOARD_BLOCK);
 
 		ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
@@ -63,14 +63,14 @@ public class DuckyPeriphsClientInit{
 
         // duck color providers
 		ColorHandlerRegistry.registerBlockColors((state,view,pos, tintIndex) -> {
-			return DuckyPeriphs.DUCK_BLOCK.getColor(view, pos);
+			return DuckyPeriphs.DUCK_BLOCK.get().getColor(view, pos);
 		}, DuckyPeriphs.DUCK_BLOCK);
 
 		ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
 			if(tintIndex != 0) {
 				return 0xFFFFFF;
 			}
-			return DuckyPeriphs.DUCK_ITEM.getColor(stack);
+			return DuckyPeriphs.DUCK_ITEM.get().getColor(stack);
 		}, DuckyPeriphs.DUCK_ITEM);
     }
 }

@@ -35,7 +35,7 @@ implements VibrationListener.Callback, IPeripheralTileDucky{
     private SculkophonePeripheral sculkPeriph;
 
     public SculkophoneBlockEntity(BlockPos pos, BlockState state) {
-        super(DuckyPeriphs.SCULKOPHONE_BLOCK_ENTITY, pos, state);
+        super(DuckyPeriphs.SCULKOPHONE_BLOCK_ENTITY.get(), pos, state);
         this.listener = new VibrationListener(new BlockPositionSource(this.pos), ((SculkophoneBlock)state.getBlock()).getRange(), this, null, 0.0f, 0);
     }
 

@@ -44,7 +44,7 @@ public class WeatherMachineBlock extends BlockWithEntity{
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
-        return checkType(type, DuckyPeriphs.WEATHER_MACHINE_TILE, (worldin, pos, statein, be) -> WeatherMachineTile.tick(worldin, pos, statein, be));
+        return checkType(type, DuckyPeriphs.WEATHER_MACHINE_TILE.get(), (worldin, pos, statein, be) -> WeatherMachineTile.tick(worldin, pos, statein, be));
     }
 
     @Nullable

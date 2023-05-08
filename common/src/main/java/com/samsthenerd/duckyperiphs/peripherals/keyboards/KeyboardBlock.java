@@ -33,7 +33,7 @@ public class KeyboardBlock extends BlockGeneric {
     public static final DirectionProperty FACING = FacingBlock.FACING;
 
     public KeyboardBlock(Block.Settings settings) {
-        super(settings.nonOpaque(), () -> DuckyPeriphs.KEYBOARD_TILE);
+        super(settings.nonOpaque(), () -> DuckyPeriphs.KEYBOARD_TILE.get());
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
     }
 

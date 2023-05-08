@@ -22,7 +22,7 @@ public class DuckBlockEntity extends BlockEntity implements Nameable{
     private int blockColor = 0;
 
     public DuckBlockEntity(BlockPos pos, BlockState state) {
-        super(DuckyPeriphs.DUCK_BLOCK_ENTITY, pos, state);
+        super(DuckyPeriphs.DUCK_BLOCK_ENTITY.get(), pos, state);
     }
 
     public DuckBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

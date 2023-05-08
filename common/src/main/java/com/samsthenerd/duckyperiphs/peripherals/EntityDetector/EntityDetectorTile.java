@@ -37,7 +37,7 @@ public class EntityDetectorTile extends TileGeneric implements IPeripheralTileDu
     }
 
     public EntityDetectorTile(BlockPos pos, BlockState state) {
-        this(DuckyPeriphs.ENTITY_DETECTOR_TILE, pos, state);
+        this(DuckyPeriphs.ENTITY_DETECTOR_TILE.get(), pos, state);
     }
 
 

@@ -13,12 +13,12 @@ import net.minecraft.world.World;
 public class EntityDetectorBlock extends BlockGeneric{
     
     public EntityDetectorBlock(Block.Settings settings) {
-        super(settings, () -> DuckyPeriphs.ENTITY_DETECTOR_TILE);
+        super(settings, () -> DuckyPeriphs.ENTITY_DETECTOR_TILE.get());
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
-        return checkType(type, DuckyPeriphs.ENTITY_DETECTOR_TILE, (worldin, pos, statein, be) -> EntityDetectorTile.tick(worldin, pos, statein, be));
+        return checkType(type, DuckyPeriphs.ENTITY_DETECTOR_TILE.get(), (worldin, pos, statein, be) -> EntityDetectorTile.tick(worldin, pos, statein, be));
     }
     
 }

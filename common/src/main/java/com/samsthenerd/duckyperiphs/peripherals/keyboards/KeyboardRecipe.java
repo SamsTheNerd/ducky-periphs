@@ -16,7 +16,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class KeyboardRecipe extends SpecialCraftingRecipe {
-    private static final Ingredient KEYBOARD = Ingredient.ofItems(DuckyPeriphs.KEYBOARD_ITEM);
+    private static final Ingredient KEYBOARD = Ingredient.ofItems(DuckyPeriphs.KEYBOARD_ITEM.get());
     private static final Ingredient SOLVENTS = Ingredient.ofItems(Items.WET_SPONGE, Items.WATER_BUCKET); // maybe add more here? idk
     
     public KeyboardRecipe(Identifier id){
