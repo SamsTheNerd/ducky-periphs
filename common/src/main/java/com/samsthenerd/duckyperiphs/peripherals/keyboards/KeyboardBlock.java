@@ -1,8 +1,10 @@
 package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.FacingBlock;
@@ -15,7 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -47,6 +52,13 @@ public class KeyboardBlock extends BlockWithEntity {
         }
     }
 
+    @Nonnull
+    @Override
+    public final ActionResult onUse( @Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockHitResult hit ){
+        BlockEntity tile = world.getBlockEntity( pos );
+        return tile instanceof KeyboardTile kbTile ? kbTile.onActivate( player, hand, hit ) : ActionResult.PASS;
+    }
+
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
@@ -67,8 +79,12 @@ public class KeyboardBlock extends BlockWithEntity {
 
     public KeyCaps getKeyCaps(BlockView view, BlockPos pos){
         BlockEntity kb_tile;
+        KeyCaps keyCapsToReturn;
         if((kb_tile = view.getBlockEntity(pos)) instanceof KeyboardTile){
-            return ((KeyboardTile)kb_tile).keyCaps;
+            keyCapsToReturn = ((KeyboardTile)kb_tile).keyCaps;
+            if(keyCapsToReturn != null){
+                return keyCapsToReturn;
+            }
         }
         return new KeyCaps();
     }
@@ -121,4 +137,10 @@ public class KeyboardBlock extends BlockWithEntity {
         return new KeyboardTile(pos, state);
     }
 
+    @Nonnull
+    @Override
+    public BlockRenderType getRenderType( @Nonnull BlockState state )
+    {
+        return BlockRenderType.MODEL;
+    }
 }

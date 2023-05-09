@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
+import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -85,7 +85,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
 
         keyData.writeBlockPos(this.handler.pos);
         LOGGER.info("sending key press packet: " + key);
-        ClientPlayNetworking.send(new Identifier(DuckyPeriphs.MOD_ID, "key_press_packet"), keyData);
+        NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "key_press_packet"), keyData);
         
         pressedKeys.add(key);
 
@@ -101,7 +101,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
         charData.writeChar(this_char);
         charData.writeInt(modifiers);
         charData.writeBlockPos(this.handler.pos);
-        ClientPlayNetworking.send(new Identifier(DuckyPeriphs.MOD_ID, "char_typed_packet"), charData);
+        NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "char_typed_packet"), charData);
 
         return super.charTyped(this_char, modifiers);
     }
@@ -121,7 +121,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
 
         keyData.writeBlockPos(this.handler.pos);
         LOGGER.info("sending key press packet: " + key);
-        ClientPlayNetworking.send(new Identifier(DuckyPeriphs.MOD_ID, "key_up_packet"), keyData);
+        NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "key_up_packet"), keyData);
         
         pressedKeys.remove(key);
         return super.keyReleased(key, scancode, modifiers);
@@ -144,7 +144,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
                         PacketByteBuf eventDataBuf = new PacketByteBuf(Unpooled.buffer());
                         eventDataBuf.writeInt(sCut);
                         eventDataBuf.writeBlockPos(this.handler.pos);
-                        ClientPlayNetworking.send(new Identifier(DuckyPeriphs.MOD_ID, "event_sent_packet"), eventDataBuf);
+                        NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "event_sent_packet"), eventDataBuf);
                     }
                 } else {
                     // not down anymore, need to cancel event

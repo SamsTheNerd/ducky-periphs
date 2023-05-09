@@ -3,6 +3,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingClient;
+import com.samsthenerd.duckyperiphs.hexcasting.DummyNoHex;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyCaps;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardScreen;
 
@@ -31,7 +32,9 @@ public class DuckyPeriphsClientInit{
 
         if(Platform.isModLoaded("hexcasting")){
             DuckyCastingClient.init();
-        }
+        } else {
+			RenderTypeRegistry.register(RenderLayer.getTranslucent(), DummyNoHex.FOCAL_PORT_BLOCK.get(), DummyNoHex.CONJURED_DUCKY_BLOCK.get());
+		}
     }
 
     private static void registerColorProviders(){

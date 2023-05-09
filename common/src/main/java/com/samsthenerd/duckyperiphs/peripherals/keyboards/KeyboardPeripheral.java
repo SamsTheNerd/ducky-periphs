@@ -44,14 +44,14 @@ public class KeyboardPeripheral implements IPeripheral {
     public void sendKey(int key, Boolean repeat) {
         for (IComputerAccess computer : computers) {
             // computer.queueEvent("key", key);
-            computer.queueEvent("key", new Object[] { key, repeat}, computer.getAttachmentName());
+            computer.queueEvent("key", key, repeat, computer.getAttachmentName());
         }
     }
 
     public void sendKeyUp(int key){
         for (IComputerAccess computer : computers) {
             // computer.queueEvent("key", key);
-            computer.queueEvent("key_up", new Object[] { key}, computer.getAttachmentName());
+            computer.queueEvent("key_up", key, computer.getAttachmentName());
         }
     }
 

@@ -38,6 +38,7 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, N
     public KeyboardTile(BlockEntityType<KeyboardTile> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         kbPeriph = new KeyboardPeripheral(this);
+        keyCaps = new KeyCaps();
     }
 
     public KeyboardTile(BlockPos pos, BlockState state) {

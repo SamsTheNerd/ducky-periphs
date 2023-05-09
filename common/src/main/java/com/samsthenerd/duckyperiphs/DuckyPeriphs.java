@@ -1,5 +1,7 @@
 package com.samsthenerd.duckyperiphs;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import org.slf4j.Logger;
@@ -29,7 +31,6 @@ import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.Registries;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
@@ -57,12 +58,13 @@ public class DuckyPeriphs{
 	public static final Supplier<Registries> REGISTRIES = Suppliers.memoize(() -> Registries.get(MOD_ID));
 
 	// various architectury registry wrappers - could maybe move each into their own files, we'll see.
-	public static Registrar<Item> items = REGISTRIES.get().get(Registry.ITEM_KEY);
-	public static Registrar<Block> blocks = REGISTRIES.get().get(Registry.BLOCK_KEY);
+	public static DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, Registry.ITEM_KEY);
+	public static DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, Registry.BLOCK_KEY);
+	public static Map<RegistrySupplier<? extends Block>, Item.Settings> blockItems = new HashMap<>();
 	public static DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(MOD_ID, Registry.BLOCK_ENTITY_TYPE_KEY);
-	public static Registrar<EntityType<?>> entities = REGISTRIES.get().get(Registry.ENTITY_TYPE_KEY);
-	public static final Registrar<SoundEvent> sounds = REGISTRIES.get().get(Registry.SOUND_EVENT_KEY);
-	public static final Registrar<GameEvent> gameEvents = REGISTRIES.get().get(Registry.GAME_EVENT_KEY);
+	public static DeferredRegister<EntityType<?>> entities = DeferredRegister.create(MOD_ID, Registry.ENTITY_TYPE_KEY);
+	public static final DeferredRegister<SoundEvent> sounds = DeferredRegister.create(MOD_ID, Registry.SOUND_EVENT_KEY);
+	public static final DeferredRegister<GameEvent> gameEvents = DeferredRegister.create(MOD_ID, Registry.GAME_EVENT_KEY);
 	public static final DeferredRegister<ScreenHandlerType<?> > screenHandlers = DeferredRegister.create(MOD_ID, Registry.MENU_KEY);
 
 	public static final ItemGroup CC_PERIPHS_GROUP = CreativeTabRegistry.create(
@@ -119,7 +121,6 @@ public class DuckyPeriphs{
 		setupNetworkStuff();
 		setupMisc();
 
-		DuckyBanners.registerBannerPatterns();
 		// registerLoot();
 
 		DPRecipeSerializer.init();
@@ -131,7 +132,18 @@ public class DuckyPeriphs{
 			DummyNoHex.init();
 		}
 
+		blocks.register();
+		blockItems.forEach((block, itemprops) -> {
+			items.register(block.getId(), () -> new BlockItem(block.get(), itemprops));
+		});
+		items.register();
 		blockEntities.register();
+		entities.register();
+		sounds.register();
+		gameEvents.register();
+		screenHandlers.register();
+
+		DuckyBanners.registerBannerPatterns();
 	}
 
 	private static void setupNetworkStuff(){
@@ -178,8 +190,10 @@ public class DuckyPeriphs{
     }
 
     public static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block, Item.Settings props) {
-		items.register(new Identifier(MOD_ID, name), () -> new BlockItem(block.get(), props));
-        return blockNoItem(name, block);
+		RegistrySupplier<T> blockRegistered = blockNoItem(name, block);
+		blockItems.put(blockRegistered, props);
+		// items.register(new Identifier(MOD_ID, name), () -> new BlockItem(block.get(), props));
+        return blockRegistered;
     }
 
 	public static RegistrySupplier<SoundEvent> soundEvent(String id){

@@ -1,10 +1,12 @@
 package com.samsthenerd.duckyperiphs.peripherals.EntityDetector;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -29,5 +31,12 @@ public class EntityDetectorBlock extends BlockWithEntity{
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state )
     {
         return new EntityDetectorTile(pos, state);
+    }
+
+    @Nonnull
+    @Override
+    public BlockRenderType getRenderType( @Nonnull BlockState state )
+    {
+        return BlockRenderType.MODEL;
     }
 }

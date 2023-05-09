@@ -1,9 +1,11 @@
 package com.samsthenerd.duckyperiphs.peripherals.WeatherMachine;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.FacingBlock;
@@ -54,4 +56,10 @@ public class WeatherMachineBlock extends BlockWithEntity{
         return new WeatherMachineTile(pos, state);
     }
 
+    @Nonnull
+    @Override
+    public BlockRenderType getRenderType( @Nonnull BlockState state )
+    {
+        return BlockRenderType.MODEL;
+    }
 }

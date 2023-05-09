@@ -15,9 +15,6 @@ public class DuckyCastingClient {
 
     public static void init(){
         // EntityRendererRegistry.register( DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY, EmptyEntityRenderer::new);
-        // BlockRenderLayerMap.INSTANCE.putBlock(DuckyCasting.FOCAL_PORT_BLOCK, RenderLayer.getTranslucent());
-
-        // BlockRenderLayerMap.INSTANCE.putBlock(DuckyCasting.CONJURED_DUCKY_BLOCK, RenderLayer.getTranslucent());
         // BlockEntityRendererRegistry.register(DuckyCasting.CONJURED_DUCKY_BLOCK_ENTITY, ConjuredDuckyBER::new);
 
         setupColorProviders();

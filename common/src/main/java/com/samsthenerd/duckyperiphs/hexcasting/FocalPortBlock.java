@@ -2,11 +2,13 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -52,5 +54,12 @@ public class FocalPortBlock extends BlockWithEntity{
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state )
     {
         return new FocalPortBlockEntity(pos, state);
+    }
+
+    @Nonnull
+    @Override
+    public BlockRenderType getRenderType( @Nonnull BlockState state )
+    {
+        return BlockRenderType.MODEL;
     }
 }
