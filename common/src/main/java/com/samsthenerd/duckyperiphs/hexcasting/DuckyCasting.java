@@ -6,15 +6,12 @@ import at.petrak.hexcasting.api.PatternRegistry;
 import at.petrak.hexcasting.api.spell.math.HexDir;
 import at.petrak.hexcasting.api.spell.math.HexPattern;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class DuckyCasting {
     // focal port (hex casting)
@@ -38,8 +35,6 @@ public class DuckyCasting {
 		FOCAL_PORT_WRAPPER_ENTITY = DuckyPeriphs.entities.register(new Identifier(DuckyPeriphs.MOD_ID, "focal_port_wrapper_entitiy"),
 			() -> EntityType.Builder.create(FocalPortWrapperEntity::new, SpawnGroup.MISC).setDimensions(0.5f, 0.5f).build(new Identifier(DuckyPeriphs.MOD_ID, "focal_port_wrapper_entitiy").toString()));
 
-		Registry.register(Registry.ENTITY_TYPE, "ducky-periphs:focal_port_wrapper_entity", 
-				FabricEntityTypeBuilder.<FocalPortWrapperEntity>create(SpawnGroup.MISC, FocalPortWrapperEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build()); 
 
 		CONJURED_DUCKY_BLOCK = DuckyPeriphs.blockItem("conjured_ducky_block", 
 			() -> new ConjuredDuckyBlock(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)));

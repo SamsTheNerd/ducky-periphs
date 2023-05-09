@@ -16,7 +16,6 @@ import at.petrak.hexcasting.api.spell.iota.NullIota;
 import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -39,7 +38,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTileDucky, ADIotaHolder, RenderAttachmentBlockEntity, Inventory{
+public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTileDucky, ADIotaHolder, Inventory{
     private FocalPortPeripheral fpPeriph;
     private ItemStack innerFocusStack;
     private int iotaColor;
@@ -93,7 +92,6 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     public void destroy(){
         ItemScatterer.spawn(world, pos, (Inventory)((Object)this));
         despawnWrapperEntity();
-        // super.destroy();
     }
 
     @Nullable
@@ -180,7 +178,9 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     public Iota getIota(){
         Iota iota = new NullIota();
         if(!innerFocusStack.isEmpty() && getWorld() instanceof ServerWorld){
-            return HexIotaTypes.deserialize(readIotaTag(),(ServerWorld)getWorld());
+            NbtCompound tag = readIotaTag();
+            if(tag != null)
+                return HexIotaTypes.deserialize(tag,(ServerWorld)getWorld());
         }
         setColor(iota.getType().color());
         return iota;
@@ -207,11 +207,6 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
             return 0xFF808080; // like a really dark gray/light black
         }
         return this.iotaColor;
-    }
-
-    @Override
-    public Object getRenderAttachmentData(){
-        return getColor();
     }
 
     @Nullable
