@@ -16,10 +16,10 @@ import at.petrak.hexcasting.api.spell.iota.NullIota;
 import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.shared.common.TileGeneric;
 import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachmentBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +39,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTileDucky, ADIotaHolder, RenderAttachmentBlockEntity, Inventory{
+public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTileDucky, ADIotaHolder, RenderAttachmentBlockEntity, Inventory{
     private FocalPortPeripheral fpPeriph;
     private ItemStack innerFocusStack;
     private int iotaColor;
@@ -47,7 +47,7 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
     private UUID wrapperEntityUUID;
 
     public FocalPortBlockEntity(BlockPos pos, BlockState state) {
-        super(DuckyCasting.FOCAL_PORT_BLOCK_ENTITY, pos, state);
+        super(DuckyCasting.FOCAL_PORT_BLOCK_ENTITY.get(), pos, state);
         DuckyPeriphs.LOGGER.info("FocalPortBlockEntity created at " + pos.toString());
         fpPeriph = new FocalPortPeripheral(this);
         iotaColor = NullIota.TYPE.color();
@@ -66,8 +66,8 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         if(wrapperEntity != null){
             return;
         }
-        wrapperEntity = new FocalPortWrapperEntity(DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY, world);
-        wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.spawn((ServerWorld)world, null, null, null, pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
+        wrapperEntity = new FocalPortWrapperEntity(DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get(), world);
+        wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get().spawn((ServerWorld)world, null, null, null, pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
         wrapperEntityUUID = wrapperEntity.getUuid();
         this.markDirty();
     }
@@ -90,11 +90,10 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
         }
     }
 
-    @Override
     public void destroy(){
         ItemScatterer.spawn(world, pos, (Inventory)((Object)this));
         despawnWrapperEntity();
-        super.destroy();
+        // super.destroy();
     }
 
     @Nullable
@@ -289,9 +288,8 @@ public class FocalPortBlockEntity extends TileGeneric implements IPeripheralTile
     }
 
 
-    @Override
     public @Nonnull ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit) {
-        Optional<FocalPortBlockEntity> beOpt = world.getBlockEntity(pos, DuckyCasting.FOCAL_PORT_BLOCK_ENTITY);
+        Optional<FocalPortBlockEntity> beOpt = world.getBlockEntity(pos, DuckyCasting.FOCAL_PORT_BLOCK_ENTITY.get());
         if(beOpt.isPresent()){
             FocalPortBlockEntity be = beOpt.get();
             if(be.hasFocus()){

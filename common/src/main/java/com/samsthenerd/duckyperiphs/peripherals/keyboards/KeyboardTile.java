@@ -9,7 +9,7 @@ import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.common.TileGeneric;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import dev.architectury.registry.menu.MenuRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, ExtendedScreenHandlerFactory, Nameable {
+public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, Nameable {
     public KeyboardPeripheral kbPeriph;
     private Text customName;
     KeyCaps keyCaps;
@@ -54,18 +54,15 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, E
     @Override
     public @Nonnull ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit){
         World world = getWorld();
-        // BlockState state = world.getBlockState(getPos());
-        // if(!world.isClient){
-        //     // get block
-        //     KeyboardBlock kbBlock = (KeyboardBlock)state.getBlock();
-        //     kbBlock.openScreen(state, world, getPos(), player);
-        // }
-        if( !world.isClient ) player.openHandledScreen( this );
+        
+        if( !world.isClient ) MenuRegistry.openExtendedMenu((ServerPlayerEntity) player, 
+            new KeyboardScreenHandler.KeyboardScreenHandlerFactory(this), (packetByteBuf -> {
+                writeScreenOpeningData((ServerPlayerEntity) player, packetByteBuf);
+            }));
         return ActionResult.SUCCESS; 
     }
 
     @Nonnull
-    @Override
     public ScreenHandler createMenu(int syncId, @Nonnull PlayerInventory inv, @Nonnull PlayerEntity player) {
         return new KeyboardScreenHandler(syncId, inv);
     }
@@ -94,7 +91,6 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, E
         return this.customName;
     }
     
-    @Override
     public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf){
         packetByteBuf.writeBlockPos( getPos() );
     }

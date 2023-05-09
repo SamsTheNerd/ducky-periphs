@@ -1,5 +1,7 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
+import com.samsthenerd.duckyperiphs.hexcasting.utils.HexyMiddleVertexConsumer;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;

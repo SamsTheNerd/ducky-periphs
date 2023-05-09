@@ -55,22 +55,22 @@ public class DuckyPeriphsClientInit{
 				// return KeyCaps.DEFAULT_COLOR;
 			}
 			return DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).getZoneColor(tintIndex);
-		}, DuckyPeriphs.KEYBOARD_BLOCK);
+		}, DuckyPeriphs.KEYBOARD_BLOCK.get());
 
 		ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
 			return KeyCaps.fromItemStack(stack).getZoneColor(tintIndex);
-		}, DuckyPeriphs.KEYBOARD_ITEM);
+		}, DuckyPeriphs.KEYBOARD_ITEM.get());
 
         // duck color providers
 		ColorHandlerRegistry.registerBlockColors((state,view,pos, tintIndex) -> {
 			return DuckyPeriphs.DUCK_BLOCK.get().getColor(view, pos);
-		}, DuckyPeriphs.DUCK_BLOCK);
+		}, DuckyPeriphs.DUCK_BLOCK.get());
 
 		ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> {
 			if(tintIndex != 0) {
 				return 0xFFFFFF;
 			}
 			return DuckyPeriphs.DUCK_ITEM.get().getColor(stack);
-		}, DuckyPeriphs.DUCK_ITEM);
+		}, DuckyPeriphs.DUCK_ITEM.get());
     }
 }

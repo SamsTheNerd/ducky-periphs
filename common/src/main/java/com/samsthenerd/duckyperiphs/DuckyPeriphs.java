@@ -1,7 +1,5 @@
 package com.samsthenerd.duckyperiphs;
 
-import java.util.Arrays;
-import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import org.slf4j.Logger;
@@ -12,6 +10,7 @@ import com.samsthenerd.duckyperiphs.ducks.DuckBlock;
 import com.samsthenerd.duckyperiphs.ducks.DuckBlockEntity;
 import com.samsthenerd.duckyperiphs.ducks.DuckItem;
 import com.samsthenerd.duckyperiphs.hexcasting.DuckyCasting;
+import com.samsthenerd.duckyperiphs.hexcasting.DummyNoHex;
 import com.samsthenerd.duckyperiphs.misc.DuckyBanners;
 import com.samsthenerd.duckyperiphs.peripherals.EntityDetector.EntityDetectorBlock;
 import com.samsthenerd.duckyperiphs.peripherals.EntityDetector.EntityDetectorTile;
@@ -24,7 +23,6 @@ import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardTile;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardUtils;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
-import com.samsthenerd.duckyperiphs.utils.EntityFromBlockEntity;
 
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
@@ -35,10 +33,7 @@ import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.Registries;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
-import net.minecraft.block.cauldron.CauldronBehavior;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BannerPatternItem;
@@ -49,7 +44,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.event.GameEvent;
 
@@ -79,35 +73,35 @@ public class DuckyPeriphs{
 
 	// Weather Machine Registering
 	public static RegistrySupplier<WeatherMachineBlock> WEATHER_MACHINE_BLOCK = blockItem("weather_machine_block", () -> new WeatherMachineBlock(peripheralBlockSettings()));
-	public static RegistrySupplier<BlockEntityType<WeatherMachineTile>> WEATHER_MACHINE_TILE = blockEntity("weather_machine_tile", (blockPos, blockState) -> new WeatherMachineTile(blockPos, blockState), WEATHER_MACHINE_BLOCK);
+	public static RegistrySupplier<BlockEntityType<WeatherMachineTile>> WEATHER_MACHINE_TILE = blockEntities.register(new Identifier(MOD_ID, "weather_machine_tile"), () -> BlockEntityType.Builder.create(WeatherMachineTile::new, WEATHER_MACHINE_BLOCK.get()).build(null));
 
 	// Entity Detector Registering
 	public static final RegistrySupplier<EntityDetectorBlock> ENTITY_DETECTOR_BLOCK = blockItem("entity_detector_block", () -> new EntityDetectorBlock(peripheralBlockSettings()));
-	public static RegistrySupplier<BlockEntityType<EntityDetectorTile>> ENTITY_DETECTOR_TILE = blockEntity("entity_detector_tile", (blockPos, blockState) -> new EntityDetectorTile(blockPos, blockState), ENTITY_DETECTOR_BLOCK);
+	public static RegistrySupplier<BlockEntityType<EntityDetectorTile>> ENTITY_DETECTOR_TILE = blockEntities.register(new Identifier(MOD_ID, "entity_detector_tile"), () -> BlockEntityType.Builder.create(EntityDetectorTile::new, ENTITY_DETECTOR_BLOCK.get()).build(null));
 
 	// Keyboard Registering - may end up having more keyboards here later
 	public static final RegistrySupplier<KeyboardBlock> KEYBOARD_BLOCK = blockNoItem("keyboard_block", () -> new KeyboardBlock(peripheralBlockSettings().hardness((float)0.7)));
-	public static RegistrySupplier<BlockEntityType<KeyboardTile>> KEYBOARD_TILE = blockEntity("keyboard_tile", (blockPos, blockState) -> new KeyboardTile(blockPos, blockState), KEYBOARD_BLOCK);
+	public static RegistrySupplier<BlockEntityType<KeyboardTile>> KEYBOARD_TILE = blockEntities.register(new Identifier(MOD_ID, "keyboard_tile"), () -> BlockEntityType.Builder.create(KeyboardTile::new, KEYBOARD_BLOCK.get()).build(null));
 	public static final RegistrySupplier<KeyboardItem> KEYBOARD_ITEM = item("keyboard_block", () -> new KeyboardItem(KEYBOARD_BLOCK.get(), new Item.Settings().group(CC_PERIPHS_GROUP)));
 	public static final ScreenHandlerType<KeyboardScreenHandler> KEYBOARD_SCREEN_HANDLER = MenuRegistry.ofExtended(KeyboardScreenHandler::new);
 	public static final Identifier KEYBOARD_PRESS_PACKET_ID = new Identifier(MOD_ID, "keyboard_press");
 
 	//duck time !
 	public static final RegistrySupplier<DuckBlock> DUCK_BLOCK = blockNoItem("duck_block", () -> new DuckBlock(Block.Settings.of(Material.WOOL).hardness((float)0.2)));
-	public static RegistrySupplier<BlockEntityType<DuckBlockEntity>> DUCK_BLOCK_ENTITY = blockEntity("duck_block_entity", (blockPos, blockState) -> new DuckBlockEntity(blockPos, blockState), DUCK_BLOCK);
+	public static RegistrySupplier<BlockEntityType<DuckBlockEntity>> DUCK_BLOCK_ENTITY = blockEntities.register(new Identifier(MOD_ID, "duck_block_entity"), () -> BlockEntityType.Builder.create(DuckBlockEntity::new, DUCK_BLOCK.get()).build(null));
 	public static final RegistrySupplier<DuckItem> DUCK_ITEM = item("duck_block", () -> new DuckItem(DUCK_BLOCK.get(), dpItemSettings()));
 	public static RegistrySupplier<SoundEvent> QUACK_SOUND_EVENT = soundEvent("quack");
 	public static RegistrySupplier<GameEvent> QUACK_GAME_EVENT = gameEvent("quack", 16);
 
 	// sculkophone
 	public static final RegistrySupplier<SculkophoneBlock> SCULKOPHONE_BLOCK = blockItem("sculkophone_block", () -> new SculkophoneBlock(peripheralBlockSettings().hardness((float)0.7)));
-	public static RegistrySupplier<BlockEntityType<SculkophoneBlockEntity>> SCULKOPHONE_BLOCK_ENTITY = blockEntity("sculkophone_block_entity", (blockPos, blockState) -> new SculkophoneBlockEntity(blockPos, blockState), SCULKOPHONE_BLOCK.get());
+	public static RegistrySupplier<BlockEntityType<SculkophoneBlockEntity>> SCULKOPHONE_BLOCK_ENTITY = blockEntities.register("sculkophone_block_entity", () -> BlockEntityType.Builder.create(SculkophoneBlockEntity::new, SCULKOPHONE_BLOCK.get()).build(null));
 	public static RegistrySupplier<SoundEvent> SCULKOPHONE_CLICKING_EVENT = soundEvent( "sculkophone_clicking");
 	public static RegistrySupplier<SoundEvent> SCULKOPHONE_CLICKING_STOP_EVENT = soundEvent("sculkophone_clicking_stop");
 	// public static GameEvent SCULKOPHONE_CLICKING_GAME_EVENT;
 
 	// it's just helpful - using it mainly for focal port hex casting rn but not unique to it
-	public static RegistrySupplier<EntityType<EntityFromBlockEntity>> ENTITY_FROM_BLOCK_ENTITY;
+	// public static RegistrySupplier<EntityType<EntityFromBlockEntity>> ENTITY_FROM_BLOCK_ENTITY;
 
 	// Banners
 	public static final RegistrySupplier<BannerPatternItem> DUCKY_PATTERN_ITEM = item("ducky_banner_pattern", () -> new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).group(ItemGroup.MISC)));
@@ -132,9 +126,12 @@ public class DuckyPeriphs{
 
 		if(Platform.isModLoaded("hexcasting")){
 			DuckyCasting.init();
+		} else {
+			// setup dummy blocks/items for when hexcasting isn't loaded
+			DummyNoHex.init();
 		}
 
-		
+		blockEntities.register();
 	}
 
 	private static void setupNetworkStuff(){
@@ -156,8 +153,6 @@ public class DuckyPeriphs{
 
 	private static void setupMisc(){
 		screenHandlers.register(new Identifier("ducky-periphs", "keyboard_screen_handler"), () -> KEYBOARD_SCREEN_HANDLER);
-
-		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(DUCK_ITEM.get(), CauldronBehavior.CLEAN_DYEABLE_ITEM);
 	}
 
 
@@ -170,34 +165,28 @@ public class DuckyPeriphs{
 	}
 
 	// stealing from hex casting :D
-	private static <T extends Block> RegistrySupplier<T> blockNoItem(String name, Supplier<T> block) {
+	public static <T extends Block> RegistrySupplier<T> blockNoItem(String name, Supplier<T> block) {
         return blocks.register(new Identifier(MOD_ID, name), block);
     }
 
-	private static <T extends Item> RegistrySupplier<T> item(String name, Supplier<T> item) {
+	public static <T extends Item> RegistrySupplier<T> item(String name, Supplier<T> item) {
 		return items.register(new Identifier(MOD_ID, name), item);
 	}
 
-    private static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block) {
+    public static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block) {
         return blockItem(name, block, dpItemSettings());
     }
 
-    private static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block, Item.Settings props) {
+    public static <T extends Block> RegistrySupplier<T> blockItem(String name, Supplier<T> block, Item.Settings props) {
 		items.register(new Identifier(MOD_ID, name), () -> new BlockItem(block.get(), props));
         return blockNoItem(name, block);
     }
 
-	private static <BET extends BlockEntity> RegistrySupplier<BlockEntityType<BET>> blockEntity(String id,
-        BiFunction<BlockPos, BlockState, BET> func, RegistrySupplier<Block>... blocks) {
-		return blockEntities.register(new Identifier(MOD_ID, id), 
-				() -> BlockEntityType.Builder.create(func::apply, Arrays.stream(blocks).map(RegistrySupplier::get).toArray(Block[]::new)).build(null));
-    }
-
-	private static RegistrySupplier<SoundEvent> soundEvent(String id){
+	public static RegistrySupplier<SoundEvent> soundEvent(String id){
 		return sounds.register(new Identifier(MOD_ID, id), () -> new SoundEvent(new Identifier(MOD_ID, id)));
 	}
 
-	private static RegistrySupplier<GameEvent> gameEvent(String id, int range){
+	public static RegistrySupplier<GameEvent> gameEvent(String id, int range){
 		return gameEvents.register(new Identifier(MOD_ID, id), 
 				() -> new GameEvent(new Identifier(MOD_ID, id).toString(), range));
 	}

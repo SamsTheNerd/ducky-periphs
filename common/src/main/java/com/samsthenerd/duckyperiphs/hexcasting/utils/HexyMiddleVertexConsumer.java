@@ -1,5 +1,6 @@
-package com.samsthenerd.duckyperiphs.hexcasting;
+package com.samsthenerd.duckyperiphs.hexcasting.utils;
 
+import com.samsthenerd.duckyperiphs.hexcasting.ConjuredDuckyBER;
 import com.samsthenerd.duckyperiphs.utils.MiddleVertexConsumer;
 
 import at.petrak.hexcasting.api.misc.FrozenColorizer;

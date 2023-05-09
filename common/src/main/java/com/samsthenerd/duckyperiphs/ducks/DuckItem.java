@@ -6,8 +6,9 @@ import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
-import net.fabricmc.loader.api.FabricLoader;
+import dev.architectury.platform.Platform;
 import net.minecraft.block.Block;
+import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -27,6 +28,7 @@ public class DuckItem extends BlockItem implements DyeableItem{
     public static final int DEFAULT_COLOR = 16701501;
     public DuckItem(Block block, Settings settings) {
         super(block, settings);
+		CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(this, CauldronBehavior.CLEAN_DYEABLE_ITEM);
     }
 
     @Override
@@ -74,7 +76,7 @@ public class DuckItem extends BlockItem implements DyeableItem{
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if(FabricLoader.getInstance().isModLoaded("hexcasting")){
+        if(Platform.isModLoaded("hexcasting")){
             tooltip.add(((MutableText)Text.of("I have the strangest urge to cast scribe's reflection?")).formatted(Formatting.ITALIC, Formatting.GRAY));
         }
     }

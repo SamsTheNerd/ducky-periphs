@@ -13,8 +13,8 @@ import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.shared.common.TileGeneric;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class EntityDetectorTile extends TileGeneric implements IPeripheralTileDucky {
+public class EntityDetectorTile extends BlockEntity implements IPeripheralTileDucky {
     private EntityDetectorPeripheral edPeriph;
 
     // used to track changes so we can fire events when we get a new entity or an old one leaves the range

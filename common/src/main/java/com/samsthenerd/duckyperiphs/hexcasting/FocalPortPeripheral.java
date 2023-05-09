@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.hexcasting.utils.IotaLuaUtils;
 
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import dan200.computercraft.api.lua.LuaFunction;

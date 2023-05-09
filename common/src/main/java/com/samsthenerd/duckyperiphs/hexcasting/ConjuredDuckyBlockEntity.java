@@ -19,7 +19,7 @@ public class ConjuredDuckyBlockEntity extends BlockEntity{
     public static final String TAG_COLORIZER = "tag_colorizer";
 
     public ConjuredDuckyBlockEntity(BlockPos pos, BlockState state) {
-        super(DuckyCasting.CONJURED_DUCKY_BLOCK_ENTITY, pos, state);
+        super(DuckyCasting.CONJURED_DUCKY_BLOCK_ENTITY.get(), pos, state);
     }
 
     public void setColorizer(FrozenColorizer colorizer){

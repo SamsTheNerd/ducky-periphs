@@ -6,9 +6,10 @@ import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
-import dan200.computercraft.shared.common.BlockGeneric;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -16,9 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 
-public class FocalPortBlock extends BlockGeneric{
-    public FocalPortBlock(FabricBlockSettings settings) {
-        super(settings.nonOpaque(), () -> DuckyCasting.FOCAL_PORT_BLOCK_ENTITY);
+public class FocalPortBlock extends BlockWithEntity{
+    public FocalPortBlock(Block.Settings settings) {
+        super(settings.nonOpaque());
         setDefaultState( getStateManager().getDefaultState());
     }
 
@@ -38,11 +39,18 @@ public class FocalPortBlock extends BlockGeneric{
     }
 
     public static int getColor(BlockRenderView world, BlockPos pos){
-        Optional<FocalPortBlockEntity> be = world.getBlockEntity(pos, DuckyCasting.FOCAL_PORT_BLOCK_ENTITY);
+        Optional<FocalPortBlockEntity> be = world.getBlockEntity(pos, DuckyCasting.FOCAL_PORT_BLOCK_ENTITY.get());
         if(be.isPresent()){
             return be.get().getColor();
         } else {
             return 0;
         }
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state )
+    {
+        return new FocalPortBlockEntity(pos, state);
     }
 }

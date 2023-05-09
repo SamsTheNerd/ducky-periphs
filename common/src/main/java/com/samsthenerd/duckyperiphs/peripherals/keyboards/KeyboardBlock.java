@@ -1,10 +1,10 @@
 package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import javax.annotation.Nullable;
 
-import dan200.computercraft.shared.common.BlockGeneric;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
@@ -29,11 +29,11 @@ import net.minecraft.world.World;
  * Might become a more generic abstract superclass with other classes being the final keyboards
  */
 
-public class KeyboardBlock extends BlockGeneric {
+public class KeyboardBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = FacingBlock.FACING;
 
     public KeyboardBlock(Block.Settings settings) {
-        super(settings.nonOpaque(), () -> DuckyPeriphs.KEYBOARD_TILE.get());
+        super(settings.nonOpaque());
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
     }
 
@@ -112,6 +112,13 @@ public class KeyboardBlock extends BlockGeneric {
     @Override
     public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
         return VoxelShapes.empty();
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state )
+    {
+        return new KeyboardTile(pos, state);
     }
 
 }

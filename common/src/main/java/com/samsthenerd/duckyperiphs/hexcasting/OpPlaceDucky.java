@@ -109,11 +109,11 @@ public class OpPlaceDucky implements SpellAction{
             if (!context.canEditBlockAt(pos))
                 return;
             
-            Block block = DuckyCasting.CONJURED_DUCKY_BLOCK;
+            Block block = DuckyCasting.CONJURED_DUCKY_BLOCK.get();
 
             FrozenColorizer colorizer = IXplatAbstractions.INSTANCE.getColorizer(context.getCaster());
 
-            ItemStack duckyItemStack = new ItemStack(DuckyCasting.CONJURED_DUCKY_ITEM);
+            ItemStack duckyItemStack = new ItemStack(DuckyCasting.CONJURED_DUCKY_BLOCK.get().asItem());
 
             ItemPlacementContext placeContext = new ItemPlacementContext(context.getWorld(), context.getCaster(), 
                 context.getCastingHand(), duckyItemStack, new BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false));
@@ -121,7 +121,7 @@ public class OpPlaceDucky implements SpellAction{
 
             BlockState worldState = context.getWorld().getBlockState(pos);
             if (worldState.canReplace(placeContext)) {
-                if (!IXplatAbstractions.INSTANCE.isPlacingAllowed(context.getWorld(), pos, new ItemStack(DuckyCasting.CONJURED_DUCKY_ITEM), context.getCaster()))
+                if (!IXplatAbstractions.INSTANCE.isPlacingAllowed(context.getWorld(), pos, new ItemStack(DuckyCasting.CONJURED_DUCKY_BLOCK.get().asItem()), context.getCaster()))
                     return;
 
                 BlockState state = block.getPlacementState(placeContext).with(ConjuredDuckyBlock.FACING, direction);

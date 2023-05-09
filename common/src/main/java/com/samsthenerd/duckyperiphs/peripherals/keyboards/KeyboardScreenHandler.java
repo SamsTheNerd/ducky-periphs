@@ -9,7 +9,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 public class KeyboardScreenHandler extends ScreenHandler{
@@ -55,5 +57,22 @@ public class KeyboardScreenHandler extends ScreenHandler{
     //     });
     // }
 
+    public static class KeyboardScreenHandlerFactory implements NamedScreenHandlerFactory {
+        private final KeyboardTile tile;
+
+        public KeyboardScreenHandlerFactory(KeyboardTile tile) {
+            this.tile = tile;
+        }
+
+        @Override
+        public Text getDisplayName(){
+            return tile.getDisplayName();
+        }
+
+        @Override
+        public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+            return new KeyboardScreenHandler(syncId, inv);
+        }
+    }
 
 }

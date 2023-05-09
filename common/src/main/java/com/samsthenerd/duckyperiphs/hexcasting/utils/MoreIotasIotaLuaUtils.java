@@ -1,4 +1,4 @@
-package com.samsthenerd.duckyperiphs.hexcasting;
+package com.samsthenerd.duckyperiphs.hexcasting.utils;
 
 import java.util.HashMap;
 import java.util.Map;
