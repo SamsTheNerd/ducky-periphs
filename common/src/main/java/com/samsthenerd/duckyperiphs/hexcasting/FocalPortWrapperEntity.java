@@ -4,15 +4,15 @@ import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.utils.EntityFromBlockEntity;
 
+import at.petrak.hexcasting.api.addldata.ADIotaHolder;
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
-import at.petrak.hexcasting.fabric.cc.adimpl.CCIotaHolder;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
-public class FocalPortWrapperEntity extends EntityFromBlockEntity implements CCIotaHolder{
+public class FocalPortWrapperEntity extends EntityFromBlockEntity implements ADIotaHolder{
     public FocalPortWrapperEntity(EntityType<? extends FocalPortWrapperEntity> entityType, World world) {
         super(entityType, world, FocalPortBlockEntity.class);
     }
@@ -50,16 +50,17 @@ public class FocalPortWrapperEntity extends EntityFromBlockEntity implements CCI
         return false;
     }
 
-
     // this is for component, I don't think it really needs that ? - entity nbt is handled by super and iota nbt is handled by block entity ?
-    @Override 
+    // @Override 
     public void writeToNbt(NbtCompound tag){
         tag.putBoolean("hasHexCC", true);
     }
 
-    @Override
+    // @Override
     public void readFromNbt(NbtCompound tag){
         tag.getBoolean("hasHexCC");
     }
+
+    
 
 }

@@ -32,7 +32,7 @@ public class DuckyCasting {
 		FOCAL_PORT_BLOCK_ENTITY = DuckyPeriphs.blockEntities.register(new Identifier(DuckyPeriphs.MOD_ID, "focal_port_block_entity"), 
 			() -> BlockEntityType.Builder.create(FocalPortBlockEntity::new, FOCAL_PORT_BLOCK.get()).build(null));
 
-		FOCAL_PORT_WRAPPER_ENTITY = DuckyPeriphs.entities.register(new Identifier(DuckyPeriphs.MOD_ID, "focal_port_wrapper_entitiy"),
+		FOCAL_PORT_WRAPPER_ENTITY = DuckyPeriphs.entities.register(new Identifier(DuckyPeriphs.MOD_ID, "focal_port_wrapper_entity"),
 			() -> EntityType.Builder.create(FocalPortWrapperEntity::new, SpawnGroup.MISC).setDimensions(0.5f, 0.5f).build(new Identifier(DuckyPeriphs.MOD_ID, "focal_port_wrapper_entitiy").toString()));
 
 
