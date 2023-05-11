@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import at.petrak.hexcasting.api.client.ScryingLensOverlayRegistry;
 import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
@@ -24,13 +25,20 @@ import net.minecraft.text.TextColor;
 public class DuckyCastingClient {
 
     public static void init(){
-        EntityRendererRegistry.register( DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY, EmptyEntityRenderer::new);
         BlockEntityRendererRegistry.register(DuckyCasting.CONJURED_DUCKY_BLOCK_ENTITY.get(), ConjuredDuckyBER::new);
+
+        if(Platform.isFabric()){
+            registerEntityRenderers();
+        }
 
         RenderTypeRegistry.register(RenderLayer.getTranslucent(), DuckyCasting.FOCAL_PORT_BLOCK.get(), DuckyCasting.CONJURED_DUCKY_BLOCK.get());
 
         setupColorProviders();
         setupScryingDisplayers();
+    }
+
+    public static void registerEntityRenderers(){
+        EntityRendererRegistry.register( DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY, EmptyEntityRenderer::new);
     }
 
     private static void setupColorProviders(){

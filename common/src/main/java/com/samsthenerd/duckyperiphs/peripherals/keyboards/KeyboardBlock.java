@@ -3,6 +3,7 @@ package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import dan200.computercraft.shared.common.TileGeneric;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -102,6 +103,14 @@ public class KeyboardBlock extends BlockWithEntity {
                 ((KeyboardTile)blockEntity).keyCaps = itemKeyCaps;
             }
         }
+    }
+
+    @Override
+    @Deprecated
+    public final void neighborUpdate( @Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull Block neighbourBlock, @Nonnull BlockPos neighbourPos, boolean isMoving )
+    {
+        BlockEntity tile = world.getBlockEntity( pos );
+        if( tile instanceof TileGeneric generic ) generic.onNeighbourChange( neighbourPos );
     }
 
     protected static final VoxelShape SHAPE = Block.createCuboidShape(5, 1, 1, 11, 2, 15);

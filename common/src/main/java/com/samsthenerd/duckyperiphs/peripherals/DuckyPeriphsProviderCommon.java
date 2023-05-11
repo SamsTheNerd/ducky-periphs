@@ -3,7 +3,10 @@ package com.samsthenerd.duckyperiphs.peripherals;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.samsthenerd.duckyperiphs.hexcasting.lonelyPeripherals.DuckyCastingLonelyPeripheralProvider;
+
 import dan200.computercraft.api.peripheral.IPeripheral;
+import dev.architectury.platform.Platform;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -16,6 +19,12 @@ public class DuckyPeriphsProviderCommon{
         BlockEntity be = world.getBlockEntity(pos);
         if(be instanceof IPeripheralTileDucky){
             return ((IPeripheralTileDucky)be).getPeripheral(side);
+        }
+        if(Platform.isModLoaded("hexcasting")){
+            IPeripheral lonelyHexPeriph = DuckyCastingLonelyPeripheralProvider.getPeripheral(world, pos, side);
+            if(lonelyHexPeriph != null){
+                return lonelyHexPeriph;
+            }
         }
         return null;
     }

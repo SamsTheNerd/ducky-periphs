@@ -5,12 +5,16 @@ import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import at.petrak.hexcasting.api.PatternRegistry;
 import at.petrak.hexcasting.api.spell.math.HexDir;
 import at.petrak.hexcasting.api.spell.math.HexPattern;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
+import dev.architectury.utils.Env;
+import dev.architectury.utils.EnvExecutor;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 public class DuckyCasting {
@@ -37,12 +41,16 @@ public class DuckyCasting {
 
 
 		CONJURED_DUCKY_BLOCK = DuckyPeriphs.blockItem("conjured_ducky_block", 
-			() -> new ConjuredDuckyBlock(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)));
+			() -> new ConjuredDuckyBlock(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
 
 		CONJURED_DUCKY_BLOCK_ENTITY = DuckyPeriphs.blockEntities.register(new Identifier(DuckyPeriphs.MOD_ID, "conjured_ducky_block_entity"), 
 			() -> BlockEntityType.Builder.create(ConjuredDuckyBlockEntity::new, CONJURED_DUCKY_BLOCK.get()).build(null));
 
 		// register it to the hex casting registries
+
+		if(Platform.isForge()){
+			EnvExecutor.runInEnv(Env.CLIENT, () -> DuckyCastingClient::registerEntityRenderers);
+		}
 
 		registerSpells();
 	}

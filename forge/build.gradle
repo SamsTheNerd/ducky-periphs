@@ -5,10 +5,12 @@ plugins {
 architectury {
     platformSetupLoomIde()
     forge()
+
 }
 
 loom {
     // accessWidenerPath = project(":common").loom.accessWidenerPath
+
 
     forge {
         // convertAccessWideners = true
@@ -16,6 +18,7 @@ loom {
         // uncomment *and add the file* if we want forge-only mixins?
         // mixinConfig "duckyperiphs.mixins.json"
     }
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 }
 
 configurations {

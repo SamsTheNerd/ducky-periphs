@@ -26,3 +26,17 @@ description = "Adds a variety of peripheral addons for ComputerCraft Tweaked"
     versionRange="[1.19.2]"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.duckyperiphs]]
+    modId="architectury"
+    mandatory=true
+    versionRange="[6.5.82,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.duckyperiphs]]
+    modId="computercraft"
+    mandatory=true
+    versionRange="[1.101.2,)"
+    ordering="NONE"
+    side="BOTH"

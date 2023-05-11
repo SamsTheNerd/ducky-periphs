@@ -6,10 +6,15 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.samsthenerd.duckyperiphs.ducks.DuckItem;
 import com.samsthenerd.duckyperiphs.hexcasting.FocalPortWrapperEntity;
 
+import at.petrak.hexcasting.api.spell.iota.PatternIota;
+import at.petrak.hexcasting.api.spell.math.HexDir;
+import at.petrak.hexcasting.api.spell.math.HexPattern;
 import at.petrak.hexcasting.forge.cap.ForgeCapabilityHandler;
 import at.petrak.hexcasting.forge.cap.HexCapabilities;
+import at.petrak.hexcasting.forge.cap.adimpl.CapStaticIotaHolder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -22,10 +27,19 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 
 public class DuckyCastingCaps {
     public static void attachEntityCaps(AttachCapabilitiesEvent<Entity> evt) {
-        var entity = evt.getObject();
+        Entity entity = evt.getObject();
         if (entity instanceof FocalPortWrapperEntity fpEnt) {
             evt.addCapability(ForgeCapabilityHandler.IOTA_STORAGE_CAP, provide(fpEnt, HexCapabilities.IOTA, 
                 () -> new EntityWrapperIotaCap<FocalPortWrapperEntity>(fpEnt)));
+        }
+    }
+
+    public static void attachItemCaps(AttachCapabilitiesEvent<ItemStack> evt){
+        ItemStack itemStack = evt.getObject();
+        if(itemStack.getItem() instanceof DuckItem duckItem){
+            evt.addCapability(ForgeCapabilityHandler.IOTA_STATIC_CAP, provide(itemStack, HexCapabilities.IOTA, 
+                () -> new CapStaticIotaHolder((s) -> new PatternIota(HexPattern.fromAngles("aqadweeeede", HexDir.NORTH_EAST)), itemStack)
+            ));
         }
     }
 

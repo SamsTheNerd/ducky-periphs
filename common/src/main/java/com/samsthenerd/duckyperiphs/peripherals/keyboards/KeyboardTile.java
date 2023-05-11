@@ -8,9 +8,9 @@ import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.shared.common.TileGeneric;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -30,15 +30,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, Nameable {
+public class KeyboardTile extends BlockEntity implements IPeripheralTileDucky, Nameable {
     public KeyboardPeripheral kbPeriph;
     private Text customName;
-    KeyCaps keyCaps;
+    KeyCaps keyCaps = new KeyCaps();
     
     public KeyboardTile(BlockEntityType<KeyboardTile> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         kbPeriph = new KeyboardPeripheral(this);
-        keyCaps = new KeyCaps();
     }
 
     public KeyboardTile(BlockPos pos, BlockState state) {
@@ -52,7 +51,6 @@ public class KeyboardTile extends TileGeneric implements IPeripheralTileDucky, N
         return kbPeriph;
     }
 
-    @Override
     public @Nonnull ActionResult onActivate(PlayerEntity player, Hand hand, BlockHitResult hit){
         World world = getWorld();
         

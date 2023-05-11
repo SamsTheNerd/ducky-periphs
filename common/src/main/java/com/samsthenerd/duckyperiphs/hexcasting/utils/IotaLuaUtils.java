@@ -12,6 +12,7 @@ import at.petrak.hexcasting.api.spell.iota.DoubleIota;
 import at.petrak.hexcasting.api.spell.iota.EntityIota;
 import at.petrak.hexcasting.api.spell.iota.GarbageIota;
 import at.petrak.hexcasting.api.spell.iota.Iota;
+import at.petrak.hexcasting.api.spell.iota.IotaType;
 import at.petrak.hexcasting.api.spell.iota.ListIota;
 import at.petrak.hexcasting.api.spell.iota.NullIota;
 import at.petrak.hexcasting.api.spell.iota.PatternIota;
@@ -19,8 +20,10 @@ import at.petrak.hexcasting.api.spell.iota.Vec3Iota;
 import at.petrak.hexcasting.api.spell.math.HexAngle;
 import at.petrak.hexcasting.api.spell.math.HexDir;
 import at.petrak.hexcasting.api.spell.math.HexPattern;
+import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
@@ -148,6 +151,14 @@ public class IotaLuaUtils {
         return new GarbageIota();
     }
 
+    public static Object getLuaObject(NbtCompound tag, ServerWorld world){
+        if(tag == null)
+            return null;
+
+        Iota iota = HexIotaTypes.deserialize(tag, world);
+        return getLuaObject(iota, world);
+    }
+
     // server world is only used for gates
     public static Object getLuaObject(Iota iota, ServerWorld world){
         if(iota instanceof NullIota){
@@ -199,10 +210,7 @@ public class IotaLuaUtils {
 
         if(iota instanceof PatternIota){
             HexPattern pat = ((PatternIota)iota).getPattern();
-            Map<String, Object> patTable = new HashMap<String, Object>();
-            patTable.put("startDir", pat.getStartDir().toString()); // not sure this will be quite right but we'll see
-            patTable.put("angles", pat.anglesSignature());
-            return patTable;
+            return getLuaObject(pat);
         }
 
         if(FabricLoader.getInstance().isModLoaded("hexal")){
@@ -221,6 +229,20 @@ public class IotaLuaUtils {
 
         // couldn't find anything useful from it
         return null;
+    }
+
+    public static Map<String, Object> getLuaObject(HexPattern pat){
+        Map<String, Object> patTable = new HashMap<String, Object>();
+        if(pat == null){
+            return null;
+        }
+        patTable.put("startDir", pat.getStartDir().toString()); // not sure this will be quite right but we'll see
+        patTable.put("angles", pat.anglesSignature());
+        return patTable;
+    }
+
+    public static String getIotaTypeID(IotaType<?> type){
+        return HexIotaTypes.REGISTRY.getId(type).toString();
     }
 
     private static Map<String, Object> makeGarbageTable(){

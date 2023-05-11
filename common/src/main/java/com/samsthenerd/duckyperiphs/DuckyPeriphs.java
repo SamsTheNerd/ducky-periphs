@@ -26,6 +26,7 @@ import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardUtils;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
 
+import dev.architectury.event.events.common.LootEvent;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
@@ -42,6 +43,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootTables;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -120,6 +124,8 @@ public class DuckyPeriphs{
 
 		setupNetworkStuff();
 		setupMisc();
+		registerLoot();
+
 
 		// registerLoot();
 
@@ -205,18 +211,25 @@ public class DuckyPeriphs{
 				() -> new GameEvent(new Identifier(MOD_ID, id).toString(), range));
 	}
 
-	private static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
-	// private static void registerLoot(){
-	// 	LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-	// 		if (source.isBuiltin() && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)
-	// 		|| LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) || LootTables.DESERT_PYRAMID_CHEST.equals(id)
-	// 		|| LootTables.WOODLAND_MANSION_CHEST.equals(id) || LootTables.JUNGLE_TEMPLE_CHEST.equals(id))) {
-	// 			LootPool[] pools = lootManager.getTable(keyboardLootTable).pools;
-	// 			if(pools.length > 0){
-	// 				LootPool pool= pools[0];
-	// 				tableBuilder.pool(pool);
-	// 			}
-	// 		}
-	// 	});
-	// }
+	public static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
+	private static void registerLoot(){
+		if(!Platform.isForge()){
+			LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
+				if (shouldAddKeyboards(id, builtin)) {
+					LootTable kbLootTable = lootTables.getTable(keyboardLootTable);
+					LootPool[] pools = kbLootTable.pools;
+					for (LootPool pool : pools) {
+						context.addPool(pool);
+					}
+				}
+			});
+		}
+	}
+
+	// since we have to do it weird on forge, expose this for easier future modification
+	public static boolean shouldAddKeyboards(Identifier id, boolean builtin){
+		return builtin && (LootTables.SIMPLE_DUNGEON_CHEST.equals(id)
+			|| LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) || LootTables.DESERT_PYRAMID_CHEST.equals(id)
+			|| LootTables.WOODLAND_MANSION_CHEST.equals(id) || LootTables.JUNGLE_TEMPLE_CHEST.equals(id));
+	}
 }

@@ -57,6 +57,7 @@ public class DuckyPeriphsClientInit{
 				return DyeColor.BLUE.getFireworkColor();
 				// return KeyCaps.DEFAULT_COLOR;
 			}
+			// DuckyPeriphs.LOGGER.info("got key caps:" + DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).craftingNulls);
 			return DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).getZoneColor(tintIndex);
 		}, DuckyPeriphs.KEYBOARD_BLOCK.get());
 
