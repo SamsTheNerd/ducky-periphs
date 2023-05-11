@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.0
+
+### Added
+
+- Forge !
+- Peripherals for akashic records, akashic bookshelves, slates
+- getIotaType method for focal port
+
+### Changed
+
+- Now requires architectury api
+
+### Fixed
+
+- Bugs related to empty focus in focal port (#12, #16, #13?)
+- Bug with non-character keys not sending from keyboard (#10)
+- Bug with blocks not being pickaxe mineable without hexcasting installed (#9)
+
 ## 1.1.5
 
 ### Added
@@ -7,6 +25,7 @@
 - Ducky Banner Pattern
 - Conjurable ducky hexcasting spell.
 - Precustomized keyboards as dungeon loot
+- Hexal Mote Support
 
 ### Changed
 
@@ -16,8 +35,6 @@
 
 - Sodium biome blending the ducks
 - Focal port not behaving without hexal/moreiotas
-
-
 
 ## 1.1.4
 
@@ -77,7 +94,6 @@
 ### Fixed
 - Crash when teleporting away from weather machine
 - REI opening up with the keyboard
-
 
 <br>
 
