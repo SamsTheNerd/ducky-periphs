@@ -33,7 +33,7 @@
     ]
   },
   "mixins": [
-    "duckyperiphs.mixins.json"
+    "ducky-periphs.mixins.json"
   ],
 
   "depends": {
