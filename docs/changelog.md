@@ -5,18 +5,21 @@
 ### Added
 
 - Forge !
-- Peripherals for akashic records, akashic bookshelves, slates
+- Peripherals for akashic records, akashic bookshelves, slates, and impetuses
 - getIotaType method for focal port
 
 ### Changed
 
 - Now requires architectury api
+- Mote iota representation to prevent arbitrary access
+- Null iota representation to work better with lists
 
 ### Fixed
 
 - Bugs related to empty focus in focal port (#12, #16, #13?)
 - Bug with non-character keys not sending from keyboard (#10)
 - Bug with blocks not being pickaxe mineable without hexcasting installed (#9)
+- List with null behaving improperly (#17)
 
 ## 1.1.5
 

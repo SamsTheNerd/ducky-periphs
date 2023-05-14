@@ -80,6 +80,36 @@ This peripheral lets you read and write between <a href="https://modrinth.com/mo
 </code></pre>
 </td>
     </tr>
+    <tr id="getIotaType">
+        <td>
+            getIotaType()
+        </td>
+        <td width = 200>
+            Returns the type of the iota in the focal port
+        </td>
+        <td>
+            none
+        </td>
+        <td width=350>
+<pre><code class="language-json">string: iota identifier
+</code></pre>
+</td>
+    </tr>
+    <tr id="hasFocus">
+        <td>
+            hasFocus()
+        </td>
+        <td width = 200>
+            Checks if the focal port has a focus in it
+        </td>
+        <td>
+            none
+        </td>
+        <td width=350>
+<pre><code class="language-json">boolean
+</code></pre>
+</td>
+    </tr>
 </table>
 
 <br>
