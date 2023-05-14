@@ -100,7 +100,8 @@ public class HexalIotaLuaUtils {
                 UUID moteUUID = UUID.fromString((String)table.get("moteUuid"));
                 String itemID = (String)table.get("itemID");
                 MoteData moteData = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getMoteData(moteUUID);
-                if(moteData == null || moteData.itemID() != itemID){
+
+                if(moteData == null || !itemID.equals(moteData.itemID())){
                     return new GarbageIota();
                 }
                 UUID storageUUID = moteData.uuid();

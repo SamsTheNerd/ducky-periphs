@@ -17,6 +17,7 @@ loom {
         // extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
         // uncomment *and add the file* if we want forge-only mixins?
         mixinConfig "ducky-periphs.mixins.json"
+        mixinConfig "ducky-periphs-common.mixins.json"
     }
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 }
