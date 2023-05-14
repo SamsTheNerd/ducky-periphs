@@ -9,7 +9,7 @@ modId = "duckyperiphs"
 version = "${mod_version}"
 displayName = "Ducky Peripherals"
 displayURL = "https://github.com/SamsTheNerd/ducky-periphs"
-logoFile = "DuckyPeriphsIconLarge.png"
+logoFile = "DuckyPeriphsIconLargeCommon.png"
 authors = "samsthenerd"
 description = "Adds a variety of peripheral addons for ComputerCraft Tweaked"
 
