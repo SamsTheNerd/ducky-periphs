@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.mojang.datafixers.util.Either;
+import com.samsthenerd.duckyperiphs.hexcasting.utils.HexalObfMapState.MoteData;
 
 import at.petrak.hexcasting.api.spell.iota.GarbageIota;
 import at.petrak.hexcasting.api.spell.iota.Iota;
@@ -84,7 +85,7 @@ public class HexalIotaLuaUtils {
 
             if(table.containsKey("gate") && table.get("gate") instanceof String){
                 if(world != null){
-                    HexalGateMapState gateMap = HexalGateMapState.getServerState(((ServerWorld)world).getServer());
+                    HexalObfMapState gateMap = HexalObfMapState.getServerState(((ServerWorld)world).getServer());
                     UUID gateUUID = UUID.fromString((String)table.get("gate"));
                     Integer gateInt = gateMap.getGateInt(gateUUID);
                     if(gateInt != null){
@@ -94,10 +95,16 @@ public class HexalIotaLuaUtils {
                 return new NullIota();
             }
 
-            if(table.containsKey("storageUuid") && table.get("storageUuid") instanceof String 
-            && table.containsKey("index") && table.get("index") instanceof Number){
-                UUID storageUUID = UUID.fromString((String)table.get("storageUuid"));
-                Integer index = ((Number)table.get("index")).intValue();
+            if(table.containsKey("moteUuid") && table.get("moteUuid") instanceof String 
+            && table.containsKey("itemID") && table.get("itemID") instanceof String){
+                UUID moteUUID = UUID.fromString((String)table.get("moteUuid"));
+                String itemID = (String)table.get("itemID");
+                MoteData moteData = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getMoteData(moteUUID);
+                if(moteData == null || moteData.itemID() != itemID){
+                    return new GarbageIota();
+                }
+                UUID storageUUID = moteData.uuid();
+                Integer index = moteData.index();
                 MediafiedItemManager manager = MediafiedItemManager.INSTANCE;
                 if(manager != null){
                     MediafiedItemManager.Index mediafiedIndex = new MediafiedItemManager.Index(storageUUID, index);
@@ -170,7 +177,7 @@ public class HexalIotaLuaUtils {
                 int gateIndex = gateIota.getGateIndex();
                 // check if we have the uuid
                 Map<String, String> gateTable = new HashMap<String, String>();
-                UUID thisGateUUID = HexalGateMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateGateUUID(gateIndex);
+                UUID thisGateUUID = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateGateUUID(gateIndex);
                 gateTable.put("gate", thisGateUUID.toString());
                 return gateTable;
             }
@@ -184,9 +191,13 @@ public class HexalIotaLuaUtils {
             }
             UUID uuid = itemIndex.getStorage();
             int index = itemIndex.getIndex();
-            Map<String, Object> itemTable = new HashMap<String, Object>();
-            itemTable.put("storageUuid", uuid.toString());
-            itemTable.put("index", index);
+            String itemID = ((ItemIota)iota).getItem().toString();
+            MoteData moteData = new MoteData(uuid, index, itemID);
+            UUID thisMoteUUID = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateMoteObfUUID(moteData);
+            Map<String, String> itemTable = new HashMap<String, String>();
+            itemTable.put("moteUuid", thisMoteUUID.toString());
+            itemTable.put("itemID", itemID);
+            itemTable.put("nexusUuid", uuid.toString());
             return itemTable;
         }
 

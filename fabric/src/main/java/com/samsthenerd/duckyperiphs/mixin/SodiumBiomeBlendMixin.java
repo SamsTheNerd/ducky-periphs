@@ -1,6 +1,7 @@
 package com.samsthenerd.duckyperiphs.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,6 +20,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 
+@Pseudo
 @Mixin(LinearColorBlender.class)
 public abstract class SodiumBiomeBlendMixin {
     @Shadow(remap = false)

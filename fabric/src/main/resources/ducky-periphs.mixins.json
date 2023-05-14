@@ -4,14 +4,13 @@
   "package": "com.samsthenerd.duckyperiphs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "HexMixins/BEImpetusEventInject",
-    "HexMixins/BEImpetusPeripheralMixin",
+    "HexMixins.BEImpetusEventInject",
+    "HexMixins.BEImpetusPeripheralMixin",
     "HexMixins.ClericImpetusAccessor"
   ],
   "client": [
     "SodiumBiomeBlendMixin"
   ],
-  "plugin": "SodiumMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }
