@@ -72,6 +72,10 @@ public class IotaLuaUtils {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> table = (Map<String, Object>) rawTable;
 
+                if(table.containsKey("null") && table.size() == 1){
+                    return new NullIota();
+                }
+
                 // return an empty list if we get handed an empty map
                 if(table.size() == 0){
                     return new ListIota(new ArrayList<Iota>());
@@ -162,7 +166,9 @@ public class IotaLuaUtils {
     // server world is only used for gates
     public static Object getLuaObject(Iota iota, ServerWorld world){
         if(iota instanceof NullIota){
-            return null;
+            Map<String, Object> nullTable = new HashMap<String, Object>();
+            nullTable.put("null", true);
+            return nullTable;
         }
 
         if(iota instanceof GarbageIota){
@@ -287,7 +293,7 @@ public class IotaLuaUtils {
         List<Iota> iotaList = new ArrayList<Iota>(keyCount);
         for(int i = 1; i <= keyCount; i++){
             if(!luaTable.containsKey((double) i)){
-                return null;
+                iotaList.add(i-1, new NullIota());
             }
             iotaList.add(i-1, getIota(luaTable.get((double) i), world));
         }
