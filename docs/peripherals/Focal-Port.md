@@ -3,7 +3,7 @@
 <br clear="center">
 
 <p valign="left"> 
-This peripheral lets you read and write between <a href="https://modrinth.com/mod/hex-casting/">Hex Casting</a> and ComputerCraft. On the hex casting side this will act just like a focus in an item frame. On the computercraft side you can use readIota() and writeIota() to work with the data.
+This peripheral lets you read and write between <a href="https://modrinth.com/mod/hex-casting/">Hex Casting</a> and ComputerCraft. On the hex casting side this will act just like a focus in an item frame. On the computercraft side you can use readIota() and writeIota() to work with the data. See [[Lua <-> Iota Mappings | Lua-Iota-Mappings]] for details on lua representations of iotas
 
 <b>This block requires Hex Casting to be installed. It will not show up without it.</b>
 </p>

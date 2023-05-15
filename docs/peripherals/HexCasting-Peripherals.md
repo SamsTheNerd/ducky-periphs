@@ -1,4 +1,4 @@
-These are a collection of peripherals for blocks from hex casting. This page has slight spoilers for later game hex casting.
+These are a collection of peripherals for blocks from hex casting. This page has slight spoilers for later game hex casting. See [[Lua <-> Iota Mappings | Lua-Iota-Mappings]] for details on lua representations of iotas
 
 <!--
 .d8888. db       .d8b.  d888888b d88888b .d8888.

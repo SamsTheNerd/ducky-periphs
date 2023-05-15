@@ -10,6 +10,7 @@
 
 ## Misc
 - [[Rubber Ducky | Rubber-Ducky]]
+- [[Lua <-> Iota Mappings | Lua-Iota-Mappings]]
 
 <br>
 <br>
