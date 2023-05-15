@@ -6,6 +6,7 @@
 - [[Keyboard | Keyboard]]
 - [[Sculkophone | Sculkophone]]
 - [[Focal Port | Focal-Port]]
+- [[Hex Casting Peripherals | HexCasting-Peripherals]]
 
 ## Misc
 - [[Rubber Ducky | Rubber-Ducky]]

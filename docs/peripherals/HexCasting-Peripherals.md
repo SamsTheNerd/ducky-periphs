@@ -280,9 +280,6 @@ Y888888P YP  YP  YP 88      Y88888P    YP    ~Y8888P' `8888Y'
 </table>
 
 <br>
-<br>
-<br>
-<br>
 
 ## Events
 
@@ -316,11 +313,12 @@ Y888888P YP  YP  YP 88      Y88888P    YP    ~Y8888P' `8888Y'
             circle_stopped
         </td>
         <td width = 200>
-            Fires when the impetus is activated.
+            Fires when the impetus finishes or mishaps
         </td>
         <td width=350>
 <pre><code class="language-json">1: 'circle_stopped' - event name
-2: string: peripheral name/side
+2: string: mishap text
+3: string: peripheral name/side
 </code></pre>
 </td>
     </tr>
