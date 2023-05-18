@@ -21,12 +21,12 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
     
     public KeyboardRecipe(Identifier id){
         super(id);
-        // DuckyPeriph.LOGGER.info("entered contructor for KeyboardRecipe");
+        // DuckyPeriph.logPrint("entered contructor for KeyboardRecipe");
     }
 
     @Override
     public boolean matches(CraftingInventory craftingInventory, World world) {
-        // DuckyPeriph.LOGGER.info("starting keyboard recipe match check");
+        // DuckyPeriph.logPrint("starting keyboard recipe match check");
         // first find where the keyboard is + make sure we only have dyes/solvents?
         // then make sure everything is within 
         int width = craftingInventory.getWidth();
@@ -51,7 +51,7 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                 keyboardX = x;
                 keyboardY = y;
                 if(keyboardCount > 1){
-                    // DuckyPeriph.LOGGER.info("too many keyboards");
+                    // DuckyPeriph.logPrint("too many keyboards");
                     return false;
                 }
             } else if(SOLVENTS.test(stack) || stack.getItem() instanceof DyeItem){
@@ -70,21 +70,21 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
             }
         }
         if(keyboardCount == 0){
-            // DuckyPeriph.LOGGER.info("no keyboards");
+            // DuckyPeriph.logPrint("no keyboards");
             return false;
         }
         if(!foundChanger){
-            // DuckyPeriph.LOGGER.info("no dyes/solvents");
+            // DuckyPeriph.logPrint("no dyes/solvents");
             return false;
         }
         // too far out
         if(Math.abs(keyboardX - minChangerX) > 2 || Math.abs(keyboardY - minChangerY) > 2 
         || Math.abs(keyboardX - maxChangerX) > 2 || Math.abs(keyboardY - maxChangerY) > 2){
-            // DuckyPeriph.LOGGER.info("too far out");
+            // DuckyPeriph.logPrint("too far out");
             return false;
         }
         // passes our check ?
-        // DuckyPeriph.LOGGER.info("Keyboard recipe passed check");
+        // DuckyPeriph.logPrint("Keyboard recipe passed check");
         return true;
     }
 

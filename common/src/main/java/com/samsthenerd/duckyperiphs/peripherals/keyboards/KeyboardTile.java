@@ -96,11 +96,11 @@ public class KeyboardTile extends BlockEntity implements IPeripheralTileDucky, N
 
     
     public static void keyPress(BlockPos pos, World world, int key, int scancode, int modifiers, Boolean repeat, String pasteText){
-        DuckyPeriphs.LOGGER.info("reached keyPress in world " + world.getRegistryKey().getValue() + " at " + pos.toString() + " with key " + key);
+        DuckyPeriphs.logPrint("reached keyPress in world " + world.getRegistryKey().getValue() + " at " + pos.toString() + " with key " + key);
 
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
-            // DuckyPeriph.LOGGER.info("kbTile found");
+            // DuckyPeriph.logPrint("kbTile found");
             kbTileTry.kbPeriph.sendKey(key, repeat);
             // char charToSend = getChar(key, modifiers);
             // if(charToSend != '\0')
@@ -111,7 +111,7 @@ public class KeyboardTile extends BlockEntity implements IPeripheralTileDucky, N
             }
             // I don't *think* you can select text in cc, so shouldn't be able to copy either? 
         } else {
-            // DuckyPeriph.LOGGER.info("kbTile not found");
+            // DuckyPeriph.logPrint("kbTile not found");
 
         }
     }

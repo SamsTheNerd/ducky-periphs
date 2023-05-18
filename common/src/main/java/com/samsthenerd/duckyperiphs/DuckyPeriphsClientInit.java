@@ -1,7 +1,4 @@
 package com.samsthenerd.duckyperiphs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingClient;
 import com.samsthenerd.duckyperiphs.hexcasting.DummyNoHex;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyCaps;
@@ -20,8 +17,6 @@ import net.minecraft.util.DyeColor;
 
 @Environment (EnvType.CLIENT)
 public class DuckyPeriphsClientInit{
-	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
-
     public static void initClient() {
 		RenderTypeRegistry.register(RenderLayer.getTranslucent(), DuckyPeriphs.WEATHER_MACHINE_BLOCK.get(),
 					DuckyPeriphs.KEYBOARD_BLOCK.get(), DuckyPeriphs.DUCK_BLOCK.get());
@@ -57,7 +52,7 @@ public class DuckyPeriphsClientInit{
 				return DyeColor.BLUE.getFireworkColor();
 				// return KeyCaps.DEFAULT_COLOR;
 			}
-			// DuckyPeriphs.LOGGER.info("got key caps:" + DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).craftingNulls);
+			// DuckyPeriphs.logPrint("got key caps:" + DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).craftingNulls);
 			return DuckyPeriphs.KEYBOARD_BLOCK.get().getKeyCaps(view, pos).getZoneColor(tintIndex);
 		}, DuckyPeriphs.KEYBOARD_BLOCK.get());
 

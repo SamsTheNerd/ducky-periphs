@@ -58,6 +58,10 @@ public class DuckyPeriphs{
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
+	public static final void logPrint(String message){
+		// LOGGER.info(message);
+	}
+
 	public static final String MOD_ID = "ducky-periphs";
 	public static final Supplier<Registries> REGISTRIES = Suppliers.memoize(() -> Registries.get(MOD_ID));
 

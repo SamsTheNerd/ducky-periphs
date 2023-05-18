@@ -59,16 +59,16 @@ public class OpPlaceDucky implements SpellAction{
         context.assertVecInRange(pos);
 
         Vec3d dirVec = OperatorUtils.getVec3(args, 1, getArgc());
-        DuckyPeriphs.LOGGER.info("vec3d input: " + dirVec.toString());
+        DuckyPeriphs.logPrint("vec3d input: " + dirVec.toString());
         Direction dir = Direction.getFacing(dirVec.x, 0, dirVec.z);
-        DuckyPeriphs.LOGGER.info("Ducky was facing: " + dir.toString());
+        DuckyPeriphs.logPrint("Ducky was facing: " + dir.toString());
         if(dir == Direction.UP || dir == Direction.DOWN){
             dir = Direction.NORTH;
         }
-        DuckyPeriphs.LOGGER.info("Ducky is facing: " + dir.toString());
+        DuckyPeriphs.logPrint("Ducky is facing: " + dir.toString());
 
 
-        DuckyPeriphs.LOGGER.info(context.getCaster().getName().toString() + " casted a duck at " + pos.toShortString());
+        DuckyPeriphs.logPrint(context.getCaster().getName().toString() + " casted a duck at " + pos.toShortString());
 
         if (!context.getWorld().canPlayerModifyAt(context.getCaster(), pos))
             return null;
@@ -105,7 +105,7 @@ public class OpPlaceDucky implements SpellAction{
 
         @Override
         public void cast(CastingContext context) {
-            DuckyPeriphs.LOGGER.info("hey we're in casting cast casted cool");
+            DuckyPeriphs.logPrint("hey we're in casting cast casted cool");
             if (!context.canEditBlockAt(pos))
                 return;
             

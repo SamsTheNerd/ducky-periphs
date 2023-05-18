@@ -1,8 +1,5 @@
 package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +12,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 public class KeyboardScreenHandler extends ScreenHandler{
-	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
 
     public BlockPos pos;
@@ -46,9 +42,9 @@ public class KeyboardScreenHandler extends ScreenHandler{
 
     // // should be able to call through KeyboardScreen 
     // public void pushKeyPressThroughContext(int key){
-    //     LOGGER.info("kbScreen pushed " + key + " to kbsHandler. context: " + (this.context != ScreenHandlerContext.EMPTY ? "yep" : "null"));
+    //     logPrint("kbScreen pushed " + key + " to kbsHandler. context: " + (this.context != ScreenHandlerContext.EMPTY ? "yep" : "null"));
     //     this.context.run((world, pos) -> {
-    //         LOGGER.info("running with context");
+    //         logPrint("running with context");
     //         KeyboardTile kbTile = world.getBlockEntity(pos, DuckyPeriph.KEYBOARD_TILE).orElse(null);
     //         if(kbTile != null){
     //             kbTile.kbPeriph.sendKey(key);

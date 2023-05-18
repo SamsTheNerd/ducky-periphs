@@ -25,9 +25,9 @@ public class ConjuredDuckyBlockEntity extends BlockEntity{
     public void setColorizer(FrozenColorizer colorizer){
         this.colorizer = colorizer;
         if(getWorld() instanceof ServerWorld){
-            DuckyPeriphs.LOGGER.info("set colorizer on server");
+            DuckyPeriphs.logPrint("set colorizer on server");
         } else {
-            DuckyPeriphs.LOGGER.info("set colorizer on client");
+            DuckyPeriphs.logPrint("set colorizer on client");
         }
         markDirty();
     }

@@ -23,7 +23,7 @@ public class MoreIotasIotaLuaUtils {
                 try{
                     return new StringIota(string);
                 } catch (MishapInvalidIota e){
-                    DuckyPeriphs.LOGGER.info("Invalid string iota (too long): " + string);
+                    DuckyPeriphs.logPrint("Invalid string iota (too long): " + string);
                     return new GarbageIota();
                 }
             }
@@ -48,7 +48,7 @@ public class MoreIotasIotaLuaUtils {
                 try{
                     return new MatrixIota(matrix);
                 } catch (MishapInvalidIota e){
-                    DuckyPeriphs.LOGGER.info("Invalid matrix iota (too big?): " + matrix);
+                    DuckyPeriphs.logPrint("Invalid matrix iota (too big?): " + matrix);
                     return new GarbageIota();
                 }
             }

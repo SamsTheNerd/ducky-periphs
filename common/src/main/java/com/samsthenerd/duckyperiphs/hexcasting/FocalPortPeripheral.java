@@ -60,7 +60,7 @@ public class FocalPortPeripheral implements IPeripheral{
             luaObject = IotaLuaUtils.getLuaObject(iota, sworld);
         } else {
             // I guess pass null ? maybe shouldn't pass anything
-            DuckyPeriphs.LOGGER.info("reading iota in client world");
+            DuckyPeriphs.logPrint("reading iota in client world");
             luaObject = IotaLuaUtils.getLuaObject(iota, null);
         }
         return MethodResult.of(luaObject);

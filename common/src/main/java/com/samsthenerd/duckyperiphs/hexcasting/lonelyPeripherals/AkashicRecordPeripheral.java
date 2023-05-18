@@ -69,19 +69,19 @@ public class AkashicRecordPeripheral implements IPeripheral{
 
         @Override
         public boolean test(BlockPos pos, BlockState state, World world) {
-            // DuckyPeriphs.LOGGER.info("testing block (" + state.getBlock().getName().toString() + ") at " + pos.toString());
+            // DuckyPeriphs.logPrint("testing block (" + state.getBlock().getName().toString() + ") at " + pos.toString());
             BlockEntity be = world.getBlockEntity(pos);
             if(be == null) {
                 return false;
             }
-            // DuckyPeriphs.LOGGER.info("block entity is " + be.toString());
+            // DuckyPeriphs.logPrint("block entity is " + be.toString());
             if(be instanceof BlockEntityAkashicBookshelf shelf){
                 HexPattern pattern = shelf.getPattern();
                 if(pattern == null){
                     return false;
                 }
                 String angleSig = pattern.anglesSignature();
-                DuckyPeriphs.LOGGER.info("found shelf with pattern " + angleSig);
+                DuckyPeriphs.logPrint("found shelf with pattern " + angleSig);
                 if(!recordTable.containsKey(angleSig)){
                     recordTable.put(angleSig, AkashicBookshelfPeripheral.shelfData(shelf));
                 }

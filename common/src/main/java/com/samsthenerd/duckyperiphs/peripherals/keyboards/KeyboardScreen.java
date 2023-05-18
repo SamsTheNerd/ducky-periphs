@@ -2,9 +2,6 @@ package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
 import java.util.HashSet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import dev.architectury.networking.NetworkManager;
@@ -18,8 +15,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
 public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
-    
-	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
     HashSet<Integer> pressedKeys = new HashSet<Integer>();
 
@@ -68,10 +63,10 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
         keyData.writeInt(scancode);
         keyData.writeInt(modifiers);
         // might maybe need to send if caps lock is on or not too -- or throw that in with modifiers?
-        LOGGER.info("modifiers: " + modifiers + " scancode: " + scancode + " key: " + key);
+        DuckyPeriphs.logPrint("modifiers: " + modifiers + " scancode: " + scancode + " key: " + key);
         // need to get char too ?
         // Key GLFW_Key = InputUtil.fromKeyCode(key, scancode);
-        // LOGGER.info("keycode: " + key + "| toString: " + GLFW_Key.toString() + "| localized: " + GLFW_Key.getLocalizedText());
+        // logPrint("keycode: " + key + "| toString: " + GLFW_Key.toString() + "| localized: " + GLFW_Key.getLocalizedText());
 
         keyData.writeBoolean(pressedKeys.contains(key)); // for repeat, just need to actually add that
 
@@ -84,7 +79,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
         keyData.writeString(pasteText);
 
         keyData.writeBlockPos(this.handler.pos);
-        LOGGER.info("sending key press packet: " + key);
+        DuckyPeriphs.logPrint("sending key press packet: " + key);
         NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "key_press_packet"), keyData);
         
         pressedKeys.add(key);
@@ -95,7 +90,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
 
     @Override
     public final boolean charTyped(char this_char, int modifiers){
-        LOGGER.info("char typed: " + this_char);
+        DuckyPeriphs.logPrint("char typed: " + this_char);
         PacketByteBuf charData = new PacketByteBuf(Unpooled.buffer());
 
         charData.writeChar(this_char);
@@ -114,13 +109,13 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
         keyData.writeInt(scancode);
         keyData.writeInt(modifiers);
         // might maybe need to send if caps lock is on or not too -- or throw that in with modifiers?
-        LOGGER.info("modifiers: " + modifiers + " scancode: " + scancode + " key: " + key);
+        DuckyPeriphs.logPrint("modifiers: " + modifiers + " scancode: " + scancode + " key: " + key);
         // need to get char too ?
         // Key GLFW_Key = InputUtil.fromKeyCode(key, scancode);
-        // LOGGER.info("keycode: " + key + "| toString: " + GLFW_Key.toString() + "| localized: " + GLFW_Key.getLocalizedText());
+        // logPrint("keycode: " + key + "| toString: " + GLFW_Key.toString() + "| localized: " + GLFW_Key.getLocalizedText());
 
         keyData.writeBlockPos(this.handler.pos);
-        LOGGER.info("sending key press packet: " + key);
+        DuckyPeriphs.logPrint("sending key press packet: " + key);
         NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "key_up_packet"), keyData);
         
         pressedKeys.remove(key);

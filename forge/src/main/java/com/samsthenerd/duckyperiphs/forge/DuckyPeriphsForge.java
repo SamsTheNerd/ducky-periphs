@@ -47,9 +47,9 @@ public class DuckyPeriphsForge {
 		// 	if (DuckyPeriphs.shouldAddKeyboards(id, builtin)) {
 		// 		LootTable kbLootTable = lootTables.getTable(DuckyPeriphs.keyboardLootTable);
         //         List<LootPool> pools = kbLootTable.f_79109_;
-        //         DuckyPeriphs.LOGGER.info("found " + pools.size() + " pools");
+        //         DuckyPeriphs.logPrint("found " + pools.size() + " pools");
         //         for (LootPool pool : pools) {
-        //             DuckyPeriphs.LOGGER.info("Adding loot pool to " + id.toString() + ": " + pool.getName());
+        //             DuckyPeriphs.logPrint("Adding loot pool to " + id.toString() + ": " + pool.getName());
         //             context.addPool(pool);
         //         }
 		// 	}

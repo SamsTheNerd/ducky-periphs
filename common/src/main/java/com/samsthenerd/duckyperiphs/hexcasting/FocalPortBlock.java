@@ -39,7 +39,7 @@ public class FocalPortBlock extends BlockWithEntity{
             if(be != null){
                 be.spawnWrapperEntity(pos);
             } else {
-                DuckyPeriphs.LOGGER.info("FocalPortBlockEntity is null");
+                DuckyPeriphs.logPrint("FocalPortBlockEntity is null");
             }
         }
     }

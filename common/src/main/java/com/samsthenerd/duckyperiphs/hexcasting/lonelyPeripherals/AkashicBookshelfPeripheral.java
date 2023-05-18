@@ -73,7 +73,7 @@ public class AkashicBookshelfPeripheral implements IPeripheral{
             }
         } else {
             // I guess pass null ? maybe shouldn't pass anything
-            DuckyPeriphs.LOGGER.info("reading iota in client world");
+            DuckyPeriphs.logPrint("reading iota in client world");
             iotaObject = IotaLuaUtils.getLuaObject(tag, null);
         }
         Map<String, Object> returnTable = new HashMap<String, Object>();

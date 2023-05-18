@@ -21,7 +21,7 @@ public class KeyboardUtils {
         ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
         MinecraftServer server = player.getServer();
         World world = player.getEntityWorld();
-        DuckyPeriphs.LOGGER.info("recieved key press packet: " + key + " on worldtype: " + (world.isClient ? "client" : "server"));
+        DuckyPeriphs.logPrint("recieved key press packet: " + key + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
             KeyboardTile.keyPress(pos, world, key, scancode, modifiers, repeat, pasteText);
         });
@@ -35,7 +35,7 @@ public class KeyboardUtils {
         ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
         MinecraftServer server = player.getServer();
         World world = player.getEntityWorld();
-        DuckyPeriphs.LOGGER.info("recieved key up packet: " + key + " on worldtype: " + (world.isClient ? "client" : "server"));
+        DuckyPeriphs.logPrint("recieved key up packet: " + key + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
             KeyboardTile.keyUp(pos, world, key, scancode, modifiers);
         });
@@ -50,7 +50,7 @@ public class KeyboardUtils {
         ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
         MinecraftServer server = player.getServer();
         World world = player.getEntityWorld();
-        DuckyPeriphs.LOGGER.info("recieved char " + char_sent + " on worldtype: " + (world.isClient ? "client" : "server"));
+        DuckyPeriphs.logPrint("recieved char " + char_sent + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
             KeyboardTile.charTyped(pos, world, char_sent, modifiers);
         });
@@ -62,7 +62,7 @@ public class KeyboardUtils {
         ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
         MinecraftServer server = player.getServer();
         World world = player.getEntityWorld();
-        DuckyPeriphs.LOGGER.info("recieved event " + eventCode + " on worldtype: " + (world.isClient ? "client" : "server"));
+        DuckyPeriphs.logPrint("recieved event " + eventCode + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
             KeyboardTile.handleEvents(pos, world, eventCode);
         });

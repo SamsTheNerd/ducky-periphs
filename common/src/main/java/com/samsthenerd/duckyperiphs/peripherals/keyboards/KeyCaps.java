@@ -59,7 +59,7 @@ public class KeyCaps {
 
     public void changeColor(int newColor, int craftingIndex){
         craftingValues[craftingIndex] = newColor;
-        // DuckyPeriph.LOGGER.info("newColor: " + newColor + " on craftingIndex: " + craftingIndex + " with (1 >>> craftingIndex) = " + (1 >>> craftingIndex)); 
+        // DuckyPeriph.logPrint("newColor: " + newColor + " on craftingIndex: " + craftingIndex + " with (1 >>> craftingIndex) = " + (1 >>> craftingIndex)); 
         craftingNulls = craftingNulls | (1 << craftingIndex);
         // logSelf();
     }
@@ -118,7 +118,7 @@ public class KeyCaps {
     }
 
     public void logSelf(){
-        DuckyPeriphs.LOGGER.info("KeyCaps: " + craftingNulls);
+        DuckyPeriphs.logPrint("KeyCaps: " + craftingNulls);
     }
 
 

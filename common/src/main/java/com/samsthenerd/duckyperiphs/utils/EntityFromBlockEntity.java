@@ -40,10 +40,10 @@ public class EntityFromBlockEntity extends Entity{
     public boolean hasBlockEntity(){
         if(parentBlockEntity == null){
             BlockPos pos = getBlockPos();
-            DuckyPeriphs.LOGGER.info("hasBlockEntity: parentBlockEntity was null, getting from pos" + pos.toString());
+            DuckyPeriphs.logPrint("hasBlockEntity: parentBlockEntity was null, getting from pos" + pos.toString());
             parentBlockEntity = world.getBlockEntity(pos);
         }
-        DuckyPeriphs.LOGGER.info("hasBlockEntity: parentBlockEntity is type " + parentBlockEntity.getClass().getName());
+        DuckyPeriphs.logPrint("hasBlockEntity: parentBlockEntity is type " + parentBlockEntity.getClass().getName());
         return parentBlockEntityType.isInstance(parentBlockEntity);
     }
 
@@ -76,9 +76,9 @@ public class EntityFromBlockEntity extends Entity{
             if(!parentBlockEntityType.isInstance(parentBlockEntity)){ // remove if wrong type or didn't get one
                 this.remove(RemovalReason.DISCARDED);
                 if(world.isClient()){
-                    DuckyPeriphs.LOGGER.info("despawn entityFromBlockEntity on client");
+                    DuckyPeriphs.logPrint("despawn entityFromBlockEntity on client");
                 } else {
-                    DuckyPeriphs.LOGGER.info("despawn entityFromBlockEntity on server");
+                    DuckyPeriphs.logPrint("despawn entityFromBlockEntity on server");
                 }
                 return;
             }
@@ -88,7 +88,7 @@ public class EntityFromBlockEntity extends Entity{
         if(!bePos.equals(getBlockPos())){ // if we're not with the block entity anymore, fix that
             BlockPos goalPos = bePos;
             this.setPosition(goalPos.getX()+0.5, goalPos.getY(), goalPos.getZ()+0.5);
-            DuckyPeriphs.LOGGER.info("FocalPortBlockEntity: resetWrapperEntity: " + this.getPos().toString());
+            DuckyPeriphs.logPrint("FocalPortBlockEntity: resetWrapperEntity: " + this.getPos().toString());
         }
     }
 

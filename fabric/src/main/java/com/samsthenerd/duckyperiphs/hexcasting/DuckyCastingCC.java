@@ -17,7 +17,7 @@ public class DuckyCastingCC implements EntityComponentInitializer, ItemComponent
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         if(FabricLoader.getInstance().isModLoaded("hexcasting")){
-            // DuckyPeriph.LOGGER.info("Registering FocalPortWrapperEntity as CC");
+            // DuckyPeriph.logPrint("Registering FocalPortWrapperEntity as CC");
             // registry.registerFor(FocalPortWrapperEntity.class, HexCardinalComponents.IOTA_HOLDER, e -> e);
             DuckyCastingCCQuaratined.quarantinedRegisterEntityComponentFactories(registry);
         }
