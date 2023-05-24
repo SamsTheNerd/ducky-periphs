@@ -21,7 +21,7 @@ import at.petrak.hexcasting.api.spell.math.HexAngle;
 import at.petrak.hexcasting.api.spell.math.HexDir;
 import at.petrak.hexcasting.api.spell.math.HexPattern;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.architectury.platform.Platform;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -136,14 +136,14 @@ public class IotaLuaUtils {
             }
         }
 
-        if(FabricLoader.getInstance().isModLoaded("hexal")){
+        if(Platform.isModLoaded("hexal")){
             Iota hexalIota = HexalIotaLuaUtils.getHexalIota(LuaObject, world);
             if(hexalIota != null){
                 return hexalIota;
             }
         }
 
-        if(FabricLoader.getInstance().isModLoaded("moreiotas")){
+        if(Platform.isModLoaded("moreiotas")){
             Iota moreIotasIota = MoreIotasIotaLuaUtils.getMoreIotasIota(LuaObject);
             if(moreIotasIota != null){
                 return moreIotasIota;
@@ -219,14 +219,14 @@ public class IotaLuaUtils {
             return getLuaObject(pat);
         }
 
-        if(FabricLoader.getInstance().isModLoaded("hexal")){
+        if(Platform.isModLoaded("hexal")){
             Object hexalIota = HexalIotaLuaUtils.getHexalObject(iota, world);
             if(hexalIota != null){
                 return hexalIota;
             }
         }
 
-        if(FabricLoader.getInstance().isModLoaded("moreiotas")){
+        if(Platform.isModLoaded("moreiotas")){
             Object moreIotasObject = MoreIotasIotaLuaUtils.getMoreIotasObject(iota);
             if(moreIotasObject != null){
                 return moreIotasObject;
