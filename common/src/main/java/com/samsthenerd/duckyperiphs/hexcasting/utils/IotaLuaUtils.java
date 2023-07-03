@@ -205,12 +205,14 @@ public class IotaLuaUtils {
         if(iota instanceof EntityIota){
             // need to add in player handling here later
             Entity ent = ((EntityIota)iota).getEntity();
-            if(ent.isPlayer()){
-                return null;
+            if(ent.isPlayer()){ // 
+                // return null;
             }
             Map<String, Object> entTable = new HashMap<String, Object>();
             entTable.put("uuid", ent.getUuidAsString());
             entTable.put("name", ent.getName().getString());
+            entTable.put("isPlayer", ent.isPlayer());
+            
             return entTable;
         }
 

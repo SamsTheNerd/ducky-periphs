@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.mojang.datafixers.util.Either;
+import com.samsthenerd.duckyperiphs.hexcasting.utils.HexalObfMapState.GateData;
 import com.samsthenerd.duckyperiphs.hexcasting.utils.HexalObfMapState.MoteData;
 
 import at.petrak.hexcasting.api.spell.iota.GarbageIota;
@@ -13,19 +14,22 @@ import at.petrak.hexcasting.api.spell.iota.Iota;
 import at.petrak.hexcasting.api.spell.iota.IotaType;
 import at.petrak.hexcasting.api.spell.iota.NullIota;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
+import kotlin.Pair;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager;
 import ram.talia.hexal.api.spell.iota.EntityTypeIota;
 import ram.talia.hexal.api.spell.iota.GateIota;
 import ram.talia.hexal.api.spell.iota.IotaTypeIota;
-import ram.talia.hexal.api.spell.iota.ItemIota;
 import ram.talia.hexal.api.spell.iota.ItemTypeIota;
+import ram.talia.hexal.api.spell.iota.MoteIota;
 
 public class HexalIotaLuaUtils {
     // just putting it in a separate function for neatness
@@ -87,9 +91,18 @@ public class HexalIotaLuaUtils {
                 if(world != null){
                     HexalObfMapState gateMap = HexalObfMapState.getServerState(((ServerWorld)world).getServer());
                     UUID gateUUID = UUID.fromString((String)table.get("gate"));
-                    Integer gateInt = gateMap.getGateInt(gateUUID);
-                    if(gateInt != null){
-                        return new GateIota(gateInt);
+                    GateData gData = gateMap.getGateData(gateUUID);
+                    if(gData != null){
+                        if(gData.type() == 0){ //drifting
+                            return new GateIota(gData.index(), null);
+                        }
+                        if(gData.type() == 1){ // location anchored
+                            return new GateIota(gData.index(), Either.left(gData.tVec()));
+                        }
+                        if(gData.type() == 2){ // entity anchored
+                            Pair<Entity, Vec3d> gatePair = new Pair<Entity, Vec3d>(world.getEntity(gData.entUuid()), gData.tVec());
+                            return new GateIota(gData.index(), Either.right(gatePair));
+                        }
                     }
                 }
                 return new NullIota();
@@ -109,7 +122,7 @@ public class HexalIotaLuaUtils {
                 MediafiedItemManager manager = MediafiedItemManager.INSTANCE;
                 if(manager != null){
                     MediafiedItemManager.Index mediafiedIndex = new MediafiedItemManager.Index(storageUUID, index);
-                    return new ItemIota(mediafiedIndex);
+                    return new MoteIota(mediafiedIndex);
                 }
                 return new NullIota();
             }
@@ -175,24 +188,40 @@ public class HexalIotaLuaUtils {
         if(iota instanceof GateIota){
             if(world != null){
                 GateIota gateIota = (GateIota)iota;
-                int gateIndex = gateIota.getGateIndex();
+                GateData gData = HexalObfMapState.GateDataFromIota(gateIota);
                 // check if we have the uuid
-                Map<String, String> gateTable = new HashMap<String, String>();
-                UUID thisGateUUID = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateGateUUID(gateIndex);
+                UUID thisGateUUID = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateGateUUID(gData);
+                Map<String, Object> gateTable = new HashMap<String, Object>();
                 gateTable.put("gate", thisGateUUID.toString());
+                if(gData.type() == 0){
+                    gateTable.put("gateType", "drifting");
+                } else {
+                    Map<String, Double> locationTable = new HashMap<String, Double>();
+                    locationTable.put("x", gData.tVec().x);
+                    locationTable.put("y", gData.tVec().y);
+                    locationTable.put("z", gData.tVec().z);
+                    if(gData.type() == 1){
+                        gateTable.put("gateType", "location");
+                        gateTable.put("location", locationTable);
+                    } else if(gData.type() == 2){
+                        gateTable.put("gateType", "entity");
+                        gateTable.put("entity", gData.entUuid().toString());
+                        gateTable.put("offset", locationTable);
+                    }
+                }
                 return gateTable;
             }
             return null;
         }
 
-        if(iota instanceof ItemIota){
-            MediafiedItemManager.Index itemIndex = ((ItemIota)iota).getItemIndex();
+        if(iota instanceof MoteIota){
+            MediafiedItemManager.Index itemIndex = ((MoteIota)iota).getItemIndex();
             if(itemIndex == null){
                 return null;
             }
             UUID uuid = itemIndex.getStorage();
             int index = itemIndex.getIndex();
-            String itemID = ((ItemIota)iota).getItem().toString();
+            String itemID = ((MoteIota)iota).getItem().toString();
             MoteData moteData = new MoteData(uuid, index, itemID);
             UUID thisMoteUUID = HexalObfMapState.getServerState(((ServerWorld)world).getServer()).getOrCreateMoteObfUUID(moteData);
             Map<String, String> itemTable = new HashMap<String, String>();
