@@ -10,6 +10,10 @@
 
 - Support for hexal 0.2.16 and typed gates.
 
+### Changed
+
+- Can now read in truenames to cc, but still can't write them
+
 ## 1.2.1
 
 ### Fixed
