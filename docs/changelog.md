@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.2
+
+### Fixed
+
+- Forge moreIotas/Hexal weirdness
+
+### Added
+
+- Support for hexal 0.2.16 and typed gates.
+
 ## 1.2.1
 
 ### Fixed
