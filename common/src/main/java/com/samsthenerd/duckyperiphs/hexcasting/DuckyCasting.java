@@ -1,6 +1,7 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.hexcasting.hexal.DuckyHexal;
 
 import at.petrak.hexcasting.api.PatternRegistry;
 import at.petrak.hexcasting.api.spell.math.HexDir;
@@ -50,6 +51,10 @@ public class DuckyCasting {
 
 		if(Platform.isForge()){
 			EnvExecutor.runInEnv(Env.CLIENT, () -> DuckyCastingClient::registerEntityRenderers);
+		}
+
+		if(Platform.isModLoaded("hexal")){
+			DuckyHexal.init();
 		}
 
 		registerSpells();

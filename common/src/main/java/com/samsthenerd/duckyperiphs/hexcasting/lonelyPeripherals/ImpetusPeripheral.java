@@ -92,7 +92,7 @@ public class ImpetusPeripheral implements IPeripheral{
         return MethodResult.of(((BEImpetusPeripheralMixin) impetus).getNextBlock() != null);
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult activateCircle(){
         if(impetus instanceof BlockEntityStoredPlayerImpetus){
             if(((BlockEntityStoredPlayerImpetus) impetus).getStoredPlayer() instanceof ServerPlayerEntity sPlayer){
