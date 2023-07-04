@@ -22,6 +22,8 @@
     "block.ducky-periphs.focal_port_block": "Focal Port",
     "item.ducky-periphs.focal_port_block": "Focal Port",
     "entity.ducky-periphs.focal_port_wrapper_entity": "Focal Port",
+    "block.ducky-periphs.focal_link_block": "Focal Link",
+    "item.ducky-periphs.focal_link_block": "Focal Link",
 
     "item.ducky-periphs.ducky_banner_pattern": "Banner Pattern",
     "item.ducky-periphs.ducky_banner_pattern.desc": "Ducky Banner Pattern",

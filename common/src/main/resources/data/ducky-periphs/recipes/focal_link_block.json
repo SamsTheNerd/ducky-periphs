@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SAS",
+        "MFM",
+        "SSS"
+    ],
+    "key": {
+        "A": {
+            "item": "hexcasting:charged_amethyst"
+        },
+        "S":{
+            "item": "hexcasting:slate_block"
+        },
+        "M":{
+            "item": "computercraft:wireless_modem_advanced"
+        },
+        "F":{
+            "item": "ducky-periphs:focal_port_block"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:focal_link_block"
+    }
+}
