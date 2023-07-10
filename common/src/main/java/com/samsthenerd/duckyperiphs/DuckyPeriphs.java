@@ -59,7 +59,8 @@ public class DuckyPeriphs{
 	public static final Logger LOGGER = LoggerFactory.getLogger("ducky-periphs");
 
 	public static final void logPrint(String message){
-		// LOGGER.info(message);
+		if(Platform.isDevelopmentEnvironment())
+			LOGGER.info(message);
 	}
 
 	public static final String MOD_ID = "ducky-periphs";

@@ -8,14 +8,19 @@ import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.hexcasting.utils.IotaLuaUtils;
 
+import at.petrak.hexcasting.api.misc.FrozenColorizer;
 import at.petrak.hexcasting.api.spell.iota.GarbageIota;
 import at.petrak.hexcasting.api.spell.iota.Iota;
+import at.petrak.hexcasting.common.lib.HexItems;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper.Argb;
+import net.minecraft.util.registry.Registry;
 import ram.talia.hexal.api.linkable.ILinkable;
 
 public class FocalLinkPeripheral implements IPeripheral{
@@ -52,34 +57,29 @@ public class FocalLinkPeripheral implements IPeripheral{
     }
 
     @LuaFunction
-    public final void storeWorld(){
-        flTile.storeWorld();
-    }
-
-    @LuaFunction
-    public MethodResult receiveIota(){
+    public final MethodResult receiveIota(){
         Iota iota = flTile.nextReceivedIota();
         return MethodResult.of(IotaLuaUtils.getLuaObject(iota, (ServerWorld)flTile.getWorld()));
     }
 
     @LuaFunction
-    public void clearReceivedIotas(){
+    public final void clearReceivedIotas(){
         flTile.clearReceivedIotas();
     }
 
     @LuaFunction
-    public MethodResult remainingIotaCount(){
+    public final MethodResult remainingIotaCount(){
         return MethodResult.of(flTile.numRemainingIota());
     }
 
     @LuaFunction
-    public MethodResult numLinked(){
+    public final MethodResult numLinked(){
         return MethodResult.of(flTile.numLinked());
     }
-
+    
     // no idea if this will do what we want !
-    @LuaFunction
-    public MethodResult getLinked(){
+    @LuaFunction( mainThread = true)
+    public final MethodResult getLinked(){
         List<String> ourLinks = new ArrayList<String>();
         for(int i = 0; i < flTile.numLinked(); i++){
             ILinkable link = flTile.getLinked(i);
@@ -96,7 +96,7 @@ public class FocalLinkPeripheral implements IPeripheral{
     }
 
     @LuaFunction(mainThread = true)
-    public void sendIota(int index, Object luaObject){
+    public final void sendIota(int index, Object luaObject){
         Iota iota = IotaLuaUtils.getIota(luaObject, (ServerWorld)flTile.getWorld());
         if(iota == null){
             iota = new GarbageIota();
@@ -115,6 +115,43 @@ public class FocalLinkPeripheral implements IPeripheral{
         Object luaObject = IotaLuaUtils.getLuaObject(iota, (ServerWorld)flTile.getWorld());
         for(IComputerAccess computer : computers){
             computer.queueEvent("received_iota", luaObject, computer.getAttachmentName());
+        }
+    }
+
+    @LuaFunction(mainThread = true)
+    public final void setPigmentRGB(int argb){
+        flTile.setRGBColorizer(argb);
+    }
+
+    @LuaFunction(mainThread = true)
+    public final void setPigmentRGB(int r, int g, int b){
+        setPigmentRGB(Argb.getArgb(255, r, g, b));
+    }
+
+    @LuaFunction
+    public final MethodResult getPigment(){
+        FrozenColorizer col = flTile.colouriser();
+        Identifier id = Registry.ITEM.getId(col.item().getItem());
+        String idString = id.toString();
+        if(col.item().getItem() == DuckyHexal.ITEM_RGB_COLORIZER){
+            idString = "rgb:" + getPigmentRGB();
+        }
+        if(col.item().getItem() == HexItems.UUID_COLORIZER){
+            idString = "soulglimmer:" + col.owner().toString();
+        }
+        return MethodResult.of(idString);
+    }
+
+    @LuaFunction
+    public final MethodResult getPigmentRGB(){
+        FrozenColorizer col = flTile.colouriser();
+        int rgb = ItemRGBColorizer.getRGB(col.item());
+        return MethodResult.of(rgb);
+    }
+
+    public void newColorizer(){
+        for(IComputerAccess computer : computers){
+            computer.queueEvent("new_pigment", computer.getAttachmentName());
         }
     }
 }

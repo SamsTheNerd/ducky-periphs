@@ -15,6 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtLong;
 import net.minecraft.server.world.ServerWorld;
@@ -26,6 +27,7 @@ import ram.talia.hexal.api.linkable.LinkableRegistry;
 import ram.talia.hexal.api.linkable.LinkableRegistry.LinkableType;
 
 public class DuckyHexal {
+    public static RegistrySupplier<ItemRGBColorizer> ITEM_RGB_COLORIZER;
     public static RegistrySupplier<FocalLinkBlock> FOCAL_LINK_BLOCK;
 	public static RegistrySupplier<BlockEntityType<FocalLinkBlockEntity>> FOCAL_LINK_BLOCK_ENTITY;
     public static LinkableType<FocalLinkBlockEntity, FocalLinkBlockEntity> FOCAL_LINKABLE_TYPE =
@@ -34,9 +36,12 @@ public class DuckyHexal {
             private FocalLinkBlockEntity fromTag(@NotNull NbtElement nbt, @NotNull World world){
                 BlockPos pos = BlockPos.fromLong(((NbtLong)nbt).longValue());
                 BlockEntity be = world.getBlockEntity(pos);
+                DuckyPeriphs.logPrint("fromTag: pos:" + pos.toString() + "; from: " + nbt.toString());
                 if(be instanceof FocalLinkBlockEntity){
+                    DuckyPeriphs.logPrint("fromTag: be is FocalLinkBlockEntity: " + be.toString());
                     return (FocalLinkBlockEntity)be;
                 }
+                DuckyPeriphs.logPrint("fromTag is null or not");
                 return null;
             }
 
@@ -75,9 +80,9 @@ public class DuckyHexal {
             @Override
             @Nullable
             // need ServerWorld for this?
-            public FocalLinkBlockEntity linkableFromIota(@NotNull Iota iota){
+            public FocalLinkBlockEntity linkableFromIota(@NotNull Iota iota, ServerWorld world){
                 if(iota instanceof Vec3Iota vIota){
-                    BlockEntity be = FocalLinkBlockEntity.storedWorld.getBlockEntity(new BlockPos(vIota.getVec3()));
+                    BlockEntity be = world.getBlockEntity(new BlockPos(vIota.getVec3()));
                     if(be instanceof FocalLinkBlockEntity){
                         return (FocalLinkBlockEntity)be;
                     }
@@ -91,10 +96,24 @@ public class DuckyHexal {
                 // can't cast, ignore this
                 return null;
             }
+
+            @Override
+            @NotNull
+            public NbtElement toNbt(ILinkable linkable){
+                return ((FocalLinkBlockEntity)linkable).toTag();
+            }
+
+            @Override
+            @NotNull
+            public NbtElement toSync(ILinkable linkable){
+                return ((FocalLinkBlockEntity)linkable).toTag();
+            }
         };
 
     public static void init(){
 		// do these registries in here so we can be sure it only happens when hex casting is installed
+        ITEM_RGB_COLORIZER = DuckyPeriphs.item("cc_internal_pigment", () -> new ItemRGBColorizer(new Item.Settings()));
+
 		FOCAL_LINK_BLOCK = DuckyPeriphs.blockItem("focal_link_block", 
 			() -> new FocalLinkBlock(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)));
 		

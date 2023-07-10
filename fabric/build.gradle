@@ -68,6 +68,8 @@ dependencies {
 	implementation group: "org.joml", name: "joml", version: "1.10.5"
 	include group: "org.joml", name: "joml", version: "1.10.5"
 
+    modImplementation "software.bernie.geckolib:geckolib-fabric-1.19:${geckolibVersion}"
+    modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-1.19:${geckolibVersion}"
 	
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_version}"

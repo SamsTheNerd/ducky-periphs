@@ -69,6 +69,10 @@ allprojects {
             name = 'Kotlin for Forge'
             url = 'https://thedarkcolour.github.io/KotlinForForge/'
         }
+        maven {
+            name = 'GeckoLib'
+            url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' 
+        }
         exclusiveContent {
             forRepository {
                 maven {

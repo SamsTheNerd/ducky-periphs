@@ -13,7 +13,7 @@
             "item": "hexcasting:slate_block"
         },
         "M":{
-            "item": "computercraft:wireless_modem_advanced"
+            "item": "computercraft:wireless_modem_normal"
         },
         "F":{
             "item": "ducky-periphs:focal_port_block"
