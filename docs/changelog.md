@@ -9,6 +9,8 @@
 ### Added
 
 - Support for hexal 0.2.16 and typed gates.
+- Focal Link
+- Ability to click on monitors while using a keyboard
 
 ### Changed
 
