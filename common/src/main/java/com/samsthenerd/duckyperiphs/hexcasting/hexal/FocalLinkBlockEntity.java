@@ -160,6 +160,13 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
         markDirty();
     }
 
+    public void unlink(int index){
+        ILinkable other = getLinked(index);
+        if(other != null){
+            unlink(other, true);
+        }
+    }
+
     @Override
     public ILinkable getLinked(int index){
         ServerLinkableHolder holder = getLinkableHolder();

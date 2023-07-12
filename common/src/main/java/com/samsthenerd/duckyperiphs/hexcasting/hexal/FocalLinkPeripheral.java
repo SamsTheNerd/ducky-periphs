@@ -19,7 +19,6 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper.Argb;
 import net.minecraft.util.registry.Registry;
 import ram.talia.hexal.api.linkable.ILinkable;
 
@@ -56,7 +55,7 @@ public class FocalLinkPeripheral implements IPeripheral{
         return this == other;
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult receiveIota(){
         Iota iota = flTile.nextReceivedIota();
         return MethodResult.of(IotaLuaUtils.getLuaObject(iota, (ServerWorld)flTile.getWorld()));
@@ -96,6 +95,12 @@ public class FocalLinkPeripheral implements IPeripheral{
     }
 
     @LuaFunction(mainThread = true)
+    public final void unlink(int index){
+        flTile.unlink(index);
+    }
+
+
+    @LuaFunction(mainThread = true)
     public final void sendIota(int index, Object luaObject){
         Iota iota = IotaLuaUtils.getIota(luaObject, (ServerWorld)flTile.getWorld());
         if(iota == null){
@@ -121,11 +126,6 @@ public class FocalLinkPeripheral implements IPeripheral{
     @LuaFunction(mainThread = true)
     public final void setPigmentRGB(int argb){
         flTile.setRGBColorizer(argb);
-    }
-
-    @LuaFunction(mainThread = true)
-    public final void setPigmentRGB(int r, int g, int b){
-        setPigmentRGB(Argb.getArgb(255, r, g, b));
     }
 
     @LuaFunction

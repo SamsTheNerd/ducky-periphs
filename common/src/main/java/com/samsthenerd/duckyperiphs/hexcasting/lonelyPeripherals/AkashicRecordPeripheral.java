@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriphs;
-
 import at.petrak.hexcasting.api.misc.TriPredicate;
 import at.petrak.hexcasting.api.spell.math.HexPattern;
 import at.petrak.hexcasting.common.blocks.akashic.AkashicFloodfiller;
@@ -81,7 +79,6 @@ public class AkashicRecordPeripheral implements IPeripheral{
                     return false;
                 }
                 String angleSig = pattern.anglesSignature();
-                DuckyPeriphs.logPrint("found shelf with pattern " + angleSig);
                 if(!recordTable.containsKey(angleSig)){
                     recordTable.put(angleSig, AkashicBookshelfPeripheral.shelfData(shelf));
                 }

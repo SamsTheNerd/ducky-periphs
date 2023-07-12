@@ -2,8 +2,6 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 
 import javax.annotation.Nullable;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriphs;
-
 import at.petrak.hexcasting.api.misc.FrozenColorizer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,7 +9,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 public class ConjuredDuckyBlockEntity extends BlockEntity{
@@ -24,11 +21,6 @@ public class ConjuredDuckyBlockEntity extends BlockEntity{
 
     public void setColorizer(FrozenColorizer colorizer){
         this.colorizer = colorizer;
-        if(getWorld() instanceof ServerWorld){
-            DuckyPeriphs.logPrint("set colorizer on server");
-        } else {
-            DuckyPeriphs.logPrint("set colorizer on client");
-        }
         markDirty();
     }
 

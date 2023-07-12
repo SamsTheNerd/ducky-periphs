@@ -36,12 +36,9 @@ public class DuckyHexal {
             private FocalLinkBlockEntity fromTag(@NotNull NbtElement nbt, @NotNull World world){
                 BlockPos pos = BlockPos.fromLong(((NbtLong)nbt).longValue());
                 BlockEntity be = world.getBlockEntity(pos);
-                DuckyPeriphs.logPrint("fromTag: pos:" + pos.toString() + "; from: " + nbt.toString());
                 if(be instanceof FocalLinkBlockEntity){
-                    DuckyPeriphs.logPrint("fromTag: be is FocalLinkBlockEntity: " + be.toString());
                     return (FocalLinkBlockEntity)be;
                 }
-                DuckyPeriphs.logPrint("fromTag is null or not");
                 return null;
             }
 
