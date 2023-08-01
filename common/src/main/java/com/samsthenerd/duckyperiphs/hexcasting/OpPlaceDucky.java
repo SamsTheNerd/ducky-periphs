@@ -50,7 +50,9 @@ public class OpPlaceDucky implements SpellAction{
     public boolean getAlwaysProcessGreatSpell(){ return false;}
 
     @Override
-    public Text getDisplayName(){ return Text.translatable("ducky-periphs.spellaction.place_ducky");}
+    public Text getDisplayName(){ 
+        return DefaultImpls.getDisplayName(this);
+    }
 
     @Override
     public Triple<RenderedSpell, Integer, List<ParticleSpray>> execute(List<? extends Iota> args, CastingContext context){
