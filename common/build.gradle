@@ -23,6 +23,10 @@ dependencies {
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 
+    compileOnly(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixinExtrasVersion}"))
+    modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-fabric"
+    modImplementation "maven.modrinth:wnboi:${wnboiVersion}-fabric"
+
     // throw this in so that we have access to the api in common. inspired by techtactic's architectury setup on valkyrien computers
     // try replacing this with cc-tweaked and see if forgfe will accept that?
 	modImplementation "com.github.cc-tweaked:cc-restitched:${project.cc_version}"

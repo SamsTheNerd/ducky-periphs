@@ -79,6 +79,10 @@ dependencies {
     modImplementation "software.bernie.geckolib:geckolib-forge-1.19:${geckolibVersion}"
     modRuntimeOnly "software.bernie.geckolib:geckolib-forge-1.19:${geckolibVersion}"
 
+    runtimeOnly(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixinExtrasVersion}"))
+    modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-forge"
+    modRuntimeOnly "maven.modrinth:wnboi:${wnboiVersion}-forge"
+
     // modRuntimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
 
     // compileOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion:api"

@@ -63,7 +63,7 @@ public class KeyboardTile extends BlockEntity implements IPeripheralTileDucky, N
 
     @Nonnull
     public ScreenHandler createMenu(int syncId, @Nonnull PlayerInventory inv, @Nonnull PlayerEntity player) {
-        return new KeyboardScreenHandler(syncId, inv);
+        return new KeyboardScreenHandler(syncId, inv, this.pos);
     }
 
     @Override

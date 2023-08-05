@@ -7,14 +7,17 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.samsthenerd.duckyperiphs.compat.gloopy.GloopyUtils;
 import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import at.petrak.hexcasting.api.spell.iota.NullIota;
+import at.petrak.hexcasting.common.items.ItemFocus;
 import at.petrak.hexcasting.common.lib.HexItems;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import dev.architectury.platform.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -145,7 +148,13 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
 
     @Override
     public NbtCompound readIotaTag() {
-        return HexItems.FOCUS.readIotaTag(innerFocusStack);
+        if(innerFocusStack != null && innerFocusStack.getItem() instanceof ItemFocus){
+            return ((ItemFocus)innerFocusStack.getItem()).readIotaTag(innerFocusStack);
+        } else if(Platform.isModLoaded("hexgloop")){
+            return GloopyUtils.getIotaNbt(innerFocusStack);
+        } else {
+            return null;
+        }
     }
 
     // fromHex is true if we're writing from hex casting, false if we're writing from CC
@@ -162,11 +171,22 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     @Override
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
         if(iota == null || innerFocusStack.isEmpty()
-        || !HexItems.FOCUS.canWrite(innerFocusStack, iota)){
-            return false;
+        || (innerFocusStack.getItem() instanceof ItemFocus && !((ItemFocus)innerFocusStack.getItem()).canWrite(innerFocusStack, iota))){
+            if(Platform.isModLoaded("hexgloop")){
+                if(!GloopyUtils.writeIota(innerFocusStack, iota, true)) return false;
+            } else {
+                return false;
+            }
         }
         if(!simulate){
-            HexItems.FOCUS.writeDatum(innerFocusStack, iota);
+            if(innerFocusStack.getItem() instanceof ItemFocus){
+                ((ItemFocus)innerFocusStack.getItem()).writeDatum(innerFocusStack, iota);
+            } else if(Platform.isModLoaded("hexgloop")){
+                GloopyUtils.writeIota(innerFocusStack, iota, false);
+            }
+            if(iota == null){
+                iota = new NullIota();
+            }
             setColor(iota.getType().color());
             this.markDirty();
             
@@ -261,8 +281,22 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         return result;
     }
 
+    @Override
+    public boolean isValid(int slot, ItemStack stack) {
+        if(stack.isEmpty() || slot != 0){
+            return false;
+        }
+        if(stack.getItem() == HexItems.FOCUS){
+            return true;
+        }
+        if(Platform.isModLoaded("hexgloop")){
+            if(GloopyUtils.goesInFocalPort(stack)) return true;
+        }
+        return false;
+    }
+
     @Override public void setStack(int slot, ItemStack stack) {
-        if(slot != 0){
+        if(slot != 0 || !isValid(slot, stack)){
             return;
         }
         innerFocusStack = stack;
@@ -289,7 +323,7 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
             if(be.hasFocus()){
                 ItemStack oldFocusStack = be.removeStack(0);
                 ItemStack newFocusStack = player.getStackInHand(hand);
-                if(newFocusStack.getItem() == HexItems.FOCUS && !newFocusStack.isEmpty()){
+                if(isValid(0, newFocusStack)){
                     be.setStack(0, newFocusStack);
                     player.setStackInHand(hand, ItemStack.EMPTY);
                 }
@@ -299,13 +333,11 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
                 ActionResult.success(world.isClient);
             } else {
                 ItemStack focusStack = player.getStackInHand(hand);
-                if(focusStack.getItem() != HexItems.FOCUS){
+                if(!isValid(0, focusStack)){
                     return ActionResult.PASS;
                 }
-                if(!focusStack.isEmpty()){
-                    be.setStack(0, focusStack);
-                    player.setStackInHand(hand, ItemStack.EMPTY);
-                }
+                be.setStack(0, focusStack);
+                player.setStackInHand(hand, ItemStack.EMPTY);
                 ActionResult.success(world.isClient);
             }
         }

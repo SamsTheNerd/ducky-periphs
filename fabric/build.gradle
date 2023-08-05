@@ -48,6 +48,10 @@ dependencies {
 
     modRuntimeOnly "maven.modrinth:hexal:${hexalVersion}"
 
+    runtimeOnly(include("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixinExtrasVersion}"))
+    modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-fabric"
+    modRuntimeOnly "maven.modrinth:wnboi:${wnboiVersion}-fabric"
+
 	// Hex Casting Dependencies
 	modImplementation "at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucalVersion}"
 	modImplementation "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}-FABRIC"

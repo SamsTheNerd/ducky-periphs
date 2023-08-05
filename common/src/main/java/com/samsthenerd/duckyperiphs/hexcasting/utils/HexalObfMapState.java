@@ -167,7 +167,7 @@ public class HexalObfMapState extends PersistentState{
 
 
     public static GateData GateDataFromIota(GateIota iota){
-        Either<Vec3d, FakeEntityAnchor> target = (Either<Vec3d, FakeEntityAnchor>) ((Object)iota.getTarget());
+        Either<Vec3d, GateIota.EntityAnchor> target = (Either<Vec3d, GateIota.EntityAnchor>) ((Object)iota.getTarget());
         if(iota.isDrifting() || target == null){
             return new GateData(iota.getGateIndex(), 0, null, null);
         }
@@ -175,13 +175,11 @@ public class HexalObfMapState extends PersistentState{
             return new GateData(iota.getGateIndex(), 1, target.left().get(), null);
         }
         if(target.right().isPresent()){ // entity
-            FakeEntityAnchor anchor = target.right().get();
+            GateIota.EntityAnchor anchor = target.right().get();
             return new GateData(iota.getGateIndex(), 2, anchor.offset(), anchor.uuid());
         }
         return new GateData(iota.getGateIndex(), 0, null, null);
     }
-    
-    public record FakeEntityAnchor(UUID uuid, String name, Vec3d offset) { }
 
     public record GateData(int index, int type, Vec3d tVec, UUID entUuid){
         public GateData(int index, int type, Vec3d tVec, UUID entUuid){

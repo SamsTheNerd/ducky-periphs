@@ -145,7 +145,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
                         eventsStarted[sCut] = 0;
                         PacketByteBuf eventDataBuf = new PacketByteBuf(Unpooled.buffer());
                         eventDataBuf.writeInt(sCut);
-                        eventDataBuf.writeBlockPos(this.handler.pos);
+                        // eventDataBuf.writeBlockPos(this.handler.pos);
                         NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "event_sent_packet"), eventDataBuf);
                     }
                 } else {
