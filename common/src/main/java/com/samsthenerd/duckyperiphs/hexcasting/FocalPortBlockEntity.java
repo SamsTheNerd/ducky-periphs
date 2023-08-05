@@ -189,7 +189,6 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
             }
             setColor(iota.getType().color());
             this.markDirty();
-            
         }
         return true;
     }
@@ -207,6 +206,34 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
 
     public boolean hasFocus(){
         return !innerFocusStack.isEmpty();
+    }
+
+    public int getSlotCount(){
+        if(Platform.isModLoaded("hexgloop")){
+            return GloopyUtils.pageCount(innerFocusStack);
+        }
+        return 1;
+    }
+
+    public int getCurrentSlot(){
+        if(Platform.isModLoaded("hexgloop")){
+            int gloopedSlot = GloopyUtils.getPage(innerFocusStack);
+            if(gloopedSlot >= 1){
+                return gloopedSlot;
+            }
+        }
+        return 1;
+    }
+
+    public int setCurrentSlot(int slot){
+        int slotToReturn = 1;
+        if(Platform.isModLoaded("hexgloop")){
+            int gloopedSlot = GloopyUtils.setPage(innerFocusStack, slot);
+            slotToReturn = gloopedSlot;
+        }
+        updateColor();
+        markDirty();
+        return slotToReturn;
     }
 
     private void setColor(int color){

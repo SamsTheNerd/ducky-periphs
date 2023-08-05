@@ -49,27 +49,29 @@ public class GloopyUtils {
         }
     }
 
+    // -1 if not handled by this
     public static int getPage(ItemStack stack){
         if(stack.getItem() instanceof ItemMultiFocus){
             return ItemSpellbook.getPage(stack, 0);
         } else {
-            return 0;
+            return -1;
         }
     }
 
     // returns new page
     public static int setPage(ItemStack stack, int goal){
         if(stack.getItem() instanceof ItemMultiFocus){
+            if(goal > ItemMultiFocus.MAX_FOCI_SLOTS){
+                goal = ItemMultiFocus.MAX_FOCI_SLOTS;
+            } else if(goal < 1){
+                goal = 1;
+            }
             int diff = goal - ItemSpellbook.getPage(stack, 0);
             if (diff == goal) {
                 // empty 
-                return 0;
+                return 1;
             } else {
-                if(goal > ItemMultiFocus.MAX_FOCI_SLOTS){
-                    goal = ItemMultiFocus.MAX_FOCI_SLOTS;
-                } else if(goal < 1){
-                    goal = 1;
-                }
+                
                 boolean forward = diff > 0;
                 for(int i = 0; i < Math.abs(diff); i++){
                     ItemSpellbook.rotatePageIdx(stack, forward);
@@ -77,7 +79,7 @@ public class GloopyUtils {
                 return getPage(stack);
             }
         } else {
-            return 0;
+            return 1;
         }
     }
 }

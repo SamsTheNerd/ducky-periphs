@@ -104,6 +104,21 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(IotaLuaUtils.getIotaTypeID(iota.getType()));
     }
 
+    @LuaFunction
+    public final MethodResult getSlotCount(){
+        return MethodResult.of(fpTile.getSlotCount());
+    }
+
+    @LuaFunction
+    public final MethodResult getCurrentSlot(){
+        return MethodResult.of(fpTile.getCurrentSlot());
+    }
+
+    @LuaFunction
+    public final MethodResult setCurrentSlot(int slot){
+        return MethodResult.of(fpTile.setCurrentSlot(slot));
+    }
+
     public void updateIota(){
         for(IComputerAccess computer : computers){
             computer.queueEvent("new_iota", computer.getAttachmentName());
