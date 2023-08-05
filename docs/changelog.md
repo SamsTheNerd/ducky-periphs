@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.3
+
+### Fixed
+
+- Unchecked keyboard packets
+- Focal Link not dropping in survival
+- Hexal entity anchored gates crashing
+
 ## 1.2.2
 
 ### Fixed
