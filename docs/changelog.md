@@ -7,6 +7,11 @@
 - Unchecked keyboard packets
 - Focal Link not dropping in survival
 - Hexal entity anchored gates crashing
+- Focal Port accepting anything by hopper
+
+### Added
+
+- HexGloop interop (gloop dye for keyboards + multifoci and wearable foci in focal port)
 
 ## 1.2.2
 
