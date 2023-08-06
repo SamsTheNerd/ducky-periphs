@@ -2,7 +2,9 @@ package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
 import com.samsthenerd.duckyperiphs.DPRecipeSerializer;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.compat.gloopy.GloopyUtils;
 
+import dev.architectury.platform.Platform;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -54,7 +56,7 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                     // DuckyPeriph.logPrint("too many keyboards");
                     return false;
                 }
-            } else if(SOLVENTS.test(stack) || stack.getItem() instanceof DyeItem){
+            } else if(SOLVENTS.test(stack) || stack.getItem() instanceof DyeItem || (Platform.isModLoaded("hexgloop") && GloopyUtils.isGloopDye(stack))){
                 if(!foundChanger){
                     foundChanger = true;
                     minChangerX = x;
@@ -124,6 +126,11 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                 float[] thisColorComps = ((DyeItem)stack.getItem()).getColor().getColorComponents();
                 int thisColor = (int)(thisColorComps[0] * 255.0f) << 16 | (int)(thisColorComps[1] * 255.0f) << 8 | (int)(thisColorComps[2] * 255.0f);
                 keyCaps.blendAndSetColor(thisColor, craftingGridIndex);
+            } else if(Platform.isModLoaded("hexgloop") && GloopyUtils.isGloopDye(stack)){
+                // add dye
+                int craftingGridIndex = gridIndex(x, y, keyboardX, keyboardY);
+                int thisColor = GloopyUtils.getGloopDyeColor(stack);
+                keyCaps.blendAndSetColor(thisColor, craftingGridIndex);
             }
         }
 
@@ -140,6 +147,10 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                 defaultedList.set(i, inventory.getStack(i));
             } else if(item == Items.WATER_BUCKET){
                 defaultedList.set(i, new ItemStack(Items.BUCKET));
+            } else if(Platform.isModLoaded("hexgloop") && GloopyUtils.isGloopDye(inventory.getStack(i))){
+                ItemStack stack = inventory.getStack(i).copy();
+                GloopyUtils.useGloopMedia(stack);
+                defaultedList.set(i, stack);
             }
             if (!item.hasRecipeRemainder()) continue;
             defaultedList.set(i, new ItemStack(item.getRecipeRemainder()));

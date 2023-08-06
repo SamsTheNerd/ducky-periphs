@@ -1,7 +1,10 @@
 package com.samsthenerd.duckyperiphs.compat.gloopy;
 
+import com.samsthenerd.hexgloop.items.HexGloopItems;
+import com.samsthenerd.hexgloop.items.ItemGloopDye;
 import com.samsthenerd.hexgloop.items.ItemMultiFocus;
 
+import at.petrak.hexcasting.api.misc.MediaConstants;
 import at.petrak.hexcasting.api.spell.iota.Iota;
 import at.petrak.hexcasting.common.items.ItemFocus;
 import at.petrak.hexcasting.common.items.ItemSpellbook;
@@ -80,6 +83,27 @@ public class GloopyUtils {
             }
         } else {
             return 1;
+        }
+    }
+
+    // really is it *good* gloop dye
+    public static boolean isGloopDye(ItemStack stack){
+        boolean isDye = stack.getItem() instanceof ItemGloopDye;
+        if(!isDye) return false;
+        return HexGloopItems.GLOOP_DYE_ITEM.get().getMedia(stack) >= MediaConstants.DUST_UNIT;
+    }
+
+    public static void useGloopMedia(ItemStack stack){
+        if(stack.getItem() instanceof ItemGloopDye){
+            ((ItemGloopDye)stack.getItem()).decrementMedia(stack, MediaConstants.DUST_UNIT);
+        }
+    }
+
+    public static int getGloopDyeColor(ItemStack stack){
+        if(stack.getItem() instanceof ItemGloopDye){
+            return ItemGloopDye.getDyeColor(stack);
+        } else {
+            return 0;
         }
     }
 }
