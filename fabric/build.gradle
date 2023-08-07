@@ -2,10 +2,13 @@ plugins {
 	// id 'fabric-loom' version '1.1-SNAPSHOT'
 	// id 'maven-publish'
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "me.modmuss50.mod-publish-plugin" version "0.3.0"
 }
 
 // sourceCompatibility = JavaVersion.VERSION_17
 // targetCompatibility = JavaVersion.VERSION_17
+
+apply from: '../common/build.gradle'
 
 architectury {
     platformSetupLoomIde()
@@ -103,14 +106,15 @@ remapJar {
     // injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier.set null
+    archiveClassifier.set "fabric"
 }
 
 jar {
-    archiveClassifier.set "dev"
+    archiveClassifier.set "fabric-dev"
 }
 
 sourcesJar {
+    archiveClassifier.set "fabric-sources"
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
@@ -133,5 +137,58 @@ publishing {
     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
         // Add repositories to publish to here.
+    }
+}
+
+
+publishMods {
+    file = remapJar.archiveFile
+    additionalFiles.from(sourcesJar.archiveFile)
+    changelog = trimChangelog(file("$rootDir/docs/changelog.md").text)
+    type = STABLE
+    modLoaders.add("fabric")
+    modLoaders.add("quilt")
+
+    version = project.version + "-fabric"
+    displayName = "Ducky Peripherals" + " " + project.version + " [Fabric]"
+ 
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+        projectId = "832658"
+        minecraftVersions.add("1.19.2")
+        requires {
+            slug = "architectury-api"
+        }
+        requires {
+            slug = "cc-restitched"
+        }
+        optional {
+            slug = "hexcasting"
+        }
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
+        projectId = "l2IpK3Ji"
+        minecraftVersions.add("1.19.2")
+
+        optional {
+            slug = "hex-casting"
+        }
+        requires {
+            // architectury api
+            // id = "XV72M5Gg"
+            slug = "architectury-api"
+        }
+        requires {
+            // architectury api
+            // id = "XV72M5Gg"
+            slug = "cc-restitched"
+        }
+        requires{
+            // fabric api
+            // id = "hfsU4hXq"
+            slug = "fabric-api"
+        }
     }
 }

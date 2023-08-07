@@ -95,3 +95,21 @@ allprojects {
         withSourcesJar()
     }
 }
+
+ext.trimChangelog = { changelogString -> 
+    String changelogSec = ""
+    def lines = changelogString.split("\n")
+    Boolean going = false;
+    for (String line : lines){
+        if (line.startsWith("##") && !line.startsWith("###")){
+            if(going)
+                break
+            going = true;
+        }
+        if(going){
+            changelogSec += (line + "\n")
+        }
+    }
+    // println(changelogSec)
+    return changelogSec
+}
