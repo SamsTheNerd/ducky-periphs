@@ -11,10 +11,10 @@ import javax.annotation.Nullable;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.hexcasting.utils.IotaLuaUtils;
 
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.iota.NullIota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
+import at.petrak.hexcasting.api.casting.iota.NullIota;
 import at.petrak.hexcasting.common.blocks.akashic.BlockEntityAkashicBookshelf;
-import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
@@ -69,7 +69,7 @@ public class AkashicBookshelfPeripheral implements IPeripheral{
             ServerWorld sworld = (ServerWorld)world;
             iotaObject = IotaLuaUtils.getLuaObject(tag, sworld);
             if(tag != null){
-                iota = HexIotaTypes.deserialize(tag, sworld);
+                iota = IotaType.deserialize(tag, sworld);
             }
         } else {
             // I guess pass null ? maybe shouldn't pass anything

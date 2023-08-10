@@ -5,8 +5,8 @@ import javax.annotation.Nullable;
 import com.samsthenerd.duckyperiphs.utils.EntityFromBlockEntity;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -29,7 +29,7 @@ public class FocalPortWrapperEntity extends EntityFromBlockEntity implements ADI
     public Iota readIota(ServerWorld world) {
         var tag = readIotaTag();
         if (tag != null) {
-            return HexIotaTypes.deserialize(tag, world);
+            return IotaType.deserialize(tag, world);
         }
         return null;
     }

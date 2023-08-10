@@ -4,9 +4,7 @@
     "package": "com.samsthenerd.duckyperiphs.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-      "HexMixins.BEImpetusEventInject",
-      "HexMixins.BEImpetusPeripheralMixin",
-      "HexMixins.ClericImpetusAccessor"
+      "HexMixins.BEImpetusEventInject"
     ],
     "client": [
     ],

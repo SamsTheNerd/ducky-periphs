@@ -13,26 +13,34 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
 
-    // modImplementation("net.fabricmc:fabric-language-kotlin:1.7.4+kotlin.1.6.21")
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2' // for @Nonnull
 
+    compileOnly(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixinExtrasVersion}"))
+    
+    //hex depenedent stuff
     modCompileOnly "at.petra-k.paucal:paucal-common-$minecraft_version:$paucalVersion"
-    modCompileOnly "at.petra-k.hexcasting:hexcasting-fabric-$minecraft_version:$hexcastingVersion"
-    modCompileOnly "vazkii.patchouli:Patchouli-xplat:$minecraft_version-$patchouliVersion"
+    // modCompileOnly "at.petra-k.hexcasting:hexcasting-fabric-$minecraft_version:$hexcastingVersion"
+    modCompileOnly "localModLibs:hexcasting-fabric-$minecraft_version:$hexcastingVersion"
+    modCompileOnly "vazkii.patchouli:Patchouli-xplat:$minecraft_version-$patchouliVersion-SNAPSHOT"
+
+    /*
+    modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-fabric"
+    modImplementation "maven.modrinth:wnboi:${wnboiVersion}-fabric"
+    */
+
+    modImplementation "localModLibs:hexal-fabric-${minecraft_version}:${hexalVersion}"
+	modImplementation "localModLibs:moreiotas-fabric-${minecraft_version}:${moreIotasVersion}"
 
     modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 
-    compileOnly(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixinExtrasVersion}"))
-    modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-fabric"
-    modImplementation "maven.modrinth:wnboi:${wnboiVersion}-fabric"
-
-    // throw this in so that we have access to the api in common. inspired by techtactic's architectury setup on valkyrien computers
-    // try replacing this with cc-tweaked and see if forgfe will accept that?
-	modImplementation "com.github.cc-tweaked:cc-restitched:${project.cc_version}"
-    // modCompileOnly("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
-    //     transitive = false
-    // }
+    // fabric so that it is in the right mapping (https://discord.com/channels/792699517631594506/1103052639245185145/1103059149387993108) ?
+    modCompileOnly("cc.tweaked:cc-tweaked-${minecraft_version}-fabric:${cc_version}"){
+        transitive = false
+    }
+    modCompileOnly("cc.tweaked:cc-tweaked-${minecraft_version}-fabric-api:${cc_version}")
+    modImplementation("cc.tweaked:cc-tweaked-${minecraft_version}-core-api:${project.cc_version}")
+    modImplementation("cc.tweaked:cc-tweaked-${minecraft_version}-core:${project.cc_version}")
 
     // for moreIotas matrices
 	implementation group: "org.jblas", name: "jblas", version: "1.2.5"
@@ -40,9 +48,7 @@ dependencies {
 
     // compileOnly "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
 
-    modImplementation "maven.modrinth:hexal:${hexalVersion}"
-	modImplementation "maven.modrinth:moreiotas:${moreIotasVersion}"
-	modImplementation "maven.modrinth:gravity-api:${gravityApiVersion}"
+    
 }
 
 publishing {

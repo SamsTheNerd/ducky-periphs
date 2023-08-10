@@ -2,14 +2,15 @@ package com.samsthenerd.duckyperiphs.hexcasting.hexal;
 
 import java.util.UUID;
 
-import at.petrak.hexcasting.api.item.ColorizerItem;
+import at.petrak.hexcasting.api.item.PigmentItem;
+import at.petrak.hexcasting.api.pigment.ColorProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.Vec3d;
 
-public class ItemRGBColorizer extends Item implements ColorizerItem{
+public class ItemRGBColorizer extends Item implements PigmentItem{
     public ItemRGBColorizer(Item.Settings settings){
         super(settings);
     }
@@ -31,12 +32,8 @@ public class ItemRGBColorizer extends Item implements ColorizerItem{
     }
 
     @Override
-    public int color(ItemStack stack, UUID owner, float time, Vec3d position){
-        NbtCompound tag = stack.getNbt();
-        if(tag != null && tag.contains("argb", NbtElement.INT_TYPE)){
-            return tag.getInt("argb");
-        }
-        return 0xFF_FFFFFF;
+    public ColorProvider provideColor(ItemStack stack, UUID owner){
+        return new RGBColorProvider(stack, owner);
     }
 
     public static int getRGB(ItemStack stack){
@@ -45,5 +42,24 @@ public class ItemRGBColorizer extends Item implements ColorizerItem{
             return tag.getInt("argb");
         }
         return -1;
+    }
+
+    public static class RGBColorProvider extends ColorProvider{
+        private ItemStack stack;
+        private UUID owner;
+
+        public RGBColorProvider(ItemStack stack, UUID owner){
+            this.stack = stack;
+            this.owner = owner;
+        }
+
+        @Override
+        public int getRawColor(float time, Vec3d position){
+            NbtCompound tag = stack.getNbt();
+            if(tag != null && tag.contains("argb", NbtElement.INT_TYPE)){
+                return tag.getInt("argb");
+            }
+            return 0xFF_FFFFFF;
+        }
     }
 }

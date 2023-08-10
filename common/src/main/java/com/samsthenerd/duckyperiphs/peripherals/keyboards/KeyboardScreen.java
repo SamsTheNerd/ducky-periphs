@@ -5,13 +5,13 @@ import java.util.HashSet;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.utils.BlockHitFromScreen;
 
-import dan200.computercraft.shared.peripheral.monitor.BlockMonitor;
+import dan200.computercraft.shared.peripheral.monitor.MonitorBlock;
 import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
@@ -36,12 +36,12 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY){
         // not sure what needs to go here 
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+    public void render(DrawContext context, int mouseX, int mouseY, float delta){
         // renderBackground(matrices);
         // super.render(matrices, mouseX, mouseY, delta);
         // drawMouseoverTooltip(matrices, x, y); // don't think we need this? 
@@ -167,7 +167,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
             DuckyPeriphs.logPrint("hit: " + hit.getType() + "; pos: " + hit.getBlockPos() + "; side: " + hit.getSide() + "; pos: " + hit.getPos());
             if(client.world == null) return super.mouseClicked(mouseX, mouseY, button);
             BlockState state = client.world.getBlockState(hit.getBlockPos());
-            if(state != null && state.getBlock() instanceof BlockMonitor){
+            if(state != null && state.getBlock() instanceof MonitorBlock){
                 // do stuff
                 client.interactionManager.interactBlock(client.player, Hand.MAIN_HAND, hit);
             }

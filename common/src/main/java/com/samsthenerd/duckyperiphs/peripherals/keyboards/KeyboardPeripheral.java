@@ -6,9 +6,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import dan200.computercraft.ComputerCraft;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.shared.computer.core.ServerComputer;
+import dan200.computercraft.shared.computer.core.ServerContext;
 
 public class KeyboardPeripheral implements IPeripheral {
     private final KeyboardTile kbTile;
@@ -76,17 +77,20 @@ public class KeyboardPeripheral implements IPeripheral {
 
     public void sendShutdown(){
         for (IComputerAccess computer : computers) {
-            ComputerCraft.serverComputerRegistry.lookup(computer.getID()).shutdown();;
+            getServerComputer(computer).shutdown();
             computer.queueEvent("shutdown", computer.getAttachmentName());
         }
     }
 
     public void sendReboot(){
         for (IComputerAccess computer : computers) {
-            ComputerCraft.serverComputerRegistry.lookup(computer.getID()).reboot();;
+            getServerComputer(computer).reboot();
             computer.queueEvent("reboot", computer.getAttachmentName());
         }
     }
 
+    private ServerComputer getServerComputer(IComputerAccess computer){
+        return ServerContext.get(kbTile.getWorld().getServer()).registry().get(computer.getID());
+    }
 
 }

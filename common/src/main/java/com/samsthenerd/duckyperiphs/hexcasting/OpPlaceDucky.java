@@ -4,26 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import javax.annotation.Nullable;
 
-import at.petrak.hexcasting.api.misc.FrozenColorizer;
+import org.jetbrains.annotations.NotNull;
+
+import com.samsthenerd.duckyperiphs.hexcasting.utils.mishapJavaSkillIssues.MishapThrowerWrapper;
+
+import at.petrak.hexcasting.api.casting.OperatorUtils;
+import at.petrak.hexcasting.api.casting.ParticleSpray;
+import at.petrak.hexcasting.api.casting.RenderedSpell;
+import at.petrak.hexcasting.api.casting.castables.SpellAction;
+import at.petrak.hexcasting.api.casting.eval.CastingEnvironment;
+import at.petrak.hexcasting.api.casting.eval.OperationResult;
+import at.petrak.hexcasting.api.casting.eval.vm.CastingImage;
+import at.petrak.hexcasting.api.casting.eval.vm.SpellContinuation;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.mishaps.Mishap;
+import at.petrak.hexcasting.api.casting.mishaps.MishapBadBlock;
 import at.petrak.hexcasting.api.misc.MediaConstants;
-import at.petrak.hexcasting.api.spell.OperationResult;
-import at.petrak.hexcasting.api.spell.OperatorUtils;
-import at.petrak.hexcasting.api.spell.ParticleSpray;
-import at.petrak.hexcasting.api.spell.RenderedSpell;
-import at.petrak.hexcasting.api.spell.SpellAction;
-import at.petrak.hexcasting.api.spell.casting.CastingContext;
-import at.petrak.hexcasting.api.spell.casting.eval.SpellContinuation;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.mishaps.MishapBadBlock;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.xplat.IXplatAbstractions;
-import kotlin.Triple;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -35,30 +40,16 @@ public class OpPlaceDucky implements SpellAction{
     public int getArgc(){ return 2;}
 
     @Override
-    public boolean hasCastingSound(CastingContext context){ return true;}
+    public boolean hasCastingSound(CastingEnvironment context){ return true;}
 
     @Override
-    public boolean awardsCastingStat(CastingContext context){ return true;}
+    public boolean awardsCastingStat(CastingEnvironment context){ return true;}
 
     @Override
-    public boolean isGreat(){ return false;}
-
-    @Override
-    public boolean getCausesBlindDiversion(){ return false;}
-
-    @Override 
-    public boolean getAlwaysProcessGreatSpell(){ return false;}
-
-    @Override
-    public Text getDisplayName(){ 
-        return DefaultImpls.getDisplayName(this);
-    }
-
-    @Override
-    public Triple<RenderedSpell, Integer, List<ParticleSpray>> execute(List<? extends Iota> args, CastingContext context){
+    public Result execute(List<? extends Iota> args, CastingEnvironment context){
         try{
         BlockPos pos = OperatorUtils.getBlockPos(args, 0, getArgc());
-        context.assertVecInRange(pos);
+        context.assertPosInRange(pos);
 
         Vec3d dirVec = OperatorUtils.getVec3(args, 1, getArgc());
         Direction dir = Direction.getFacing(dirVec.x, 0, dirVec.z);
@@ -82,15 +73,12 @@ public class OpPlaceDucky implements SpellAction{
         List<ParticleSpray> particles = new ArrayList<>();
         particles.add(ParticleSpray.cloud(Vec3d.ofCenter(pos), 1.0, 1));
 
-        return new Triple<RenderedSpell, Integer, List<ParticleSpray>>(
-            new Spell(pos, dir),
-            MediaConstants.DUST_UNIT,
-            particles
-        );
-        } catch (MishapBadBlock e){
-            DuckyPeriphs.LOGGER.error("Error in casting: " + e.toString());
-            return null;
+        return new Result( new Spell(pos, dir), MediaConstants.DUST_UNIT, particles, 0);
+
+        } catch (Mishap e){
+            MishapThrowerWrapper.throwMishap(e);
         }
+        return null; // should never reach here. just java - kotlin skill issue-ing
     }
 
     private class Spell implements RenderedSpell {
@@ -101,14 +89,19 @@ public class OpPlaceDucky implements SpellAction{
             this.direction = direction;
         }
 
+        @Nullable
+        public CastingImage cast(@NotNull CastingEnvironment env, @NotNull CastingImage image) {
+            return DefaultImpls.cast(this, env, image);
+        }
+
         @Override
-        public void cast(CastingContext context) {
+        public void cast(CastingEnvironment context) {
             if (!context.canEditBlockAt(pos))
                 return;
             
             Block block = DuckyCasting.CONJURED_DUCKY_BLOCK.get();
 
-            FrozenColorizer colorizer = IXplatAbstractions.INSTANCE.getColorizer(context.getCaster());
+            FrozenPigment colorizer = IXplatAbstractions.INSTANCE.getPigment(context.getCaster());
 
             ItemStack duckyItemStack = new ItemStack(DuckyCasting.CONJURED_DUCKY_BLOCK.get().asItem());
 
@@ -134,8 +127,12 @@ public class OpPlaceDucky implements SpellAction{
     }
 
     @Override
-    public OperationResult operate(SpellContinuation continuation, List<Iota> stack, Iota ravenmind, CastingContext castingContext){
-        return SpellAction.DefaultImpls.operate(this, continuation, stack, ravenmind, castingContext);
+    public OperationResult operate(CastingEnvironment env, CastingImage image, SpellContinuation continuation){
+        return SpellAction.DefaultImpls.operate(this, env, image, continuation);
     }
     
+    @NotNull
+    public SpellAction.Result executeWithUserdata(@NotNull List<? extends Iota> args, @NotNull CastingEnvironment env, @NotNull NbtCompound userData) {
+        return DefaultImpls.executeWithUserdata(this, args, env, userData);
+    }
 }

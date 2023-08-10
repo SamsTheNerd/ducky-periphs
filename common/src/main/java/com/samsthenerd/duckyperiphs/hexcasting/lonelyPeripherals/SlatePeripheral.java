@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.hexcasting.utils.IotaLuaUtils;
 
-import at.petrak.hexcasting.api.spell.math.HexPattern;
+import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.common.blocks.circles.BlockEntitySlate;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;

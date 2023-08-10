@@ -1,5 +1,6 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
+import com.mojang.blaze3d.systems.VertexSorter;
 import com.samsthenerd.duckyperiphs.hexcasting.utils.HexyMiddleVertexConsumer;
 
 import net.fabricmc.api.EnvType;
@@ -59,7 +60,8 @@ public class ConjuredDuckyBER implements BlockEntityRenderer<ConjuredDuckyBlockE
 
 
             BlockPos camPos = mcClient.getCameraEntity().getBlockPos();
-            RenderLayer.getTranslucent().draw((BufferBuilder) hexyConsumer.innerConsumer, camPos.getX(), camPos.getY(), camPos.getZ());
+            VertexSorter vSorter = VertexSorter.byDistance(camPos.getX(), camPos.getY(), camPos.getZ());
+            RenderLayer.getTranslucent().draw((BufferBuilder) hexyConsumer.innerConsumer, vSorter);
 
             matrices.pop();
     }

@@ -2,29 +2,29 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 
 import javax.annotation.Nullable;
 
-import at.petrak.hexcasting.api.misc.FrozenColorizer;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 
 public class ConjuredDuckyBlockEntity extends BlockEntity{
-    private FrozenColorizer colorizer = FrozenColorizer.DEFAULT.get();
+    private FrozenPigment colorizer = FrozenPigment.DEFAULT.get();
     public static final String TAG_COLORIZER = "tag_colorizer";
 
     public ConjuredDuckyBlockEntity(BlockPos pos, BlockState state) {
         super(DuckyCasting.CONJURED_DUCKY_BLOCK_ENTITY.get(), pos, state);
     }
 
-    public void setColorizer(FrozenColorizer colorizer){
+    public void setColorizer(FrozenPigment colorizer){
         this.colorizer = colorizer;
         markDirty();
     }
 
-    public FrozenColorizer getColorizer(){
+    public FrozenPigment getColorizer(){
         return colorizer;
     }
 
@@ -32,7 +32,7 @@ public class ConjuredDuckyBlockEntity extends BlockEntity{
     public void readNbt(NbtCompound nbt){
         super.readNbt(nbt);
         if(nbt.contains(TAG_COLORIZER)){
-            colorizer = FrozenColorizer.fromNBT(nbt.getCompound(TAG_COLORIZER));
+            colorizer = FrozenPigment.fromNBT(nbt.getCompound(TAG_COLORIZER));
         }
     }
 

@@ -6,7 +6,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +42,7 @@ public class EntityFromBlockEntity extends Entity{
         if(parentBlockEntity == null){
             BlockPos pos = getBlockPos();
             DuckyPeriphs.logPrint("hasBlockEntity: parentBlockEntity was null, getting from pos" + pos.toString());
-            parentBlockEntity = world.getBlockEntity(pos);
+            parentBlockEntity = getWorld().getBlockEntity(pos);
         }
         DuckyPeriphs.logPrint("hasBlockEntity: parentBlockEntity is type " + parentBlockEntity.getClass().getName());
         return parentBlockEntityType.isInstance(parentBlockEntity);
@@ -93,7 +94,7 @@ public class EntityFromBlockEntity extends Entity{
     }
 
     @Override
-    public Packet<?> createSpawnPacket() {
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
     }
 }

@@ -8,18 +8,18 @@ import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.hexcasting.utils.IotaLuaUtils;
 
-import at.petrak.hexcasting.api.misc.FrozenColorizer;
-import at.petrak.hexcasting.api.spell.iota.GarbageIota;
-import at.petrak.hexcasting.api.spell.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.GarbageIota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexItems;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import ram.talia.hexal.api.linkable.ILinkable;
 
 public class FocalLinkPeripheral implements IPeripheral{
@@ -130,13 +130,13 @@ public class FocalLinkPeripheral implements IPeripheral{
 
     @LuaFunction
     public final MethodResult getPigment(){
-        FrozenColorizer col = flTile.colouriser();
-        Identifier id = Registry.ITEM.getId(col.item().getItem());
+        FrozenPigment col = flTile.pigment();
+        Identifier id = Registries.ITEM.getId(col.item().getItem());
         String idString = id.toString();
         if(col.item().getItem() == DuckyHexal.ITEM_RGB_COLORIZER){
             idString = "rgb:" + getPigmentRGB();
         }
-        if(col.item().getItem() == HexItems.UUID_COLORIZER){
+        if(col.item().getItem() == HexItems.UUID_PIGMENT){
             idString = "soulglimmer:" + col.owner().toString();
         }
         return MethodResult.of(idString);
@@ -144,7 +144,7 @@ public class FocalLinkPeripheral implements IPeripheral{
 
     @LuaFunction
     public final MethodResult getPigmentRGB(){
-        FrozenColorizer col = flTile.colouriser();
+        FrozenPigment col = flTile.pigment();
         int rgb = ItemRGBColorizer.getRGB(col.item());
         return MethodResult.of(rgb);
     }

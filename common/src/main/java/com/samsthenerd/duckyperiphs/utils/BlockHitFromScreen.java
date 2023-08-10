@@ -1,6 +1,9 @@
 package com.samsthenerd.duckyperiphs.utils;
 
-import blue.endless.jankson.annotation.Nullable;
+import javax.annotation.Nullable;
+
+import org.joml.Vector3f;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -10,8 +13,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.RaycastContext;
 
 
@@ -25,24 +28,25 @@ public class BlockHitFromScreen {
         Vec3d cameraDirection = client.cameraEntity.getRotationVec(tickDelta);
         double fov = (double)client.options.getFov().getValue();
         double angleSize = fov/height;
-        Vec3f verticalRotationAxis = new Vec3f(cameraDirection);
-        verticalRotationAxis.cross(Vec3f.POSITIVE_Y);
-        if(!verticalRotationAxis.normalize()) {
-            return null;//The camera is pointing directly up or down, you'll have to fix this one
-        }
+        Vector3f verticalRotationAxis = cameraDirection.toVector3f();
+        verticalRotationAxis.cross(0,1,0); // no clue if this is right !
+        verticalRotationAxis.normalize();
+        // if(!verticalRotationAxis.normalize()) {
+        //     return null;//The camera is pointing directly up or down, you'll have to fix this one
+        // }
         
-        Vec3f horizontalRotationAxis = new Vec3f(cameraDirection);
+        Vector3f horizontalRotationAxis = cameraDirection.toVector3f();
         horizontalRotationAxis.cross(verticalRotationAxis);
         horizontalRotationAxis.normalize();
         
-        verticalRotationAxis = new Vec3f(cameraDirection);
+        verticalRotationAxis = cameraDirection.toVector3f();
         verticalRotationAxis.cross(horizontalRotationAxis);
 
         Vec3d direction = map(
             (float) angleSize,
             cameraDirection,
-            horizontalRotationAxis,
-            verticalRotationAxis,
+            RotationAxis.of(horizontalRotationAxis),
+            RotationAxis.of(verticalRotationAxis),
             x,
             y,
             width,
@@ -76,14 +80,14 @@ public class BlockHitFromScreen {
         // }
     }
 
-    private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis,
-        Vec3f verticalRotationAxis, int x, int y, int width, int height) {
+    private static Vec3d map(float anglePerPixel, Vec3d center, RotationAxis horizontalRotationAxis,
+        RotationAxis verticalRotationAxis, int x, int y, int width, int height) {
         float horizontalRotation = (x - width/2f) * anglePerPixel;
         float verticalRotation = (y - height/2f) * anglePerPixel;
      
-        final Vec3f temp2 = new Vec3f(center);
-        temp2.rotate(verticalRotationAxis.getDegreesQuaternion(verticalRotation));
-        temp2.rotate(horizontalRotationAxis.getDegreesQuaternion(horizontalRotation));
+        final Vector3f temp2 = center.toVector3f();
+        temp2.rotate(verticalRotationAxis.rotation(verticalRotation));
+        temp2.rotate(horizontalRotationAxis.rotation(horizontalRotation));
         return new Vec3d(temp2);
     }
 
@@ -157,7 +161,7 @@ public class BlockHitFromScreen {
             Vec3d direction
     ) {
         Vec3d end = entity.getCameraPosVec(tickDelta).add(direction.multiply(maxDistance));
-        return entity.world.raycast(new RaycastContext(
+        return entity.getWorld().raycast(new RaycastContext(
                 entity.getCameraPosVec(tickDelta),
                 end,
                 RaycastContext.ShapeType.OUTLINE,

@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.samsthenerd.duckyperiphs.ducks.DuckBlock;
 
-import at.petrak.hexcasting.api.misc.FrozenColorizer;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
@@ -62,21 +62,22 @@ public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
         }
     }
 
+    // might not be right ? - was isTranslucent but i can't find that
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
         return true;
     }
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction direction = ctx.getPlayerFacing().getOpposite();
+        Direction direction = ctx.getHorizontalPlayerFacing().getOpposite();
         if(direction == Direction.DOWN || direction == Direction.UP)
             direction = Direction.NORTH;
         return (BlockState)this.getDefaultState().with(FACING, direction);
     }
 
     // taken from BlockConjured
-    public static void setColor(WorldAccess pLevel, BlockPos pPos, FrozenColorizer colorizer) {
+    public static void setColor(WorldAccess pLevel, BlockPos pPos, FrozenPigment colorizer) {
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
         if (blockentity instanceof ConjuredDuckyBlockEntity tile) {
             tile.setColorizer(colorizer);

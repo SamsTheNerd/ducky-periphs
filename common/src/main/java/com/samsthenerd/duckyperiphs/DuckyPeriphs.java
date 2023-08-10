@@ -26,16 +26,14 @@ import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardUtils;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlock;
 import com.samsthenerd.duckyperiphs.peripherals.sculkophone.SculkophoneBlockEntity;
 
-import dev.architectury.event.events.common.LootEvent;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registries;
+import dev.architectury.registry.registries.RegistrarManager;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BannerPatternItem;
@@ -43,13 +41,13 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.event.GameEvent;
 
 public class DuckyPeriphs{
@@ -64,22 +62,22 @@ public class DuckyPeriphs{
 	}
 
 	public static final String MOD_ID = "ducky-periphs";
-	public static final Supplier<Registries> REGISTRIES = Suppliers.memoize(() -> Registries.get(MOD_ID));
+	public static final Supplier<RegistrarManager> REGISTRIES = Suppliers.memoize(() -> RegistrarManager.get(MOD_ID));
 
 	// various architectury registry wrappers - could maybe move each into their own files, we'll see.
-	public static DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, Registry.ITEM_KEY);
-	public static DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, Registry.BLOCK_KEY);
+	public static DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM);
+	public static DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
 	public static Map<RegistrySupplier<? extends Block>, Item.Settings> blockItems = new HashMap<>();
-	public static DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(MOD_ID, Registry.BLOCK_ENTITY_TYPE_KEY);
-	public static DeferredRegister<EntityType<?>> entities = DeferredRegister.create(MOD_ID, Registry.ENTITY_TYPE_KEY);
-	public static final DeferredRegister<SoundEvent> sounds = DeferredRegister.create(MOD_ID, Registry.SOUND_EVENT_KEY);
-	public static final DeferredRegister<GameEvent> gameEvents = DeferredRegister.create(MOD_ID, Registry.GAME_EVENT_KEY);
-	public static final DeferredRegister<ScreenHandlerType<?> > screenHandlers = DeferredRegister.create(MOD_ID, Registry.MENU_KEY);
+	public static DeferredRegister<BlockEntityType<?>> blockEntities = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK_ENTITY_TYPE);
+	public static DeferredRegister<EntityType<?>> entities = DeferredRegister.create(MOD_ID, RegistryKeys.ENTITY_TYPE);
+	public static final DeferredRegister<SoundEvent> sounds = DeferredRegister.create(MOD_ID, RegistryKeys.SOUND_EVENT);
+	public static final DeferredRegister<GameEvent> gameEvents = DeferredRegister.create(MOD_ID, RegistryKeys.GAME_EVENT);
+	public static final DeferredRegister<ScreenHandlerType<?> > screenHandlers = DeferredRegister.create(MOD_ID, RegistryKeys.SCREEN_HANDLER);
+	public static final DeferredRegister<ItemGroup> TABS = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM_GROUP);
 
-	public static final ItemGroup CC_PERIPHS_GROUP = CreativeTabRegistry.create(
-		new Identifier("ducky-periphs", "general"),
-		() -> new ItemStack(DuckyPeriphs.DUCK_ITEM.get()));
-
+	public static final RegistrySupplier<ItemGroup> CC_PERIPHS_GROUP = TABS.register("test_tab", () ->
+            CreativeTabRegistry.create(Text.translatable("itemGroup.ducky-periphs.general"),
+                    () -> new ItemStack(DuckyPeriphs.DUCK_ITEM.get())));
 	// Peripheral Registering
 
 	// Weather Machine Registering
@@ -93,12 +91,12 @@ public class DuckyPeriphs{
 	// Keyboard Registering - may end up having more keyboards here later
 	public static final RegistrySupplier<KeyboardBlock> KEYBOARD_BLOCK = blockNoItem("keyboard_block", () -> new KeyboardBlock(peripheralBlockSettings().hardness((float)0.7)));
 	public static RegistrySupplier<BlockEntityType<KeyboardTile>> KEYBOARD_TILE = blockEntities.register(new Identifier(MOD_ID, "keyboard_tile"), () -> BlockEntityType.Builder.create(KeyboardTile::new, KEYBOARD_BLOCK.get()).build(null));
-	public static final RegistrySupplier<KeyboardItem> KEYBOARD_ITEM = item("keyboard_block", () -> new KeyboardItem(KEYBOARD_BLOCK.get(), new Item.Settings().group(CC_PERIPHS_GROUP)));
+	public static final RegistrySupplier<KeyboardItem> KEYBOARD_ITEM = item("keyboard_block", () -> new KeyboardItem(KEYBOARD_BLOCK.get(), new Item.Settings().arch$tab(CC_PERIPHS_GROUP)));
 	public static final ScreenHandlerType<KeyboardScreenHandler> KEYBOARD_SCREEN_HANDLER = MenuRegistry.ofExtended(KeyboardScreenHandler::new);
 	public static final Identifier KEYBOARD_PRESS_PACKET_ID = new Identifier(MOD_ID, "keyboard_press");
 
 	//duck time !
-	public static final RegistrySupplier<DuckBlock> DUCK_BLOCK = blockNoItem("duck_block", () -> new DuckBlock(Block.Settings.of(Material.WOOL).hardness((float)0.2)));
+	public static final RegistrySupplier<DuckBlock> DUCK_BLOCK = blockNoItem("duck_block", () -> new DuckBlock(Block.Settings.create().hardness((float)0.2)));
 	public static RegistrySupplier<BlockEntityType<DuckBlockEntity>> DUCK_BLOCK_ENTITY = blockEntities.register(new Identifier(MOD_ID, "duck_block_entity"), () -> BlockEntityType.Builder.create(DuckBlockEntity::new, DUCK_BLOCK.get()).build(null));
 	public static final RegistrySupplier<DuckItem> DUCK_ITEM = item("duck_block", () -> new DuckItem(DUCK_BLOCK.get(), dpItemSettings()));
 	public static RegistrySupplier<SoundEvent> QUACK_SOUND_EVENT = soundEvent("quack");
@@ -115,11 +113,11 @@ public class DuckyPeriphs{
 	// public static RegistrySupplier<EntityType<EntityFromBlockEntity>> ENTITY_FROM_BLOCK_ENTITY;
 
 	// Banners
-	public static final RegistrySupplier<BannerPatternItem> DUCKY_PATTERN_ITEM = item("ducky_banner_pattern", () -> new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).group(ItemGroup.MISC)));
+	public static final RegistrySupplier<BannerPatternItem> DUCKY_PATTERN_ITEM = item("ducky_banner_pattern", () -> new BannerPatternItem(DuckyBanners.DUCKY_PATTERN_ITEM_KEY, new Item.Settings().maxCount(1).arch$tab(Registries.ITEM_GROUP.get(new Identifier("ingredients")))));
 	
 	// public static BlockEntityType<StrongModemBlockEntity> STRONG_MODEM_BLOCK_ENTITY;
 	// public static final StrongModemBlock STRONG_MODEM_BLOCK=null; //= new StrongModemBlock(FabricBlockSettings.of(Material.STONE).hardness((float)0.7));
-	// public static final BlockItem STRONG_MODEM_ITEM=null; //= new BlockItem(STRONG_MODEM_BLOCK, new Item.Settings().group(CC_PERIPHS_GROUP));
+	// public static final BlockItem STRONG_MODEM_ITEM=null; //= new BlockItem(STRONG_MODEM_BLOCK, new Item.Settings().arch$tab(CC_PERIPHS_GROUP));
 
 
 	public static void onInitialize() {
@@ -129,9 +127,6 @@ public class DuckyPeriphs{
 
 		setupNetworkStuff();
 		setupMisc();
-		registerLoot();
-
-
 		// registerLoot();
 
 		DPRecipeSerializer.init();
@@ -180,11 +175,11 @@ public class DuckyPeriphs{
 
 
 	private static Block.Settings peripheralBlockSettings(){
-		return Block.Settings.of(Material.STONE).hardness((float)1.3);
+		return Block.Settings.create().hardness((float)1.3);
 	}
 
 	private static Item.Settings dpItemSettings(){
-		return new Item.Settings().group(CC_PERIPHS_GROUP);
+		return new Item.Settings().arch$tab(CC_PERIPHS_GROUP);
 	}
 
 	// stealing from hex casting :D
@@ -208,7 +203,7 @@ public class DuckyPeriphs{
     }
 
 	public static RegistrySupplier<SoundEvent> soundEvent(String id){
-		return sounds.register(new Identifier(MOD_ID, id), () -> new SoundEvent(new Identifier(MOD_ID, id)));
+		return sounds.register(new Identifier(MOD_ID, id), () -> SoundEvent.of(new Identifier(MOD_ID, id)));
 	}
 
 	public static RegistrySupplier<GameEvent> gameEvent(String id, int range){
@@ -217,19 +212,21 @@ public class DuckyPeriphs{
 	}
 
 	public static final Identifier keyboardLootTable = new Identifier("ducky-periphs", "chests/keyboards");
-	private static void registerLoot(){
-		if(!Platform.isForge()){
-			LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
-				if (shouldAddKeyboards(id, builtin)) {
-					LootTable kbLootTable = lootTables.getTable(keyboardLootTable);
-					LootPool[] pools = kbLootTable.pools;
-					for (LootPool pool : pools) {
-						context.addPool(pool);
-					}
-				}
-			});
-		}
-	}
+	// doesn't work for now. add an accessor later for pools if we care enough
+	// private static void registerLoot(){
+	// 	if(!Platform.isForge()){
+	// 		LootEvent.MODIFY_LOOT_TABLE.register((lootTables, id, context, builtin) -> {
+	// 			if (shouldAddKeyboards(id, builtin)) {
+	// 				LootTable kbLootTable = lootTables.getLootTable(keyboardLootTable);
+
+	// 				LootPool[] pools = kbLootTable.pools;
+	// 				for (LootPool pool : pools) {
+	// 					context.addPool(pool);
+	// 				}
+	// 			}
+	// 		});
+	// 	}
+	// }
 
 	// since we have to do it weird on forge, expose this for easier future modification
 	public static boolean shouldAddKeyboards(Identifier id, boolean builtin){

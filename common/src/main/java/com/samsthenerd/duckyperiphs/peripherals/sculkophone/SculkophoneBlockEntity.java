@@ -23,20 +23,26 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.event.BlockPositionSource;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.event.PositionSource;
+import net.minecraft.world.event.Vibrations;
 import net.minecraft.world.event.listener.GameEventListener;
-import net.minecraft.world.event.listener.VibrationListener;
 
 public class SculkophoneBlockEntity
 extends BlockEntity
-implements VibrationListener.Callback, IPeripheralTileDucky{
+implements GameEventListener.Holder<Vibrations.VibrationListener>, Vibrations, IPeripheralTileDucky{
     private static final Logger LOGGER = LogUtils.getLogger();
-    private VibrationListener listener;
+    private Vibrations.ListenerData listenerData;
+    private final Vibrations.VibrationListener listener;
+    private final Vibrations.Callback callback;
     private int lastVibrationFrequency;
     private SculkophonePeripheral sculkPeriph;
 
     public SculkophoneBlockEntity(BlockPos pos, BlockState state) {
         super(DuckyPeriphs.SCULKOPHONE_BLOCK_ENTITY.get(), pos, state);
-        this.listener = new VibrationListener(new BlockPositionSource(this.pos), ((SculkophoneBlock)state.getBlock()).getRange(), this, null, 0.0f, 0);
+        sculkPeriph = new SculkophonePeripheral(this);
+        this.callback = new SPVibrationCallback(this, pos, sculkPeriph);
+        this.listenerData = new Vibrations.ListenerData();
+        this.listener = new Vibrations.VibrationListener(this);
     }
 
     @Override
@@ -45,8 +51,8 @@ implements VibrationListener.Callback, IPeripheralTileDucky{
         this.lastVibrationFrequency = nbt.getInt("last_vibration_frequency");
         if (nbt.contains("listener", NbtElement.COMPOUND_TYPE)) {
             new Dynamic<>(NbtOps.INSTANCE, nbt.getCompound("listener"));
-            VibrationListener.createCodec(this).parse(new Dynamic<>(NbtOps.INSTANCE, nbt.getCompound("listener"))).resultOrPartial(LOGGER::error).ifPresent(listener -> {
-                this.listener = listener;
+            ListenerData.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, nbt.getCompound("listener"))).resultOrPartial(LOGGER::error).ifPresent(listener -> {
+                this.listenerData = listener;
             });
         }
     }
@@ -55,47 +61,83 @@ implements VibrationListener.Callback, IPeripheralTileDucky{
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.putInt("last_vibration_frequency", this.lastVibrationFrequency);
-        VibrationListener.createCodec(this).encodeStart(NbtOps.INSTANCE, this.listener).resultOrPartial(LOGGER::error).ifPresent(listenerNbt -> nbt.put("listener", (NbtElement)listenerNbt));
+        ListenerData.CODEC.encodeStart(NbtOps.INSTANCE, this.listenerData).resultOrPartial(LOGGER::error).ifPresent(listenerNbt -> nbt.put("listener", (NbtElement)listenerNbt));
     }
 
     public VibrationListener getEventListener() {
         return this.listener;
     }
 
+    public Vibrations.ListenerData getVibrationListenerData() {
+        return this.listenerData;
+    }
+
+    public Vibrations.Callback getVibrationCallback() {
+        return this.callback;
+    }
+
     public int getLastVibrationFrequency() {
         return this.lastVibrationFrequency;
     }
 
-    @Override
-    public boolean triggersAvoidCriterion() {
-        return true;
-    }
+    public static class SPVibrationCallback implements Vibrations.Callback{
+        private final SculkophoneBlockEntity spbe;
+        private final SculkophonePeripheral sculkPeriph;
+        private final BlockPos spPos;
+        PositionSource posSource;
 
-    @Override
-    public boolean accepts(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable GameEvent.Emitter emitter) {
-        if (this.isRemoved() || pos.equals(this.getPos()) && (event == GameEvent.BLOCK_DESTROY || event == GameEvent.BLOCK_PLACE)) {
-            return false;
+        public SPVibrationCallback(SculkophoneBlockEntity spbe, BlockPos pos, SculkophonePeripheral sculkPeriph) {
+            this.spbe = spbe;
+            this.spPos = pos;
+            this.sculkPeriph = sculkPeriph;
+            posSource = new BlockPositionSource(pos);
+        }   
+
+        @Override
+        public boolean triggersAvoidCriterion() {
+            return true;
         }
-        return SculkophoneBlock.isInactive(this.getCachedState());
-    }
 
-    @Override
-    public void accept(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable Entity entity, @Nullable Entity sourceEntity, float distance) {
-        BlockState blockState = this.getCachedState();
-        if (SculkophoneBlock.isInactive(blockState)) {
-            // this is where we'd fire the event
-            // Math.sqrt( pos.getSquaredDistance(sourceEntity.getPos()))
-            if(sculkPeriph != null){
-                sculkPeriph.vibrationEvent(event, distance);
+        @Override
+        public boolean accepts(ServerWorld world, BlockPos pos, GameEvent event, @Nullable GameEvent.Emitter emitter) {
+            if (spbe.isRemoved() || pos.equals(spPos) && (event == GameEvent.BLOCK_DESTROY || event == GameEvent.BLOCK_PLACE)) {
+                return false;
             }
-            SculkophoneBlock.setActive(entity, world, this.pos, blockState);
+            return SculkophoneBlock.isInactive(spbe.getCachedState());
         }
+
+        @Override
+        public void accept(ServerWorld world, BlockPos pos, GameEvent event, @Nullable Entity entity, @Nullable Entity sourceEntity, float distance) {
+            BlockState blockState = spbe.getCachedState();
+            if (SculkophoneBlock.isInactive(blockState)) {
+                // this is where we'd fire the event
+                // Math.sqrt( pos.getSquaredDistance(sourceEntity.getPos()))
+                if(sculkPeriph != null){
+                    sculkPeriph.vibrationEvent(event, distance);
+                }
+                SculkophoneBlock.setActive(entity, world, spPos, blockState);
+            }
+        }
+
+        @Override
+        public void onListen() {
+            spbe.markDirty();
+        }
+
+        public int getRange(){
+            return 8;
+        }
+
+        public PositionSource getPositionSource(){
+            return posSource;
+        }
+
+        public boolean requiresTickingChunksAround() {
+            return true;
+         }
     }
 
-    @Override
-    public void onListen() {
-        this.markDirty();
-    }
+    
 
     @Nullable
     @Override

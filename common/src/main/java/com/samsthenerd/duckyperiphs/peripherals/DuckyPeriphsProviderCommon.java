@@ -17,11 +17,16 @@ public class DuckyPeriphsProviderCommon{
     @Nullable
     public static IPeripheral getPeripheral( @Nonnull World world, @Nonnull BlockPos pos, @Nonnull Direction side ){
         BlockEntity be = world.getBlockEntity(pos);
+        return getPeripheral(be, side);
+    }
+
+    @Nullable
+    public static IPeripheral getPeripheral(BlockEntity be, @Nonnull Direction side){
         if(be instanceof IPeripheralTileDucky){
             return ((IPeripheralTileDucky)be).getPeripheral(side);
         }
         if(Platform.isModLoaded("hexcasting")){
-            IPeripheral lonelyHexPeriph = DuckyCastingLonelyPeripheralProvider.getPeripheral(world, pos, side);
+            IPeripheral lonelyHexPeriph = DuckyCastingLonelyPeripheralProvider.getPeripheral(be, side);
             if(lonelyHexPeriph != null){
                 return lonelyHexPeriph;
             }

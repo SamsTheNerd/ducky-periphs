@@ -7,12 +7,11 @@ import org.jetbrains.annotations.NotNull;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.hexcasting.FocalPortBlockEntity;
 
-import at.petrak.hexcasting.api.spell.casting.CastingContext;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.iota.Vec3Iota;
+import at.petrak.hexcasting.api.casting.eval.CastingEnvironment;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.Vec3Iota;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
@@ -21,6 +20,7 @@ import net.minecraft.nbt.NbtLong;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import ram.talia.hexal.api.linkable.ILinkable;
 import ram.talia.hexal.api.linkable.LinkableRegistry;
@@ -79,7 +79,8 @@ public class DuckyHexal {
             // need ServerWorld for this?
             public FocalLinkBlockEntity linkableFromIota(@NotNull Iota iota, ServerWorld world){
                 if(iota instanceof Vec3Iota vIota){
-                    BlockEntity be = world.getBlockEntity(new BlockPos(vIota.getVec3()));
+                    Vec3d vec = vIota.getVec3();
+                    BlockEntity be = world.getBlockEntity(new BlockPos((int)vec.getX(), (int)vec.getY(), (int)vec.getZ()));
                     if(be instanceof FocalLinkBlockEntity){
                         return (FocalLinkBlockEntity)be;
                     }
@@ -89,7 +90,7 @@ public class DuckyHexal {
 
             @Override
             @Nullable
-            public FocalLinkBlockEntity linkableFromCastingContext(@NotNull CastingContext castingContext){
+            public FocalLinkBlockEntity linkableFromCastingContext(@NotNull CastingEnvironment castingContext){
                 // can't cast, ignore this
                 return null;
             }
@@ -112,7 +113,7 @@ public class DuckyHexal {
         ITEM_RGB_COLORIZER = DuckyPeriphs.item("cc_internal_pigment", () -> new ItemRGBColorizer(new Item.Settings()));
 
 		FOCAL_LINK_BLOCK = DuckyPeriphs.blockItem("focal_link_block", 
-			() -> new FocalLinkBlock(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)));
+			() -> new FocalLinkBlock(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)));
 		
 		FOCAL_LINK_BLOCK_ENTITY = DuckyPeriphs.blockEntities.register(new Identifier(DuckyPeriphs.MOD_ID, "focal_link_block_entity"), 
 			() -> BlockEntityType.Builder.create(FocalLinkBlockEntity::new, FOCAL_LINK_BLOCK.get()).build(null));

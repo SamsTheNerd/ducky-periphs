@@ -3,7 +3,7 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 import javax.annotation.Nullable;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
-import at.petrak.hexcasting.api.spell.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.fabric.cc.adimpl.CCIotaHolder;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;

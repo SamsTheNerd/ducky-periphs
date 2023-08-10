@@ -7,17 +7,15 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.samsthenerd.duckyperiphs.compat.gloopy.GloopyUtils;
 import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.iota.NullIota;
-import at.petrak.hexcasting.common.items.ItemFocus;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
+import at.petrak.hexcasting.api.casting.iota.NullIota;
+import at.petrak.hexcasting.common.items.storage.ItemFocus;
 import at.petrak.hexcasting.common.lib.HexItems;
-import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dev.architectury.platform.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -27,8 +25,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
@@ -68,7 +66,7 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
             return;
         }
         wrapperEntity = new FocalPortWrapperEntity(DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get(), world);
-        wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get().spawn((ServerWorld)world, null, null, null, pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
+        wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get().spawn((ServerWorld)world, null, null, pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
         wrapperEntityUUID = wrapperEntity.getUuid();
         this.markDirty();
     }
@@ -150,8 +148,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     public NbtCompound readIotaTag() {
         if(innerFocusStack != null && innerFocusStack.getItem() instanceof ItemFocus){
             return ((ItemFocus)innerFocusStack.getItem()).readIotaTag(innerFocusStack);
-        } else if(Platform.isModLoaded("hexgloop")){
-            return GloopyUtils.getIotaNbt(innerFocusStack);
+        } else if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+            return DuckyCasting.GLOOPY_UTILS_INSTANCE.getIotaNbt(innerFocusStack);
         } else {
             return null;
         }
@@ -172,8 +170,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
         if(iota == null || innerFocusStack.isEmpty()
         || (innerFocusStack.getItem() instanceof ItemFocus && !((ItemFocus)innerFocusStack.getItem()).canWrite(innerFocusStack, iota))){
-            if(Platform.isModLoaded("hexgloop")){
-                if(!GloopyUtils.writeIota(innerFocusStack, iota, true)) return false;
+            if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+                if(!DuckyCasting.GLOOPY_UTILS_INSTANCE.writeIota(innerFocusStack, iota, true)) return false;
             } else {
                 return false;
             }
@@ -181,8 +179,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(!simulate){
             if(innerFocusStack.getItem() instanceof ItemFocus){
                 ((ItemFocus)innerFocusStack.getItem()).writeDatum(innerFocusStack, iota);
-            } else if(Platform.isModLoaded("hexgloop")){
-                GloopyUtils.writeIota(innerFocusStack, iota, false);
+            } else if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+                DuckyCasting.GLOOPY_UTILS_INSTANCE.writeIota(innerFocusStack, iota, false);
             }
             if(iota == null){
                 iota = new NullIota();
@@ -198,7 +196,7 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(!innerFocusStack.isEmpty() && getWorld() instanceof ServerWorld){
             NbtCompound tag = readIotaTag();
             if(tag != null)
-                return HexIotaTypes.deserialize(tag,(ServerWorld)getWorld());
+                return IotaType.deserialize(tag,(ServerWorld)getWorld());
         }
         setColor(iota.getType().color());
         return iota;
@@ -209,15 +207,15 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     }
 
     public int getSlotCount(){
-        if(Platform.isModLoaded("hexgloop")){
-            return GloopyUtils.pageCount(innerFocusStack);
+        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+            return DuckyCasting.GLOOPY_UTILS_INSTANCE.pageCount(innerFocusStack);
         }
         return 1;
     }
 
     public int getCurrentSlot(){
-        if(Platform.isModLoaded("hexgloop")){
-            int gloopedSlot = GloopyUtils.getPage(innerFocusStack);
+        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+            int gloopedSlot = DuckyCasting.GLOOPY_UTILS_INSTANCE.getPage(innerFocusStack);
             if(gloopedSlot >= 1){
                 return gloopedSlot;
             }
@@ -227,8 +225,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
 
     public int setCurrentSlot(int slot){
         int slotToReturn = 1;
-        if(Platform.isModLoaded("hexgloop")){
-            int gloopedSlot = GloopyUtils.setPage(innerFocusStack, slot);
+        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+            int gloopedSlot = DuckyCasting.GLOOPY_UTILS_INSTANCE.setPage(innerFocusStack, slot);
             slotToReturn = gloopedSlot;
         }
         updateColor();
@@ -316,8 +314,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(stack.getItem() == HexItems.FOCUS){
             return true;
         }
-        if(Platform.isModLoaded("hexgloop")){
-            if(GloopyUtils.goesInFocalPort(stack)) return true;
+        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+            if(DuckyCasting.GLOOPY_UTILS_INSTANCE.goesInFocalPort(stack)) return true;
         }
         return false;
     }

@@ -85,7 +85,7 @@ public class DuckBlock extends Block implements BlockEntityProvider {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction direction = ctx.getPlayerFacing().getOpposite();
+        Direction direction = ctx.getHorizontalPlayerFacing().getOpposite();
         if(direction == Direction.DOWN || direction == Direction.UP)
             direction = Direction.NORTH;
         return (BlockState)this.getDefaultState().with(FACING, direction).with(POWERED, false);

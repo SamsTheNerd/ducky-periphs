@@ -33,7 +33,7 @@ public class WeatherMachineBlock extends BlockWithEntity{
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction direction = ctx.getPlayerFacing().getOpposite();
+        Direction direction = ctx.getHorizontalPlayerFacing().getOpposite();
         if(direction == Direction.DOWN || direction == Direction.UP)
             direction = Direction.NORTH;
         return (BlockState)this.getDefaultState().with(FACING, direction).with(TEMP, 0).with(TANK, 0);

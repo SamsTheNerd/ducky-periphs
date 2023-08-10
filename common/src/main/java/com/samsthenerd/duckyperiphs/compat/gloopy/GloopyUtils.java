@@ -1,17 +1,7 @@
 package com.samsthenerd.duckyperiphs.compat.gloopy;
 
-import com.samsthenerd.hexgloop.items.HexGloopItems;
-import com.samsthenerd.hexgloop.items.ItemGloopDye;
-import com.samsthenerd.hexgloop.items.ItemMultiFocus;
-
-import at.petrak.hexcasting.api.misc.MediaConstants;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.common.items.ItemFocus;
-import at.petrak.hexcasting.common.items.ItemSpellbook;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-
 public class GloopyUtils {
+    /*
     public static boolean goesInFocalPort(ItemStack stack){
         return stack.getItem() instanceof ItemMultiFocus || stack.getItem() instanceof ItemFocus;
     }
@@ -106,4 +96,5 @@ public class GloopyUtils {
             return 0;
         }
     }
+    */
 }

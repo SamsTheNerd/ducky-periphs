@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import at.petrak.hexcasting.api.spell.SpellList;
-import at.petrak.hexcasting.api.spell.iota.BooleanIota;
-import at.petrak.hexcasting.api.spell.iota.DoubleIota;
-import at.petrak.hexcasting.api.spell.iota.EntityIota;
-import at.petrak.hexcasting.api.spell.iota.GarbageIota;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.iota.IotaType;
-import at.petrak.hexcasting.api.spell.iota.ListIota;
-import at.petrak.hexcasting.api.spell.iota.NullIota;
-import at.petrak.hexcasting.api.spell.iota.PatternIota;
-import at.petrak.hexcasting.api.spell.iota.Vec3Iota;
-import at.petrak.hexcasting.api.spell.math.HexAngle;
-import at.petrak.hexcasting.api.spell.math.HexDir;
-import at.petrak.hexcasting.api.spell.math.HexPattern;
+import at.petrak.hexcasting.api.casting.SpellList;
+import at.petrak.hexcasting.api.casting.iota.BooleanIota;
+import at.petrak.hexcasting.api.casting.iota.DoubleIota;
+import at.petrak.hexcasting.api.casting.iota.EntityIota;
+import at.petrak.hexcasting.api.casting.iota.GarbageIota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
+import at.petrak.hexcasting.api.casting.iota.ListIota;
+import at.petrak.hexcasting.api.casting.iota.NullIota;
+import at.petrak.hexcasting.api.casting.iota.PatternIota;
+import at.petrak.hexcasting.api.casting.iota.Vec3Iota;
+import at.petrak.hexcasting.api.casting.math.HexAngle;
+import at.petrak.hexcasting.api.casting.math.HexDir;
+import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dev.architectury.platform.Platform;
 import net.minecraft.entity.Entity;
@@ -137,17 +137,17 @@ public class IotaLuaUtils {
         }
 
         if(Platform.isModLoaded("hexal")){
-            Iota hexalIota = HexalIotaLuaUtils.getHexalIota(LuaObject, world);
-            if(hexalIota != null){
-                return hexalIota;
-            }
+            // Iota hexalIota = HexalIotaLuaUtils.getHexalIota(LuaObject, world);
+            // if(hexalIota != null){
+            //     return hexalIota;
+            // }
         }
 
         if(Platform.isModLoaded("moreiotas")){
-            Iota moreIotasIota = MoreIotasIotaLuaUtils.getMoreIotasIota(LuaObject);
-            if(moreIotasIota != null){
-                return moreIotasIota;
-            }
+            // Iota moreIotasIota = MoreIotasIotaLuaUtils.getMoreIotasIota(LuaObject);
+            // if(moreIotasIota != null){
+            //     return moreIotasIota;
+            // }
         }
 
 
@@ -159,7 +159,7 @@ public class IotaLuaUtils {
         if(tag == null)
             return null;
 
-        Iota iota = HexIotaTypes.deserialize(tag, world);
+        Iota iota = IotaType.deserialize(tag, world);
         return getLuaObject(iota, world);
     }
 
@@ -222,17 +222,17 @@ public class IotaLuaUtils {
         }
 
         if(Platform.isModLoaded("hexal")){
-            Object hexalIota = HexalIotaLuaUtils.getHexalObject(iota, world);
-            if(hexalIota != null){
-                return hexalIota;
-            }
+            // Object hexalIota = HexalIotaLuaUtils.getHexalObject(iota, world);
+            // if(hexalIota != null){
+            //     return hexalIota;
+            // }
         }
 
         if(Platform.isModLoaded("moreiotas")){
-            Object moreIotasObject = MoreIotasIotaLuaUtils.getMoreIotasObject(iota);
-            if(moreIotasObject != null){
-                return moreIotasObject;
-            }
+            // Object moreIotasObject = MoreIotasIotaLuaUtils.getMoreIotasObject(iota);
+            // if(moreIotasObject != null){
+            //     return moreIotasObject;
+            // }
         }
 
         // couldn't find anything useful from it

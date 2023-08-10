@@ -1,11 +1,12 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
 
+
 import com.mojang.datafixers.util.Pair;
 
+import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.client.ScryingLensOverlayRegistry;
 import at.petrak.hexcasting.common.lib.HexItems;
-import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
@@ -62,7 +63,7 @@ public class DuckyCastingClient {
                     NbtCompound tag = HexItems.FOCUS.readIotaTag(focusStack);
                     if(tag != null){
                         // put the focus description first so it doesn't cut off the name
-                        lines.add(new Pair<ItemStack, Text>(new ItemStack(Items.AIR), HexIotaTypes.getDisplay(tag)));
+                        lines.add(new Pair<ItemStack, Text>(new ItemStack(Items.AIR), IotaType.getDisplay(tag)));
                     }
 
                     lines.add(new Pair<>(focusStack, focusStack.getName().copy()

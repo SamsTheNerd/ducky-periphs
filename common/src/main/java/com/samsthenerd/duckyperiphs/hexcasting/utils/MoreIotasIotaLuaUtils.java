@@ -8,11 +8,11 @@ import org.jetbrains.annotations.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
-import at.petrak.hexcasting.api.spell.iota.GarbageIota;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.mishaps.MishapInvalidIota;
-import ram.talia.moreiotas.api.spell.iota.MatrixIota;
-import ram.talia.moreiotas.api.spell.iota.StringIota;
+import at.petrak.hexcasting.api.casting.iota.GarbageIota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota;
+import ram.talia.moreiotas.api.casting.iota.MatrixIota;
+import ram.talia.moreiotas.api.casting.iota.StringIota;
 
 public class MoreIotasIotaLuaUtils {
     @Nullable
@@ -21,7 +21,7 @@ public class MoreIotasIotaLuaUtils {
             String string = (String)luaObject;
             if(string != null){
                 try{
-                    return new StringIota(string);
+                    return StringIota.make(string);
                 } catch (MishapInvalidIota e){
                     DuckyPeriphs.logPrint("Invalid string iota (too long): " + string);
                     return new GarbageIota();

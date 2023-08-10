@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
-import at.petrak.hexcasting.api.misc.FrozenColorizer;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.xplat.IXplatAbstractions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -84,12 +84,12 @@ public class FocalLinkBlock extends BlockWithEntity{
             } else {
                 FocalLinkBlockEntity fl = (FocalLinkBlockEntity)be;
                 ItemStack stack = player.getStackInHand(hand).copy();
-                if (!IXplatAbstractions.INSTANCE.isColorizer(stack)) {
+                if (!IXplatAbstractions.INSTANCE.isPigment(stack)) {
                     return ActionResult.PASS;
                 } else {
                     if(stack != null && player.getStackInHand(hand).getCount() > 0) {
                         player.getStackInHand(hand).decrement(1);
-                        fl.setColorizer(new FrozenColorizer(stack, player.getUuid()));
+                        fl.setColorizer(new FrozenPigment(stack, player.getUuid()));
                         return ActionResult.SUCCESS;
                     } else {
                         return ActionResult.FAIL;

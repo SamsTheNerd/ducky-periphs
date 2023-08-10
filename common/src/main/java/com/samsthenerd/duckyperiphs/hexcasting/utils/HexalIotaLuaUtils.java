@@ -9,33 +9,33 @@ import com.mojang.datafixers.util.Either;
 import com.samsthenerd.duckyperiphs.hexcasting.utils.HexalObfMapState.GateData;
 import com.samsthenerd.duckyperiphs.hexcasting.utils.HexalObfMapState.MoteData;
 
-import at.petrak.hexcasting.api.spell.iota.GarbageIota;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.iota.IotaType;
-import at.petrak.hexcasting.api.spell.iota.NullIota;
+import at.petrak.hexcasting.api.casting.iota.GarbageIota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
+import at.petrak.hexcasting.api.casting.iota.NullIota;
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
 import kotlin.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
+import ram.talia.hexal.api.casting.iota.GateIota;
+import ram.talia.hexal.api.casting.iota.MoteIota;
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager;
-import ram.talia.hexal.api.spell.iota.EntityTypeIota;
-import ram.talia.hexal.api.spell.iota.GateIota;
-import ram.talia.hexal.api.spell.iota.IotaTypeIota;
-import ram.talia.hexal.api.spell.iota.ItemTypeIota;
-import ram.talia.hexal.api.spell.iota.MoteIota;
+import ram.talia.moreiotas.api.casting.iota.EntityTypeIota;
+import ram.talia.moreiotas.api.casting.iota.IotaTypeIota;
+import ram.talia.moreiotas.api.casting.iota.ItemTypeIota;
 
 public class HexalIotaLuaUtils {
     // just putting it in a separate function for neatness
     public static Iota getHexalIota(Object luaObject, ServerWorld world){
         if(luaObject instanceof Map){
-            Map<String, Object> table = (Map) luaObject;
+            Map<String, Object> table = (Map<String, Object>) luaObject;
 
             if(table.containsKey("iotaType") && table.get("iotaType") instanceof String){
                 String typeKey = (String)table.get("iotaType");
@@ -56,7 +56,7 @@ public class HexalIotaLuaUtils {
                     return new GarbageIota();
                 }
                 var typeLoc = new Identifier(typeKey);
-                EntityType<?> type = Registry.ENTITY_TYPE.get(typeLoc);
+                EntityType<?> type = Registries.ENTITY_TYPE.get(typeLoc);
                 if(type == null){
                     return new GarbageIota();
                 }
@@ -73,13 +73,13 @@ public class HexalIotaLuaUtils {
                 }
                 var typeLoc = new Identifier(typeKey);
                 if(isItem){
-                    Item type = Registry.ITEM.get(typeLoc);
+                    Item type = Registries.ITEM.get(typeLoc);
                     if(type == null){
                         return new GarbageIota();
                     }
                     return new ItemTypeIota(type);
                 } else {
-                    Block type = Registry.BLOCK.get(typeLoc);
+                    Block type = Registries.BLOCK.get(typeLoc);
                     if(type == null){
                         return new GarbageIota();
                     }
@@ -147,7 +147,7 @@ public class HexalIotaLuaUtils {
         if(iota instanceof EntityTypeIota){
             EntityType<?> type = ((EntityTypeIota)iota).getEntityType();
             Map<String, Object> typeTable = new HashMap<String, Object>();
-            Optional<RegistryKey<EntityType<?>>> typeLoc = Registry.ENTITY_TYPE.getKey(type);
+            Optional<RegistryKey<EntityType<?>>> typeLoc = Registries.ENTITY_TYPE.getKey(type);
             if(typeLoc.isPresent()){
                 typeTable.put("entityType", typeLoc.get().getValue().toString());
             } else {
@@ -161,7 +161,7 @@ public class HexalIotaLuaUtils {
             Map<String, Object> typeTable = new HashMap<String, Object>();
             Optional<Item> item = type.left();
             if(item.isPresent()){
-                Optional<RegistryKey<Item>> typeLoc = Registry.ITEM.getKey(item.get());
+                Optional<RegistryKey<Item>> typeLoc = Registries.ITEM.getKey(item.get());
                 if(typeLoc.isPresent()){
                     typeTable.put("itemType", typeLoc.get().getValue().toString());
                     typeTable.put("isItem", true);
@@ -171,7 +171,7 @@ public class HexalIotaLuaUtils {
             } else {
                 Optional<Block> block = type.right();
                 if(block.isPresent()){
-                    Optional<RegistryKey<Block>> typeLoc = Registry.BLOCK.getKey(block.get());
+                    Optional<RegistryKey<Block>> typeLoc = Registries.BLOCK.getKey(block.get());
                     if(typeLoc.isPresent()){
                         typeTable.put("itemType", typeLoc.get().getValue().toString());
                         typeTable.put("isItem", false);

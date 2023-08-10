@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
-import at.petrak.hexcasting.api.misc.FrozenColorizer;
-import at.petrak.hexcasting.api.spell.iota.Iota;
-import at.petrak.hexcasting.api.spell.iota.Vec3Iota;
+import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.Vec3Iota;
+import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.api.utils.NBTHelper;
 import at.petrak.hexcasting.common.lib.HexItems;
 import dan200.computercraft.api.peripheral.IPeripheral;
@@ -24,8 +24,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtLong;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
@@ -48,7 +48,7 @@ import ram.talia.hexal.api.linkable.ServerLinkableHolder;
 public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTileDucky, ILinkable, IRenderCentre{
     private FocalLinkPeripheral flPeriph = null;
     private static final double MAX_SQR_LINK_RANGE = 32.0*32.0;
-    private FrozenColorizer colorizer = new FrozenColorizer(new ItemStack(HexItems.DYE_COLORIZERS.get(DyeColor.PURPLE)), Util.NIL_UUID);
+    private FrozenPigment colorizer = new FrozenPigment(new ItemStack(HexItems.DYE_PIGMENTS.get(DyeColor.PURPLE)), Util.NIL_UUID);
     private long colorizerTime = 0L;
     @NotNull
     public static final String TAG_COLOURISER = "hexal:colouriser";
@@ -87,7 +87,7 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
             this.serialisedLinkableHolder = tag.getCompound("hexal:linkable_holder");
         }
         if (tag.contains(TAG_COLOURISER)) {
-            FrozenColorizer newColorizer = FrozenColorizer.fromNBT(tag.getCompound(TAG_COLOURISER));
+            FrozenPigment newColorizer = FrozenPigment.fromNBT(tag.getCompound(TAG_COLOURISER));
             this.setColorizer(newColorizer);
         }
 
@@ -139,7 +139,7 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
     }
     
     @Override
-    public int currentMediaLevel() {
+    public long currentMediaLevel() {
         return 0;
     }
 
@@ -303,12 +303,12 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
     }
 
     @Override
-    public int canAcceptMedia(@NotNull ILinkable other, int otherMediaLevel){
+    public long canAcceptMedia(@NotNull ILinkable other, long otherMediaLevel){
         return 0;
     }
 
     @Override
-    public void acceptMedia(@NotNull ILinkable other, int otherMediaLevel){
+    public void acceptMedia(@NotNull ILinkable other, long otherMediaLevel){
         return;
     }
 
@@ -362,17 +362,17 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
     }
 
     @Override
-    public FrozenColorizer colouriser(){
+    public FrozenPigment pigment(){
         return this.colorizer;
     }
 
-    public final void setColorizer(@NotNull FrozenColorizer newColorizer) {
+    public final void setColorizer(@NotNull FrozenPigment newColorizer) {
         this.colorizer = newColorizer;
         markDirty();
     }
 
     public final void setRGBColorizer(int argb){
-        setColorizer(new FrozenColorizer(DuckyHexal.ITEM_RGB_COLORIZER.get().stackFromRGB(argb), owner()));
+        setColorizer(new FrozenPigment(DuckyHexal.ITEM_RGB_COLORIZER.get().stackFromRGB(argb), owner()));
     }
 
     // public final void setTimeColorizer(long time){

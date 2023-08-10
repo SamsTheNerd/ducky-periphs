@@ -46,15 +46,11 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    // // Vanilla (i.e. for multi-loader systems)
-    modImplementation("org.squiddev:cc-tweaked-${minecraft_version}:${cct_version}"){
-        transitive = false
-    }
+    modApi("cc.tweaked:cc-tweaked-${minecraft_version}-forge-api:${project.cc_version}")
+	modRuntimeOnly("cc.tweaked:cc-tweaked-${minecraft_version}-forge:${project.cc_version}")
 
-    // // for HexCasting
-    modImplementation("at.petra-k.hexcasting:hexcasting-forge-${project.minecraft_version}:${project.hexcastingVersion}"){
-        transitive = false
-    }
+    // for HexCasting
+    modImplementation "localModLibs:hexcasting-forge-$minecraft_version:$hexcastingVersion"
 
     // runtimeOnly("at.petra-k.hexcasting:hexcasting-forge-${project.minecraft_version}:${project.hexcastingVersion}"){
     //     transitive = false
@@ -62,35 +58,37 @@ dependencies {
 
     // // Hex Casting Dependencies
     modCompileOnly "at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucalVersion}"
-    modCompileOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}"
+    modCompileOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}-FORGE-SNAPSHOT"
 
     modRuntimeOnly "at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucalVersion}"
-    modRuntimeOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}"
+    modRuntimeOnly "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}-FORGE-SNAPSHOT"
 
     //  // Hex Optional interop
-
+    
     modCompileOnly "mezz.jei:jei-$minecraft_version-common-api:$jeiVersion"
     modCompileOnly "mezz.jei:jei-$minecraft_version-forge-api:$jeiVersion"
+    
 
-    runtimeOnly 'thedarkcolour:kotlinforforge:3.12.0'
+    modCompileOnly "localModLibs:hexal-forge-${minecraft_version}:${hexalVersion}"
+    modRuntimeOnly "localModLibs:hexal-forge-${minecraft_version}:${hexalVersion}"
+    modRuntimeOnly "localModLibs:moreiotas-forge-${minecraft_version}:${moreIotasVersion}"
 
-    modCompileOnly "maven.modrinth:hexal:CpzILaOc"
-    modRuntimeOnly "maven.modrinth:hexal:CpzILaOc"
+    modImplementation "top.theillusivec4.caelus:caelus-forge:$caelusVersion"
 
-    modImplementation "software.bernie.geckolib:geckolib-forge-1.19:${geckolibVersion}"
-    modRuntimeOnly "software.bernie.geckolib:geckolib-forge-1.19:${geckolibVersion}"
 
-    runtimeOnly(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixinExtrasVersion}"))
+    modImplementation "software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolibVersion}"
+    modRuntimeOnly "software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolibVersion}"
+
+    /*
+
     modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-forge"
     modRuntimeOnly "maven.modrinth:hexgloop:${hexgloopVersion}-forge"
     modRuntimeOnly "maven.modrinth:wnboi:${wnboiVersion}-forge"
+    */
 
-    // modRuntimeOnly "mezz.jei:jei-$minecraft_version-forge:$jeiVersion"
+    runtimeOnly "thedarkcolour:kotlinforforge:${kotlinForForgeVersion}"
+    runtimeOnly(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixinExtrasVersion}"))
 
-    // compileOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion:api"
-    // runtimeOnly "top.theillusivec4.curios:curios-forge:$minecraft_version-$curiosVersion"
-
-    // modApi "com.github.Virtuoel:Pehkui:${pehkuiVersion}-${minecraft_version}-forge"
 }
 
 processResources {

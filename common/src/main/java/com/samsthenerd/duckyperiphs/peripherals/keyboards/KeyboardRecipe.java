@@ -2,10 +2,10 @@ package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
 import com.samsthenerd.duckyperiphs.DPRecipeSerializer;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
-import com.samsthenerd.duckyperiphs.compat.gloopy.GloopyUtils;
+import com.samsthenerd.duckyperiphs.hexcasting.DuckyCasting;
 
-import dev.architectury.platform.Platform;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,6 +13,8 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -21,13 +23,13 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
     private static final Ingredient KEYBOARD = Ingredient.ofItems(DuckyPeriphs.KEYBOARD_ITEM.get());
     private static final Ingredient SOLVENTS = Ingredient.ofItems(Items.WET_SPONGE, Items.WATER_BUCKET); // maybe add more here? idk
     
-    public KeyboardRecipe(Identifier id){
-        super(id);
+    public KeyboardRecipe(Identifier id, CraftingRecipeCategory category){
+        super(id, category);
         // DuckyPeriph.logPrint("entered contructor for KeyboardRecipe");
     }
 
     @Override
-    public boolean matches(CraftingInventory craftingInventory, World world) {
+    public boolean matches(RecipeInputInventory craftingInventory, World world) {
         // DuckyPeriph.logPrint("starting keyboard recipe match check");
         // first find where the keyboard is + make sure we only have dyes/solvents?
         // then make sure everything is within 
@@ -56,7 +58,7 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                     // DuckyPeriph.logPrint("too many keyboards");
                     return false;
                 }
-            } else if(SOLVENTS.test(stack) || stack.getItem() instanceof DyeItem || (Platform.isModLoaded("hexgloop") && GloopyUtils.isGloopDye(stack))){
+            } else if(SOLVENTS.test(stack) || stack.getItem() instanceof DyeItem || (DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy() && DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopDye(stack))){
                 if(!foundChanger){
                     foundChanger = true;
                     minChangerX = x;
@@ -92,7 +94,7 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
 
 
     @Override
-    public ItemStack craft(CraftingInventory craftingInventory) {
+    public ItemStack craft(RecipeInputInventory craftingInventory, DynamicRegistryManager dynRegManager) {
         int width = craftingInventory.getWidth();
         int height = craftingInventory.getHeight();
         int keyboardX = 0;
@@ -126,10 +128,10 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                 float[] thisColorComps = ((DyeItem)stack.getItem()).getColor().getColorComponents();
                 int thisColor = (int)(thisColorComps[0] * 255.0f) << 16 | (int)(thisColorComps[1] * 255.0f) << 8 | (int)(thisColorComps[2] * 255.0f);
                 keyCaps.blendAndSetColor(thisColor, craftingGridIndex);
-            } else if(Platform.isModLoaded("hexgloop") && GloopyUtils.isGloopDye(stack)){
+            } else if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy() && DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopDye(stack)){
                 // add dye
                 int craftingGridIndex = gridIndex(x, y, keyboardX, keyboardY);
-                int thisColor = GloopyUtils.getGloopDyeColor(stack);
+                int thisColor = DuckyCasting.GLOOPY_UTILS_INSTANCE.getGloopDyeColor(stack);
                 keyCaps.blendAndSetColor(thisColor, craftingGridIndex);
             }
         }
@@ -147,9 +149,9 @@ public class KeyboardRecipe extends SpecialCraftingRecipe {
                 defaultedList.set(i, inventory.getStack(i));
             } else if(item == Items.WATER_BUCKET){
                 defaultedList.set(i, new ItemStack(Items.BUCKET));
-            } else if(Platform.isModLoaded("hexgloop") && GloopyUtils.isGloopDye(inventory.getStack(i))){
+            } else if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy() && DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopDye(inventory.getStack(i))){
                 ItemStack stack = inventory.getStack(i).copy();
-                GloopyUtils.useGloopMedia(stack);
+                DuckyCasting.GLOOPY_UTILS_INSTANCE.useGloopMedia(stack);
                 defaultedList.set(i, stack);
             }
             if (!item.hasRecipeRemainder()) continue;

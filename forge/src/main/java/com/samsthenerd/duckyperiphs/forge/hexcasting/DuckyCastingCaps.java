@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 import com.samsthenerd.duckyperiphs.ducks.DuckItem;
 import com.samsthenerd.duckyperiphs.hexcasting.FocalPortWrapperEntity;
 
-import at.petrak.hexcasting.api.spell.iota.PatternIota;
-import at.petrak.hexcasting.api.spell.math.HexDir;
-import at.petrak.hexcasting.api.spell.math.HexPattern;
+import at.petrak.hexcasting.api.casting.iota.PatternIota;
+import at.petrak.hexcasting.api.casting.math.HexDir;
+import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.forge.cap.ForgeCapabilityHandler;
 import at.petrak.hexcasting.forge.cap.HexCapabilities;
 import at.petrak.hexcasting.forge.cap.adimpl.CapStaticIotaHolder;

@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.api.misc.TriPredicate;
-import at.petrak.hexcasting.api.spell.math.HexPattern;
 import at.petrak.hexcasting.common.blocks.akashic.AkashicFloodfiller;
 import at.petrak.hexcasting.common.blocks.akashic.BlockEntityAkashicBookshelf;
 import dan200.computercraft.api.lua.LuaFunction;

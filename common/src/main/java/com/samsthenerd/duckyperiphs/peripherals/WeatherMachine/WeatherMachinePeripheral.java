@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import net.minecraft.world.biome.Biome.Precipitation;
 
 
 /*
@@ -38,7 +39,7 @@ public class WeatherMachinePeripheral implements IPeripheral{
     @LuaFunction
     public final boolean isRaining(){
         boolean isPrecipitating = wmTile.getWorld().isRaining();
-        return isPrecipitating && wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation().asString() == "rain";
+        return isPrecipitating && wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation(wmTile.getPos()) == Precipitation.RAIN;
     }
 
     @LuaFunction
@@ -57,14 +58,14 @@ public class WeatherMachinePeripheral implements IPeripheral{
 
     @LuaFunction
     public final boolean canSnow(){
-        return wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation().asString() == "snow";
+        return wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation(wmTile.getPos()) == Precipitation.SNOW;
     }
 
     // again, not sure if this works for mountains/altitudes
     @LuaFunction
     public final boolean isSnowing(){
         boolean isPrecipitating = wmTile.getWorld().isRaining();
-        return isPrecipitating && wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation().asString() == "snow";
+        return isPrecipitating && wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation(wmTile.getPos()) == Precipitation.SNOW;
     }
 
     // not really sure what the range on this is, not my business though
@@ -75,7 +76,7 @@ public class WeatherMachinePeripheral implements IPeripheral{
 
     @LuaFunction
     public final boolean isPrecipitating(){
-        return wmTile.getWorld().isRaining() && wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation().asString() != "none";
+        return wmTile.getWorld().isRaining() && wmTile.getWorld().getBiome(wmTile.getPos()).value().getPrecipitation(wmTile.getPos()) != Precipitation.NONE;
     }
     
     // just a debugging function so I can see if issue is ticking or updating

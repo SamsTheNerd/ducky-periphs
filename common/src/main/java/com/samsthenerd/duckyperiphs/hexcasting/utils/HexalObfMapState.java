@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
-import ram.talia.hexal.api.spell.iota.GateIota;
+import ram.talia.hexal.api.casting.iota.GateIota;
 
 
 public class HexalObfMapState extends PersistentState{

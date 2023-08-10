@@ -5,7 +5,6 @@ import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.item.Item;
 
 public class DummyNoHex {
@@ -17,14 +16,14 @@ public class DummyNoHex {
     
     public static void init(){
         FOCAL_PORT_BLOCK = DuckyPeriphs.blockItem("focal_port_block", 
-			() -> new Block(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
+			() -> new Block(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
 
         CONJURED_DUCKY_BLOCK = DuckyPeriphs.blockItem("conjured_ducky_block", 
-			() -> new Block(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
+			() -> new Block(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
 
         if(!Platform.isModLoaded("hexal")){
             FOCAL_LINK_BLOCK = DuckyPeriphs.blockItem("focal_link_block",
-                () -> new Block(Block.Settings.of(Material.AMETHYST).hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
+                () -> new Block(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
         }
     }
 

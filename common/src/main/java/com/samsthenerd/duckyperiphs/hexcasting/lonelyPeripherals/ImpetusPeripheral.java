@@ -7,19 +7,20 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.samsthenerd.duckyperiphs.mixin.HexMixins.BEImpetusPeripheralMixin;
-import com.samsthenerd.duckyperiphs.mixin.HexMixins.ClericImpetusAccessor;
-
-import at.petrak.hexcasting.api.block.circle.BlockEntityAbstractImpetus;
-import at.petrak.hexcasting.common.blocks.entity.BlockEntityLookingImpetus;
-import at.petrak.hexcasting.common.blocks.entity.BlockEntityRightClickImpetus;
-import at.petrak.hexcasting.common.blocks.entity.BlockEntityStoredPlayerImpetus;
+import at.petrak.hexcasting.api.casting.circles.BlockEntityAbstractImpetus;
+import at.petrak.hexcasting.api.casting.circles.CircleExecutionState;
+import at.petrak.hexcasting.api.casting.circles.ICircleComponent;
+import at.petrak.hexcasting.common.blocks.circles.impetuses.BlockEntityLookingImpetus;
+import at.petrak.hexcasting.common.blocks.circles.impetuses.BlockEntityRedstoneImpetus;
+import at.petrak.hexcasting.common.blocks.circles.impetuses.BlockEntityRightClickImpetus;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.block.BlockState;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 
 public class ImpetusPeripheral implements IPeripheral{
     private BlockEntityAbstractImpetus impetus;
@@ -46,7 +47,7 @@ public class ImpetusPeripheral implements IPeripheral{
     {
         if(impetus instanceof BlockEntityLookingImpetus)
             return "fletcher_impetus";
-        if(impetus instanceof BlockEntityStoredPlayerImpetus)
+        if(impetus instanceof BlockEntityRedstoneImpetus)
             return "cleric_impetus";
         if(impetus instanceof BlockEntityRightClickImpetus)
             return "toolsmith_impetus";
@@ -71,34 +72,46 @@ public class ImpetusPeripheral implements IPeripheral{
 
     @LuaFunction
     public final MethodResult getLastMishap(){
-        Text mishap = impetus.getLastMishap();
+        Text mishap = impetus.getDisplayMsg();
         if(mishap == null)
             return MethodResult.of("");
         return MethodResult.of(mishap.getString());
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getCaster(){
-        UUID casterUUID = ((BEImpetusPeripheralMixin) impetus).getActivator();
-        if(impetus instanceof BlockEntityStoredPlayerImpetus)
-            casterUUID = ((ClericImpetusAccessor) impetus).getStoredPlayer();
+        UUID casterUUID = null;
+        if(impetus.getWorld() instanceof ServerWorld sWorld){
+            CircleExecutionState state = impetus.getExecutionState();
+            if(state != null && state.getCaster(sWorld) != null){
+                casterUUID = state.getCaster(sWorld).getUuid();
+            } else {
+                if(impetus instanceof BlockEntityRedstoneImpetus rsImpetus)
+                    casterUUID = rsImpetus.getStoredPlayer().getUuid();
+            }
+        }
         if(casterUUID == null)
             return MethodResult.of("");
         return MethodResult.of(casterUUID.toString());
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult isCasting(){
-        return MethodResult.of(((BEImpetusPeripheralMixin) impetus).getNextBlock() != null);
+        if(impetus.getWorld() instanceof ServerWorld sWorld){
+            BlockPos pos = impetus.getPos();
+            BlockState state = sWorld.getBlockState(pos);
+            if(state.getBlock() instanceof ICircleComponent comp){
+                return MethodResult.of(comp.isEnergized(pos, state, sWorld));
+            }
+        }
+        return MethodResult.of(false);
     }
 
     @LuaFunction(mainThread = true)
     public final MethodResult activateCircle(){
-        if(impetus instanceof BlockEntityStoredPlayerImpetus){
-            if(((BlockEntityStoredPlayerImpetus) impetus).getStoredPlayer() instanceof ServerPlayerEntity sPlayer){
-                ((BlockEntityStoredPlayerImpetus) impetus).activateSpellCircle(sPlayer);
-                return MethodResult.of(true);
-            }
+        if(impetus instanceof BlockEntityRedstoneImpetus rsImpetus){
+            rsImpetus.startExecution(rsImpetus.getStoredPlayer());
+            return MethodResult.of(true);
         }
         return MethodResult.of(false);
     }
@@ -110,7 +123,7 @@ public class ImpetusPeripheral implements IPeripheral{
     }
 
     public void impetusEnded(){
-        Text mishap = impetus.getLastMishap();
+        Text mishap = impetus.getDisplayMsg();
         String mishapString = "";
         if(mishap != null)
             mishapString = mishap.getString();

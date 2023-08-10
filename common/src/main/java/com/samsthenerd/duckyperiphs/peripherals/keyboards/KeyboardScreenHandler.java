@@ -44,7 +44,7 @@ public class KeyboardScreenHandler extends ScreenHandler{
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
         return ItemStack.EMPTY;
     }
 

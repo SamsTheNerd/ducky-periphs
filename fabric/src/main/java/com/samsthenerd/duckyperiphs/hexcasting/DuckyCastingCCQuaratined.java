@@ -2,9 +2,9 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
-import at.petrak.hexcasting.api.spell.iota.PatternIota;
-import at.petrak.hexcasting.api.spell.math.HexDir;
-import at.petrak.hexcasting.api.spell.math.HexPattern;
+import at.petrak.hexcasting.api.casting.iota.PatternIota;
+import at.petrak.hexcasting.api.casting.math.HexDir;
+import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.fabric.cc.HexCardinalComponents;
 import at.petrak.hexcasting.fabric.cc.adimpl.CCItemIotaHolder;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;

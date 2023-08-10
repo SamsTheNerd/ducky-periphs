@@ -7,11 +7,11 @@ import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardScreen;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
+import dev.architectury.registry.menu.MenuRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.DyeColor;
 
@@ -21,7 +21,7 @@ public class DuckyPeriphsClientInit{
 		RenderTypeRegistry.register(RenderLayer.getTranslucent(), DuckyPeriphs.WEATHER_MACHINE_BLOCK.get(),
 					DuckyPeriphs.KEYBOARD_BLOCK.get(), DuckyPeriphs.DUCK_BLOCK.get());
 
-        HandledScreens.register(DuckyPeriphs.KEYBOARD_SCREEN_HANDLER, KeyboardScreen::new);
+        MenuRegistry.registerScreenFactory(DuckyPeriphs.KEYBOARD_SCREEN_HANDLER, KeyboardScreen::new);
 
         registerColorProviders();
 
