@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+### Added
+
+- 1.20.1 support
+
 ## 1.2.3
 
 ### Fixed
