@@ -80,7 +80,7 @@ public class DuckyCasting {
 	}
 
 	// ok this needs to be called somewhere,, probably
-	private void registerSpells(BiConsumer<ActionRegistryEntry, Identifier> r) {
+	public static void registerSpells(BiConsumer<ActionRegistryEntry, Identifier> r) {
 		for (Entry<Identifier, ActionRegistryEntry> entry : ACTIONS.entrySet()) {
 			r.accept(entry.getValue(), entry.getKey());
 		}

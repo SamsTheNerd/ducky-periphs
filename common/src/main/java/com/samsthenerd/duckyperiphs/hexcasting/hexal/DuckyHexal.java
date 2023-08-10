@@ -78,12 +78,21 @@ public class DuckyHexal {
             @Nullable
             // need ServerWorld for this?
             public FocalLinkBlockEntity linkableFromIota(@NotNull Iota iota, ServerWorld world){
+                DuckyPeriphs.logPrint("trying to get linkable from iota");
                 if(iota instanceof Vec3Iota vIota){
                     Vec3d vec = vIota.getVec3();
-                    BlockEntity be = world.getBlockEntity(new BlockPos((int)vec.getX(), (int)vec.getY(), (int)vec.getZ()));
+                    DuckyPeriphs.logPrint("is vec3iota: " + vec.toString());
+                    BlockPos pos = new BlockPos((int)Math.floor(vec.getX()), (int)Math.floor(vec.getY()), (int)Math.floor(vec.getZ()));
+                    BlockEntity be = world.getBlockEntity(pos);
+                    // check what this be is doing maybe idk
                     if(be instanceof FocalLinkBlockEntity){
+                        DuckyPeriphs.logPrint("is focal link block entity");
                         return (FocalLinkBlockEntity)be;
+                    } else {
+                        DuckyPeriphs.logPrint("not focal link block entity");
                     }
+                } else {
+                    DuckyPeriphs.logPrint("not vec3iota");
                 }
                 return null;
             }

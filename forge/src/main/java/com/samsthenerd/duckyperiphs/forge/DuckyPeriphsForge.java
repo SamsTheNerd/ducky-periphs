@@ -3,6 +3,7 @@ package com.samsthenerd.duckyperiphs.forge;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.DuckyPeriphsClientInit;
 import com.samsthenerd.duckyperiphs.forge.hexcasting.DuckyCastingCaps;
+import com.samsthenerd.duckyperiphs.forge.hexcasting.DuckyPatternsForge;
 
 import dan200.computercraft.api.ForgeComputerCraftAPI;
 import dev.architectury.platform.Platform;
@@ -32,6 +33,7 @@ public class DuckyPeriphsForge {
             // DuckyCastingCaps.registerCaps();
             MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, DuckyCastingCaps::attachEntityCaps);
             MinecraftForge.EVENT_BUS.addGenericListener(ItemStack.class, DuckyCastingCaps::attachItemCaps);
+            DuckyPatternsForge.init();
         }
     }
 

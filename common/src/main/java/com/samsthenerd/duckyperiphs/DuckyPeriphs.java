@@ -149,6 +149,8 @@ public class DuckyPeriphs{
 		gameEvents.register();
 		screenHandlers.register();
 
+		TABS.register();
+
 		DuckyBanners.registerBannerPatterns();
 	}
 

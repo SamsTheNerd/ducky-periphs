@@ -137,17 +137,17 @@ public class IotaLuaUtils {
         }
 
         if(Platform.isModLoaded("hexal")){
-            // Iota hexalIota = HexalIotaLuaUtils.getHexalIota(LuaObject, world);
-            // if(hexalIota != null){
-            //     return hexalIota;
-            // }
+            Iota hexalIota = HexalIotaLuaUtils.getHexalIota(LuaObject, world);
+            if(hexalIota != null){
+                return hexalIota;
+            }
         }
 
         if(Platform.isModLoaded("moreiotas")){
-            // Iota moreIotasIota = MoreIotasIotaLuaUtils.getMoreIotasIota(LuaObject);
-            // if(moreIotasIota != null){
-            //     return moreIotasIota;
-            // }
+            Iota moreIotasIota = MoreIotasIotaLuaUtils.getMoreIotasIota(LuaObject);
+            if(moreIotasIota != null){
+                return moreIotasIota;
+            }
         }
 
 
@@ -222,17 +222,17 @@ public class IotaLuaUtils {
         }
 
         if(Platform.isModLoaded("hexal")){
-            // Object hexalIota = HexalIotaLuaUtils.getHexalObject(iota, world);
-            // if(hexalIota != null){
-            //     return hexalIota;
-            // }
+            Object hexalIota = HexalIotaLuaUtils.getHexalObject(iota, world);
+            if(hexalIota != null){
+                return hexalIota;
+            }
         }
 
         if(Platform.isModLoaded("moreiotas")){
-            // Object moreIotasObject = MoreIotasIotaLuaUtils.getMoreIotasObject(iota);
-            // if(moreIotasObject != null){
-            //     return moreIotasObject;
-            // }
+            Object moreIotasObject = MoreIotasIotaLuaUtils.getMoreIotasObject(iota);
+            if(moreIotasObject != null){
+                return moreIotasObject;
+            }
         }
 
         // couldn't find anything useful from it

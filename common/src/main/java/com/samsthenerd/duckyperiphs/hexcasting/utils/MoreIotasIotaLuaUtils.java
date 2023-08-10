@@ -2,15 +2,28 @@ package com.samsthenerd.duckyperiphs.hexcasting.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.jblas.DoubleMatrix;
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.datafixers.util.Either;
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 
 import at.petrak.hexcasting.api.casting.iota.GarbageIota;
 import at.petrak.hexcasting.api.casting.iota.Iota;
+import at.petrak.hexcasting.api.casting.iota.IotaType;
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota;
+import at.petrak.hexcasting.common.lib.hex.HexIotaTypes;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.Identifier;
+import ram.talia.moreiotas.api.casting.iota.EntityTypeIota;
+import ram.talia.moreiotas.api.casting.iota.IotaTypeIota;
+import ram.talia.moreiotas.api.casting.iota.ItemTypeIota;
 import ram.talia.moreiotas.api.casting.iota.MatrixIota;
 import ram.talia.moreiotas.api.casting.iota.StringIota;
 
@@ -30,6 +43,56 @@ public class MoreIotasIotaLuaUtils {
         }
         if(luaObject instanceof Map){
             Map<String, Object> table = (Map) luaObject;
+
+            if(table.containsKey("iotaType") && table.get("iotaType") instanceof String){
+                String typeKey = (String)table.get("iotaType");
+                if (!Identifier.isValid(typeKey)) {
+                    return new GarbageIota();
+                }
+                var typeLoc = new Identifier(typeKey);
+                IotaType<?> type = HexIotaTypes.REGISTRY.get(typeLoc);
+                if(type == null){
+                    return new GarbageIota();
+                }
+                return new IotaTypeIota(type);
+            }
+            
+            if(table.containsKey("entityType") && table.get("entityType") instanceof String){
+                String typeKey = (String)table.get("entityType");
+                if (!Identifier.isValid(typeKey)) {
+                    return new GarbageIota();
+                }
+                var typeLoc = new Identifier(typeKey);
+                EntityType<?> type = Registries.ENTITY_TYPE.get(typeLoc);
+                if(type == null){
+                    return new GarbageIota();
+                }
+                return new EntityTypeIota(type);
+            }
+
+            // the isItem tag is for if it's an item or block
+            if(table.containsKey("itemType") && table.get("itemType") instanceof String
+                && table.containsKey("isItem") && table.get("isItem") instanceof Boolean){
+                String typeKey = (String)table.get("itemType");
+                Boolean isItem = (Boolean)table.get("isItem");
+                if (!Identifier.isValid(typeKey)) {
+                    return new GarbageIota();
+                }
+                var typeLoc = new Identifier(typeKey);
+                if(isItem){
+                    Item type = Registries.ITEM.get(typeLoc);
+                    if(type == null){
+                        return new GarbageIota();
+                    }
+                    return new ItemTypeIota(type);
+                } else {
+                    Block type = Registries.BLOCK.get(typeLoc);
+                    if(type == null){
+                        return new GarbageIota();
+                    }
+                    return new ItemTypeIota(type);
+                }
+            }
 
             if(table.containsKey("col") && table.get("col") instanceof Number
                 && table.containsKey("row") && table.get("row") instanceof Number
@@ -58,6 +121,58 @@ public class MoreIotasIotaLuaUtils {
 
     @Nullable
     public static Object getMoreIotasObject(Iota iota){
+        if(iota instanceof IotaTypeIota){
+            IotaType<?> type = ((IotaTypeIota)iota).getIotaType();
+            Map<String, Object> typeTable = new HashMap<String, Object>();
+            Optional<RegistryKey<IotaType<?>>> typeLoc = HexIotaTypes.REGISTRY.getKey(type);
+            if(typeLoc.isPresent()){
+                typeTable.put("iotaType", typeLoc.get().getValue().toString());
+            } else {
+                return null;
+            }
+            return typeTable;
+        }
+
+        if(iota instanceof EntityTypeIota){
+            EntityType<?> type = ((EntityTypeIota)iota).getEntityType();
+            Map<String, Object> typeTable = new HashMap<String, Object>();
+            Optional<RegistryKey<EntityType<?>>> typeLoc = Registries.ENTITY_TYPE.getKey(type);
+            if(typeLoc.isPresent()){
+                typeTable.put("entityType", typeLoc.get().getValue().toString());
+            } else {
+                return null;
+            }
+            return typeTable;
+        }
+
+        if(iota instanceof ItemTypeIota){
+            Either<Item,Block> type = ((ItemTypeIota)iota).getEither();
+            Map<String, Object> typeTable = new HashMap<String, Object>();
+            Optional<Item> item = type.left();
+            if(item.isPresent()){
+                Optional<RegistryKey<Item>> typeLoc = Registries.ITEM.getKey(item.get());
+                if(typeLoc.isPresent()){
+                    typeTable.put("itemType", typeLoc.get().getValue().toString());
+                    typeTable.put("isItem", true);
+                } else {
+                    return null;
+                }
+            } else {
+                Optional<Block> block = type.right();
+                if(block.isPresent()){
+                    Optional<RegistryKey<Block>> typeLoc = Registries.BLOCK.getKey(block.get());
+                    if(typeLoc.isPresent()){
+                        typeTable.put("itemType", typeLoc.get().getValue().toString());
+                        typeTable.put("isItem", false);
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            }
+            return typeTable;
+        }
         if(iota instanceof StringIota){
             return ((StringIota)iota).getString();
         }

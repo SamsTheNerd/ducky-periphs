@@ -59,7 +59,9 @@ dependencies {
 	modImplementation "at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucalVersion}"
 	modImplementation "vazkii.patchouli:Patchouli:${minecraft_version}-${patchouliVersion}-FABRIC-SNAPSHOT"
 	// modImplementation "at.petra-k.hexcasting:hexcasting-fabric-${project.minecraft_version}:${project.hexcastingVersion}"
-    modImplementation "localModLibs:hexcasting-fabric-$minecraft_version:$hexcastingVersion"
+    modCompileOnly "localModLibs:hexcasting-fabric-$minecraft_version:$hexcastingVersion"
+    // so that we can actually test stuff properly
+    modRuntimeOnly "localModLibs:hexcasting-fabric-$minecraft_version:0.11.1-7"
 
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-api:${cardinalComponentsVersion}"
 
@@ -166,12 +168,12 @@ publishMods {
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
         projectId = "832658"
-        minecraftVersions.add("1.19.2")
+        minecraftVersions.add("1.20.1")
         requires {
             slug = "architectury-api"
         }
         requires {
-            slug = "cc-restitched"
+            slug = "cc-tweaked"
         }
         optional {
             slug = "hexcasting"
@@ -181,7 +183,7 @@ publishMods {
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_API_KEY")
         projectId = "l2IpK3Ji"
-        minecraftVersions.add("1.19.2")
+        minecraftVersions.add("1.20.1")
 
         optional {
             slug = "hex-casting"
@@ -194,7 +196,7 @@ publishMods {
         requires {
             // architectury api
             // id = "XV72M5Gg"
-            slug = "cc-restitched"
+            slug = "cc-tweaked"
         }
         requires{
             // fabric api
