@@ -32,7 +32,9 @@ dependencies {
     modImplementation "localModLibs:hexal-fabric-${minecraft_version}:${hexalVersion}"
 	modImplementation "localModLibs:moreiotas-fabric-${minecraft_version}:${moreIotasVersion}"
 
-    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+    modCompileOnly ("me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"){
+        transitive = false
+    }
 
     // fabric so that it is in the right mapping (https://discord.com/channels/792699517631594506/1103052639245185145/1103059149387993108) ?
     modCompileOnly("cc.tweaked:cc-tweaked-${minecraft_version}-fabric:${cc_version}"){

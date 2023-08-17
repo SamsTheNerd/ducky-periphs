@@ -29,7 +29,7 @@ public class BlockHitFromScreen {
         double fov = (double)client.options.getFov().getValue();
         double angleSize = fov/height;
         Vector3f verticalRotationAxis = cameraDirection.toVector3f();
-        verticalRotationAxis.cross(0,1,0); // no clue if this is right !
+        verticalRotationAxis.cross(0.0F,1.0F,0.0F); // no clue if this is right !
         verticalRotationAxis.normalize();
         // if(!verticalRotationAxis.normalize()) {
         //     return null;//The camera is pointing directly up or down, you'll have to fix this one

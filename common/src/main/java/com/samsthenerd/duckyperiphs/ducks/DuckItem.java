@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
-import com.samsthenerd.duckyperiphs.hexcasting.DuckyCasting;
 
 import dev.architectury.platform.Platform;
 import net.minecraft.block.Block;
@@ -14,7 +13,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeableItem;
-import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
@@ -79,7 +77,7 @@ public class DuckItem extends BlockItem implements DyeableItem{
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if(Platform.isModLoaded("hexcasting")){
-            if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
+            if(Platform.isModLoaded("hexgloop")){
                 tooltip.add(((MutableText)Text.of("<ne,aqadweeeede>")).formatted(Formatting.ITALIC, Formatting.GRAY));
             } else {
                 tooltip.add(((MutableText)Text.of("I have the strangest urge to cast scribe's reflection?")).formatted(Formatting.ITALIC, Formatting.GRAY));

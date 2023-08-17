@@ -6,8 +6,6 @@ import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
-import com.samsthenerd.duckyperiphs.compat.gloopy.FakeGloopyUtils;
-import com.samsthenerd.duckyperiphs.compat.gloopy.IGloopyUtils;
 import com.samsthenerd.duckyperiphs.hexcasting.hexal.DuckyHexal;
 
 import at.petrak.hexcasting.api.casting.ActionRegistryEntry;
@@ -34,8 +32,6 @@ public class DuckyCasting {
 
 	public static RegistrySupplier<BlockEntityType<ConjuredDuckyBlockEntity>> CONJURED_DUCKY_BLOCK_ENTITY;
 	public static RegistrySupplier<ConjuredDuckyBlock> CONJURED_DUCKY_BLOCK;
-
-	public static IGloopyUtils GLOOPY_UTILS_INSTANCE = new FakeGloopyUtils();
 
 	private static Map<Identifier, ActionRegistryEntry> ACTIONS = new HashMap<>();
 

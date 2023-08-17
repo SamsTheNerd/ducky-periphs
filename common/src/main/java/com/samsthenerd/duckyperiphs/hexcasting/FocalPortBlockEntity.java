@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.samsthenerd.duckyperiphs.compat.gloopy.GloopyUtils;
 import com.samsthenerd.duckyperiphs.peripherals.IPeripheralTileDucky;
 
 import at.petrak.hexcasting.api.addldata.ADIotaHolder;
@@ -16,6 +17,7 @@ import at.petrak.hexcasting.api.casting.iota.NullIota;
 import at.petrak.hexcasting.common.items.storage.ItemFocus;
 import at.petrak.hexcasting.common.lib.HexItems;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import dev.architectury.platform.Platform;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -148,8 +150,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     public NbtCompound readIotaTag() {
         if(innerFocusStack != null && innerFocusStack.getItem() instanceof ItemFocus){
             return ((ItemFocus)innerFocusStack.getItem()).readIotaTag(innerFocusStack);
-        } else if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-            return DuckyCasting.GLOOPY_UTILS_INSTANCE.getIotaNbt(innerFocusStack);
+        } else if(Platform.isModLoaded("hexgloop")){
+            return GloopyUtils.getIotaNbt(innerFocusStack);
         } else {
             return null;
         }
@@ -170,8 +172,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
         if(iota == null || innerFocusStack.isEmpty()
         || (innerFocusStack.getItem() instanceof ItemFocus && !((ItemFocus)innerFocusStack.getItem()).canWrite(innerFocusStack, iota))){
-            if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-                if(!DuckyCasting.GLOOPY_UTILS_INSTANCE.writeIota(innerFocusStack, iota, true)) return false;
+            if(Platform.isModLoaded("hexgloop")){
+                if(!GloopyUtils.writeIota(innerFocusStack, iota, true)) return false;
             } else {
                 return false;
             }
@@ -179,8 +181,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(!simulate){
             if(innerFocusStack.getItem() instanceof ItemFocus){
                 ((ItemFocus)innerFocusStack.getItem()).writeDatum(innerFocusStack, iota);
-            } else if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-                DuckyCasting.GLOOPY_UTILS_INSTANCE.writeIota(innerFocusStack, iota, false);
+            } else if(Platform.isModLoaded("hexgloop")){
+                GloopyUtils.writeIota(innerFocusStack, iota, false);
             }
             if(iota == null){
                 iota = new NullIota();
@@ -207,15 +209,15 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     }
 
     public int getSlotCount(){
-        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-            return DuckyCasting.GLOOPY_UTILS_INSTANCE.pageCount(innerFocusStack);
+        if(Platform.isModLoaded("hexgloop")){
+            return GloopyUtils.pageCount(innerFocusStack);
         }
         return 1;
     }
 
     public int getCurrentSlot(){
-        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-            int gloopedSlot = DuckyCasting.GLOOPY_UTILS_INSTANCE.getPage(innerFocusStack);
+        if(Platform.isModLoaded("hexgloop")){
+            int gloopedSlot = GloopyUtils.getPage(innerFocusStack);
             if(gloopedSlot >= 1){
                 return gloopedSlot;
             }
@@ -225,8 +227,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
 
     public int setCurrentSlot(int slot){
         int slotToReturn = 1;
-        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-            int gloopedSlot = DuckyCasting.GLOOPY_UTILS_INSTANCE.setPage(innerFocusStack, slot);
+        if(Platform.isModLoaded("hexgloop")){
+            int gloopedSlot = GloopyUtils.setPage(innerFocusStack, slot);
             slotToReturn = gloopedSlot;
         }
         updateColor();
@@ -314,8 +316,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(stack.getItem() == HexItems.FOCUS){
             return true;
         }
-        if(DuckyCasting.GLOOPY_UTILS_INSTANCE.isGloopy()){
-            if(DuckyCasting.GLOOPY_UTILS_INSTANCE.goesInFocalPort(stack)) return true;
+        if(Platform.isModLoaded("hexgloop")){
+            if(GloopyUtils.goesInFocalPort(stack)) return true;
         }
         return false;
     }
