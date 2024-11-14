@@ -12,6 +12,8 @@ import at.petrak.hexcasting.api.casting.iota.GarbageIota;
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
 import at.petrak.hexcasting.common.lib.HexItems;
+import dan200.computercraft.api.lua.IArguments;
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
@@ -101,12 +103,15 @@ public class FocalLinkPeripheral implements IPeripheral{
 
 
     @LuaFunction(mainThread = true)
-    public final void sendIota(int index, Object luaObject){
-        Iota iota = IotaLuaUtils.getIota(luaObject, (ServerWorld)flTile.getWorld());
-        if(iota == null){
-            iota = new GarbageIota();
+    public final void sendIota(IArguments args) throws LuaException {
+        int index = args.getInt(0);
+        for (int i = 1; i < args.count(); i++) {
+            Iota iota = IotaLuaUtils.getIota(args.get(i), (ServerWorld)flTile.getWorld());
+            if(iota == null){
+                iota = new GarbageIota();
+            }
+            flTile.sendIota(index, iota);
         }
-        flTile.sendIota(index, iota);
     }
 
     public void receivedIota(){
