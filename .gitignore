@@ -9,3 +9,5 @@ gradle/
 .gradle/
 /JSScripts/
 remappedSrc/
+
+.idea/

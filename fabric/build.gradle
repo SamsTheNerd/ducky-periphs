@@ -8,7 +8,7 @@ plugins {
 // sourceCompatibility = JavaVersion.VERSION_17
 // targetCompatibility = JavaVersion.VERSION_17
 
-apply from: '../common/build.gradle'
+//apply from: '../common/build.gradle'
 
 architectury {
     platformSetupLoomIde()
@@ -78,6 +78,7 @@ dependencies {
     modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolibVersion}"
 
     modImplementation "localModLibs:hexal-fabric-${minecraft_version}:${hexalVersion}"
+    modImplementation "localModLibs:moreiotas-fabric-${minecraft_version}:${moreIotasVersion}"
 
     /*
     modImplementation "maven.modrinth:hexgloop:${hexgloopVersion}-fabric"
