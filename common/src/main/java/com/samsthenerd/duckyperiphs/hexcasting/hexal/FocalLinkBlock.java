@@ -3,6 +3,9 @@ package com.samsthenerd.duckyperiphs.hexcasting.hexal;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.IntProperty;
 import org.jetbrains.annotations.NotNull;
 
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
@@ -24,9 +27,12 @@ import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 
 public class FocalLinkBlock extends BlockWithEntity{
+
+    public static final BooleanProperty HAS_IOTA = BooleanProperty.of("hasiota");
+
     public FocalLinkBlock(Block.Settings settings) {
         super(settings.nonOpaque());
-        setDefaultState( getStateManager().getDefaultState());
+        setDefaultState( getStateManager().getDefaultState().with(HAS_IOTA, false));
     }
 
     public static int getColor(BlockRenderView world, BlockPos pos){
@@ -37,6 +43,11 @@ public class FocalLinkBlock extends BlockWithEntity{
         //     return 0;
         // }
         return 0;
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(HAS_IOTA);
     }
 
     // copied from BlockGeneric

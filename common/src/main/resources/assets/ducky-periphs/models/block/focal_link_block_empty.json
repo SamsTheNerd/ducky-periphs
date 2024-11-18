@@ -1,10 +1,9 @@
 {   "parent": "block/block",
     "textures": {
-        "particle": "ducky-periphs:block/focal_link/focal_link_side",
-        "bottom": "ducky-periphs:block/focal_link/focal_link_bottom",
-        "top": "ducky-periphs:block/focal_link/focal_link_top_base",
-        "side": "ducky-periphs:block/focal_link/focal_link_side",
-        "topoverlay": "ducky-periphs:block/focal_link/focal_link_top_iota"
+        "particle": "ducky-periphs:block/focal_link/side_empty",
+        "bottom": "ducky-periphs:block/focal_link/top_empty",
+        "top": "ducky-periphs:block/focal_link/top_empty",
+        "side": "ducky-periphs:block/focal_link/side_empty"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

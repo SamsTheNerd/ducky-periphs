@@ -211,6 +211,13 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
             holder.checkLinks();
         }
     }
+
+    public void updateBlockState(){
+        boolean hasIota = numRemainingIota() != 0;
+        BlockState bs = getWorld().getBlockState(getPos());
+        BlockState newBs = bs.with(FocalLinkBlock.HAS_IOTA, hasIota);
+        getWorld().setBlockState(getPos(), newBs);
+    }
     
     @Override
     public void receiveIota(@NotNull ILinkable other, @NotNull Iota iota){
@@ -218,11 +225,14 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
         if (!this.world.isClient) {
             flPeriph.receivedIota();
         }
+        updateBlockState();
     }
     
     @Override
     public Iota nextReceivedIota(){
-        return ILinkable.DefaultImpls.nextReceivedIota(this);
+        Iota nextIota = ILinkable.DefaultImpls.nextReceivedIota(this);
+        updateBlockState();
+        return nextIota;
     }
     
     @Override
@@ -233,6 +243,7 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
     @Override
     public void clearReceivedIotas(){
         ILinkable.DefaultImpls.clearReceivedIotas(this);
+        updateBlockState();
     }
     
     @Override
@@ -240,8 +251,7 @@ public class FocalLinkBlockEntity extends BlockEntity implements IPeripheralTile
     public List<Iota> allReceivedIotas(){
         return ILinkable.DefaultImpls.allReceivedIotas(this);
     }
-    
-    
+
     @Override
     @NotNull
     public List<Text> transmittingTargetReturnDisplay(){

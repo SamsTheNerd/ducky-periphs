@@ -1,5 +1,6 @@
 {
     "variants": {
-        "": {"model": "ducky-periphs:block/focal_link_block"}
+        "hasiota=true": {"model": "ducky-periphs:block/focal_link_block_full"},
+        "hasiota=false": {"model": "ducky-periphs:block/focal_link_block_empty"}
     }
 }

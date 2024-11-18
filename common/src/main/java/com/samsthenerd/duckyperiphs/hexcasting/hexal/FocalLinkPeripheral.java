@@ -63,7 +63,7 @@ public class FocalLinkPeripheral implements IPeripheral{
         return MethodResult.of(IotaLuaUtils.getLuaObject(iota, (ServerWorld)flTile.getWorld()));
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final void clearReceivedIotas(){
         flTile.clearReceivedIotas();
     }
