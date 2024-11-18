@@ -9,6 +9,11 @@ architectury {
 
 }
 
+// idk shedaniel said to have this?
+configurations.configureEach {
+    resolutionStrategy.force("net.sf.jopt-simple:jopt-simple:5.0.4")
+}
+
 loom {
     // accessWidenerPath = project(":common").loom.accessWidenerPath
 
