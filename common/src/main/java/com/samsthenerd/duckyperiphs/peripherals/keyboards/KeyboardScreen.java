@@ -3,6 +3,7 @@ package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 import java.util.HashSet;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.mixin.MixinMouseLockAccessor;
 import com.samsthenerd.duckyperiphs.utils.BlockHitFromScreen;
 
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlock;
@@ -12,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
@@ -54,6 +56,10 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
     @Override
     protected void init(){
         super.init();
+        ((MixinMouseLockAccessor) this.client.mouse).setCursorLocked(true); // so that you can look around while using keyboard
+        InputUtil.setCursorParameters(this.client.getWindow().getHandle(), InputUtil.GLFW_CURSOR_DISABLED, // hide cursor
+            this.client.mouse.getX(), this.client.mouse.getY());
+        this.client.player.sendMessage(Text.translatable("ducky-periphs.keyboardescmsg"), true);
     }
 
     @Override
@@ -122,7 +128,7 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
         // logPrint("keycode: " + key + "| toString: " + GLFW_Key.toString() + "| localized: " + GLFW_Key.getLocalizedText());
 
         keyData.writeBlockPos(this.handler.pos);
-        DuckyPeriphs.logPrint("sending key press packet: " + key);
+//        DuckyPeriphs.logPrint("sending key press packet: " + key);
         NetworkManager.sendToServer(new Identifier(DuckyPeriphs.MOD_ID, "key_up_packet"), keyData);
         
         pressedKeys.remove(key);
@@ -161,9 +167,8 @@ public class KeyboardScreen extends HandledScreen<KeyboardScreenHandler> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        BlockHitResult hit = BlockHitFromScreen.getHit(0, (int)mouseX, (int)mouseY);
-        if(hit != null){
-            MinecraftClient client = MinecraftClient.getInstance();
+//        BlockHitResult hit = BlockHitFromScreen.getHit(0, (int)mouseX, (int)mouseY);
+        if(client.crosshairTarget instanceof BlockHitResult hit){
             DuckyPeriphs.logPrint("hit: " + hit.getType() + "; pos: " + hit.getBlockPos() + "; side: " + hit.getSide() + "; pos: " + hit.getPos());
             if(client.world == null) return super.mouseClicked(mouseX, mouseY, button);
             BlockState state = client.world.getBlockState(hit.getBlockPos());

@@ -96,7 +96,7 @@ public class KeyboardTile extends BlockEntity implements IPeripheralTileDucky, N
 
     
     public static void keyPress(BlockPos pos, World world, int key, int scancode, int modifiers, Boolean repeat, String pasteText){
-        DuckyPeriphs.logPrint("reached keyPress in world " + world.getRegistryKey().getValue() + " at " + pos.toString() + " with key " + key);
+//        DuckyPeriphs.logPrint("reached keyPress in world " + world.getRegistryKey().getValue() + " at " + pos.toString() + " with key " + key);
 
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
