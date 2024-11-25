@@ -5,6 +5,13 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import at.petrak.hexcasting.api.HexAPI;
+import at.petrak.hexcasting.xplat.IXplatAbstractions;
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
+import com.samsthenerd.duckyperiphs.misc.DuckyTags;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.ItemTags;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.samsthenerd.duckyperiphs.compat.gloopy.GloopyUtils;
@@ -42,6 +49,7 @@ import net.minecraft.world.World;
 
 public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTileDucky, ADIotaHolder, Inventory{
     private FocalPortPeripheral fpPeriph;
+    @NotNull
     private ItemStack innerFocusStack;
     private int iotaColor;
     private FocalPortWrapperEntity wrapperEntity;
@@ -58,24 +66,25 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     // not sure if this is quite right
     public void spawnWrapperEntity(BlockPos pos){
         // check that we have a server world and that we don't already have a wrapper entity
-        if(world instanceof ServerWorld == false){
+        if(!(world instanceof ServerWorld sWorld)){
             return;
         }
         if(wrapperEntityUUID != null){
-            wrapperEntity = (FocalPortWrapperEntity)(((ServerWorld)world).getEntity(wrapperEntityUUID));
+            wrapperEntity = (FocalPortWrapperEntity)((sWorld).getEntity(wrapperEntityUUID));
         }
         if(wrapperEntity != null){
             return;
         }
         wrapperEntity = new FocalPortWrapperEntity(DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get(), world);
-        wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get().spawn((ServerWorld)world, null, null, pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
+        wrapperEntity = DuckyCasting.FOCAL_PORT_WRAPPER_ENTITY.get().spawn(sWorld, null, null,
+            pos.subtract(new Vec3i(0, 1, 0)), SpawnReason.TRIGGERED, true, false);
         wrapperEntityUUID = wrapperEntity.getUuid();
         this.markDirty();
     }
 
     public void despawnWrapperEntity(){
-        if(wrapperEntityUUID != null && world instanceof ServerWorld){
-            wrapperEntity = (FocalPortWrapperEntity)(((ServerWorld)world).getEntity(wrapperEntityUUID));
+        if(wrapperEntityUUID != null && world instanceof ServerWorld sWorld){
+            wrapperEntity = (FocalPortWrapperEntity)((sWorld).getEntity(wrapperEntityUUID));
         }
         if(wrapperEntity != null){
             wrapperEntity.discard();
@@ -104,11 +113,6 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         return fpPeriph;
     }
 
-
-    public BlockPos getPos(){
-        return this.pos;
-    }
-
     public World getWorld(){
         return this.world;
     }
@@ -119,16 +123,12 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(nbt.contains("wrapperEntityUUID")){
             wrapperEntityUUID = nbt.getUuid("wrapperEntityUUID");
         }
-        if (nbt != null && nbt.contains("innerFocusStack", 10)) {
+        if (nbt.contains("innerFocusStack", 10)) {
             this.innerFocusStack = ItemStack.fromNbt(nbt.getCompound("innerFocusStack"));
         }
-        if(nbt != null && nbt.contains("iotaColor", 3)){
+        if(nbt.contains("iotaColor", 3)){
             setColor(nbt.getInt("iotaColor"));
             markDirty();
-            World world = getWorld();
-            if(world != null){
-                // DuckyPeriphs.logPrint("FocalPortBlockEntity: readNbt: iotaColor = " + iotaColor + " on " + (world.isClient ? "client" : "server"));
-            }
         }
     }
 
@@ -138,68 +138,45 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(wrapperEntityUUID != null){
             nbt.putUuid("wrapperEntityUUID", wrapperEntityUUID);
         }
-        if((Integer)this.iotaColor != null){
-            nbt.putInt("iotaColor", iotaColor);
-        }
-        if(this.innerFocusStack != null){
-            nbt.put("innerFocusStack", innerFocusStack.writeNbt(new NbtCompound()));
-        }
+        nbt.putInt("iotaColor", iotaColor);
+        nbt.put("innerFocusStack", innerFocusStack.writeNbt(new NbtCompound()));
     }
 
     @Override
     public NbtCompound readIotaTag() {
-        if(innerFocusStack != null && innerFocusStack.getItem() instanceof ItemFocus){
-            return ((ItemFocus)innerFocusStack.getItem()).readIotaTag(innerFocusStack);
-        } else if(Platform.isModLoaded("hexgloop")){
-            return GloopyUtils.getIotaNbt(innerFocusStack);
-        } else {
+        ADIotaHolder holder = IXplatAbstractions.INSTANCE.findDataHolder(innerFocusStack);
+        if(holder == null){
             return null;
         }
+        return holder.readIotaTag();
     }
 
     // fromHex is true if we're writing from hex casting, false if we're writing from CC
     public boolean writeIota(@Nullable Iota iota, boolean simulate, boolean fromHex){
-        boolean result = writeIota(iota, simulate);
-        if(!simulate && result){
-            if(fromHex){
-                fpPeriph.updateIota();
-            }
+        ADIotaHolder holder = IXplatAbstractions.INSTANCE.findDataHolder(innerFocusStack);
+        if(holder == null){
+            return false;
         }
-        return result;
+        boolean res = holder.writeIota(iota, simulate);
+        if(!simulate && res){
+            if(fromHex) fpPeriph.updateIota(); // send the command
+            updateColor();
+            markDirty();
+        }
+        return res;
     }
 
     @Override
     public boolean writeIota(@Nullable Iota iota, boolean simulate){
-        if(iota == null || innerFocusStack.isEmpty()
-        || (innerFocusStack.getItem() instanceof ItemFocus && !((ItemFocus)innerFocusStack.getItem()).canWrite(innerFocusStack, iota))){
-            if(Platform.isModLoaded("hexgloop")){
-                if(!GloopyUtils.writeIota(innerFocusStack, iota, true)) return false;
-            } else {
-                return false;
-            }
-        }
-        if(!simulate){
-            if(innerFocusStack.getItem() instanceof ItemFocus){
-                ((ItemFocus)innerFocusStack.getItem()).writeDatum(innerFocusStack, iota);
-            } else if(Platform.isModLoaded("hexgloop")){
-                GloopyUtils.writeIota(innerFocusStack, iota, false);
-            }
-            if(iota == null){
-                iota = new NullIota();
-            }
-            setColor(iota.getType().color());
-            this.markDirty();
-        }
-        return true;
+        return writeIota(iota, simulate, true);
     }
 
     public Iota getIota(){
-        Iota iota = new NullIota();
-        if(!innerFocusStack.isEmpty() && getWorld() instanceof ServerWorld){
-            NbtCompound tag = readIotaTag();
-            if(tag != null)
-                return IotaType.deserialize(tag,(ServerWorld)getWorld());
+        Iota iota = null;
+        if(getWorld() instanceof ServerWorld sWorld){
+            iota = readIota(sWorld);
         }
+        if(iota == null) iota = new NullIota();
         setColor(iota.getType().color());
         return iota;
     }
@@ -286,17 +263,11 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
     @Override public boolean isEmpty() { return innerFocusStack.isEmpty(); }
 
     @Override public ItemStack getStack(int slot) { 
-        if(slot == 0)
-        return innerFocusStack; 
-        // else
-        return ItemStack.EMPTY;
+        return slot == 0 ? innerFocusStack : ItemStack.EMPTY;
     }
 
     @Override public ItemStack removeStack(int slot, int amount) {
-        if(slot != 0 || amount != 1){
-            return ItemStack.EMPTY;
-        }
-        return removeStack(slot);
+        return slot != 0 || amount != 1 ? ItemStack.EMPTY : removeStack(slot);
     }
 
     @Override public ItemStack removeStack(int slot) {
@@ -313,13 +284,8 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
         if(stack.isEmpty() || slot != 0){
             return false;
         }
-        if(stack.getItem() == HexItems.FOCUS){
-            return true;
-        }
-        if(Platform.isModLoaded("hexgloop")){
-            if(GloopyUtils.goesInFocalPort(stack)) return true;
-        }
-        return false;
+        ADIotaHolder holder = IXplatAbstractions.INSTANCE.findDataHolder(stack);
+        return holder != null && stack.isIn(DuckyTags.FOCAL_PORT_FRIEND);
     }
 
     @Override public void setStack(int slot, ItemStack stack) {
@@ -357,7 +323,7 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
                 if (!player.getInventory().insertStack(oldFocusStack)) {
                     player.dropItem(oldFocusStack, false);
                 }
-                ActionResult.success(world.isClient);
+                return ActionResult.success(world.isClient);
             } else {
                 ItemStack focusStack = player.getStackInHand(hand);
                 if(!isValid(0, focusStack)){
@@ -365,7 +331,7 @@ public class FocalPortBlockEntity extends BlockEntity implements IPeripheralTile
                 }
                 be.setStack(0, focusStack);
                 player.setStackInHand(hand, ItemStack.EMPTY);
-                ActionResult.success(world.isClient);
+                return ActionResult.success(world.isClient);
             }
         }
         return ActionResult.CONSUME;

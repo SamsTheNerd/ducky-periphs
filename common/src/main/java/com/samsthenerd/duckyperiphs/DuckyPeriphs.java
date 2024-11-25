@@ -61,6 +61,10 @@ public class DuckyPeriphs{
 			LOGGER.info(message);
 	}
 
+	public static Identifier id(String path){
+		return new Identifier(MOD_ID, path);
+	}
+
 	public static final String MOD_ID = "ducky-periphs";
 	public static final Supplier<RegistrarManager> REGISTRIES = Suppliers.memoize(() -> RegistrarManager.get(MOD_ID));
 
