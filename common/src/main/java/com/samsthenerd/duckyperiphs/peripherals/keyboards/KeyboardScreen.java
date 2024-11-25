@@ -4,7 +4,6 @@ import java.util.HashSet;
 
 import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.mixin.MixinMouseLockAccessor;
-import com.samsthenerd.duckyperiphs.utils.BlockHitFromScreen;
 
 import dan200.computercraft.shared.peripheral.monitor.MonitorBlock;
 import dev.architectury.networking.NetworkManager;
