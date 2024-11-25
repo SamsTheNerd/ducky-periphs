@@ -2,6 +2,7 @@ package com.samsthenerd.duckyperiphs.hexcasting.hexal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,6 +62,16 @@ public class FocalLinkPeripheral implements IPeripheral{
     public final MethodResult receiveIota(){
         Iota iota = flTile.nextReceivedIota();
         return MethodResult.of(IotaLuaUtils.getLuaObject(iota, (ServerWorld)flTile.getWorld()));
+    }
+
+    @LuaFunction(mainThread = true)
+    public final MethodResult receiveIotas(Optional<Integer> n) {
+        List<Object> iotas = new ArrayList<>();
+        while (flTile.numRemainingIota() > 0 && (n.isEmpty() || iotas.size() < n.get())) {
+            Iota iota = flTile.nextReceivedIota();
+            iotas.add(IotaLuaUtils.getLuaObject(iota, (ServerWorld)flTile.getWorld()));
+        }
+        return MethodResult.of(iotas);
     }
 
     @LuaFunction(mainThread = true)
