@@ -1,7 +1,10 @@
 package com.samsthenerd.duckyperiphs.hexcasting.lonelyPeripherals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,7 +21,7 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 public class SlatePeripheral implements IPeripheral {
     private BlockEntitySlate slate;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     SlatePeripheral(BlockEntitySlate _slate){
         slate = _slate;

@@ -1,7 +1,10 @@
 package com.samsthenerd.duckyperiphs.peripherals.sculkophone;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,9 +16,9 @@ import net.minecraft.world.event.GameEvent;
 public class SculkophonePeripheral  implements IPeripheral {
     public static int DEFAULT_RANGE = 8;
     
-    private final SculkophoneBlockEntity sBEntity; 
+    private final SculkophoneBlockEntity sBEntity;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
     
     SculkophonePeripheral(SculkophoneBlockEntity SBE){
         sBEntity = SBE;

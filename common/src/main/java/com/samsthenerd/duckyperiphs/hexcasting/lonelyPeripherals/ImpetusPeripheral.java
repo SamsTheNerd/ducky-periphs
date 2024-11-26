@@ -1,8 +1,7 @@
 package com.samsthenerd.duckyperiphs.hexcasting.lonelyPeripherals;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +24,7 @@ import net.minecraft.util.math.BlockPos;
 public class ImpetusPeripheral implements IPeripheral{
     private BlockEntityAbstractImpetus impetus;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     public ImpetusPeripheral(BlockEntityAbstractImpetus _impetus){
         impetus = _impetus;

@@ -1,9 +1,7 @@
 package com.samsthenerd.duckyperiphs.peripherals.EntityDetector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 
@@ -20,7 +18,7 @@ public class EntityDetectorPeripheral implements IPeripheral {
     
     private final EntityDetectorTile edTile;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
     
     EntityDetectorPeripheral(EntityDetectorTile edPTile){
         edTile = edPTile;

@@ -1,8 +1,7 @@
 package com.samsthenerd.duckyperiphs.hexcasting.hexal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,7 +27,7 @@ import ram.talia.hexal.api.linkable.ILinkable;
 public class FocalLinkPeripheral implements IPeripheral{
     private final FocalLinkBlockEntity flTile;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 
     FocalLinkPeripheral( FocalLinkBlockEntity _flTile){

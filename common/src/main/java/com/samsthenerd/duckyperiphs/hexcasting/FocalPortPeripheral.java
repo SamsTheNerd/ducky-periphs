@@ -1,7 +1,10 @@
 package com.samsthenerd.duckyperiphs.hexcasting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +23,7 @@ import net.minecraft.world.World;
 public class FocalPortPeripheral implements IPeripheral{
     private final FocalPortBlockEntity fpTile;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 
     FocalPortPeripheral( FocalPortBlockEntity _fpTile){

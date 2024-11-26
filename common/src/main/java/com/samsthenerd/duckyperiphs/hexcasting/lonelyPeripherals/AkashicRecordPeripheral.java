@@ -1,9 +1,7 @@
 package com.samsthenerd.duckyperiphs.hexcasting.lonelyPeripherals;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +23,7 @@ public class AkashicRecordPeripheral implements IPeripheral{
     private BlockPos recordPos;
     private World recordWorld;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     AkashicRecordPeripheral(BlockPos _pos, World world){
         recordPos = _pos;

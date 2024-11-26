@@ -1,9 +1,7 @@
 package com.samsthenerd.duckyperiphs.hexcasting.lonelyPeripherals;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +24,7 @@ import net.minecraft.world.World;
 public class AkashicBookshelfPeripheral implements IPeripheral{
     private BlockEntityAkashicBookshelf bookshelf;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     AkashicBookshelfPeripheral(BlockEntityAkashicBookshelf _bookshelf){
         bookshelf = _bookshelf;

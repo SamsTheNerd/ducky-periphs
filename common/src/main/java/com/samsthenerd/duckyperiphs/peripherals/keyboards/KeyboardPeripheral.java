@@ -1,7 +1,10 @@
 package com.samsthenerd.duckyperiphs.peripherals.keyboards;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class KeyboardPeripheral implements IPeripheral {
     private final KeyboardTile kbTile;
 
-    public List<IComputerAccess> computers = new ArrayList<IComputerAccess>();
+    public Set<IComputerAccess> computers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     public KeyboardPeripheral(KeyboardTile kbTile) {
         this.kbTile = kbTile;
