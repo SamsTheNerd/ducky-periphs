@@ -5,6 +5,12 @@
             "ducky-periphs:quack"
         ]
     },
+    "hexxy_quack": {
+        "subtitle": "subtitles.ducky-periphs.hexxy_quack",
+        "sounds": [
+            "ducky-periphs:hexxy_quack"
+        ]
+    },
     "sculkophone_clicking_stop": {
         "subtitle": "subtitles.ducky-periphs.sculkophone_clicking_stop",
         "sounds": [

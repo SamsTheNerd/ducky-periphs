@@ -115,6 +115,7 @@ public class OpPlaceDucky implements SpellAction{
                     return;
 
                 BlockState state = block.getPlacementState(placeContext).with(ConjuredDuckyBlock.FACING, direction);
+                ConjuredDuckyBlock.quack(context.getWorld(), pos);
                 if (state != null) {
                     context.getWorld().setBlockState(pos, state);
 

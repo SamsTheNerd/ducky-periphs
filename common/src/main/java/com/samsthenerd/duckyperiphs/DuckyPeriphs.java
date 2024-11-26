@@ -105,6 +105,8 @@ public class DuckyPeriphs{
 	public static final RegistrySupplier<DuckItem> DUCK_ITEM = item("duck_block", () -> new DuckItem(DUCK_BLOCK.get(), dpItemSettings()));
 	public static RegistrySupplier<SoundEvent> QUACK_SOUND_EVENT = soundEvent("quack");
 	public static RegistrySupplier<GameEvent> QUACK_GAME_EVENT = gameEvent("quack", 16);
+	public static RegistrySupplier<SoundEvent> HEXXY_QUACK_SOUND_EVENT = soundEvent("hexxy_quack");
+	public static RegistrySupplier<GameEvent> HEXXY_QUACK_GAME_EVENT = gameEvent("hexxy_quack", 16);
 
 	// sculkophone
 	public static final RegistrySupplier<SculkophoneBlock> SCULKOPHONE_BLOCK = blockItem("sculkophone_block", () -> new SculkophoneBlock(peripheralBlockSettings().hardness((float)0.7)));

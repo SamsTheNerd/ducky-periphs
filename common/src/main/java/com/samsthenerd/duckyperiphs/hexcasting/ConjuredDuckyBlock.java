@@ -2,6 +2,7 @@ package com.samsthenerd.duckyperiphs.hexcasting;
 
 import javax.annotation.Nonnull;
 
+import com.samsthenerd.duckyperiphs.DuckyPeriphs;
 import com.samsthenerd.duckyperiphs.ducks.DuckBlock;
 
 import at.petrak.hexcasting.api.pigment.FrozenPigment;
@@ -12,15 +13,21 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FacingBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
@@ -82,5 +89,22 @@ public class ConjuredDuckyBlock extends Block implements BlockEntityProvider{
         if (blockentity instanceof ConjuredDuckyBlockEntity tile) {
             tile.setColorizer(colorizer);
         }
+    }
+
+    public static void quack(World world, BlockPos pos){
+        if(!world.isClient){
+            float pitch = (float) (Math.random() * 0.2 + 0.9);
+            world.emitGameEvent(null, DuckyPeriphs.HEXXY_QUACK_GAME_EVENT.get(), pos);
+            world.playSound(null, pos, DuckyPeriphs.HEXXY_QUACK_SOUND_EVENT.get(), SoundCategory.BLOCKS, 1f, pitch);
+        }
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
+        }
+        quack(world, pos);
+        return ActionResult.CONSUME;
     }
 }
