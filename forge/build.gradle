@@ -56,6 +56,13 @@ dependencies {
     modApi("cc.tweaked:cc-tweaked-${minecraft_version}-forge-api:${project.cc_version}")
 	modRuntimeOnly("cc.tweaked:cc-tweaked-${minecraft_version}-forge:${project.cc_version}")
 
+    // arch loom issue: https://github.com/cc-tweaked/CC-Tweaked/discussions/1752
+    forgeRuntimeLibrary "cc.tweaked:cobalt:0.9.0"
+    forgeRuntimeLibrary "com.jcraft:jzlib:1.1.3"
+    forgeRuntimeLibrary "io.netty:netty-codec-http:4.1.82.Final"
+    forgeRuntimeLibrary "io.netty:netty-codec-socks:4.1.82.Final"
+    forgeRuntimeLibrary "io.netty:netty-handler-proxy:4.1.82.Final"
+
     // for HexCasting
     modImplementation "localModLibs:hexcasting-forge-$minecraft_version:$hexcastingVersion"
 

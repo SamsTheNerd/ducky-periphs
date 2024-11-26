@@ -28,7 +28,7 @@ public class DuckyCastingLonelyPeripheralProvider {
         if(be instanceof BlockEntitySlate slate){
             return new SlatePeripheral(slate);
         }
-        if(be.getWorld().getBlockState(be.getPos()).getBlock() instanceof BlockAkashicRecord){
+        if(be != null && be.getWorld().getBlockState(be.getPos()).getBlock() instanceof BlockAkashicRecord){
             return new AkashicRecordPeripheral(be.getPos(), be.getWorld());
         }
         return null;
