@@ -61,6 +61,8 @@ public class DuckyCasting {
 
 		if(Platform.isModLoaded("hexal")){
 			DuckyHexal.init();
+		} else {
+			DummyNoHex.initNoHexal();
 		}
 
 		makeSpells();

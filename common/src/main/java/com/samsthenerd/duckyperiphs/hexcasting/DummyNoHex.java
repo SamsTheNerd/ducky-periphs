@@ -21,11 +21,11 @@ public class DummyNoHex {
         CONJURED_DUCKY_BLOCK = DuckyPeriphs.blockItem("conjured_ducky_block", 
 			() -> new Block(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
 
-        if(!Platform.isModLoaded("hexal")){
-            FOCAL_LINK_BLOCK = DuckyPeriphs.blockItem("focal_link_block",
-                () -> new Block(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
-        }
+        initNoHexal();
     }
 
-
+    public static void initNoHexal(){
+        FOCAL_LINK_BLOCK = DuckyPeriphs.blockItem("focal_link_block",
+            () -> new Block(Block.Settings.create().hardness((float)1.0).luminance(state -> 5)), new Item.Settings());
+    }
 }
