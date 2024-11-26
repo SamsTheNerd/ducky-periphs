@@ -5,6 +5,8 @@ plugins {
     id "me.modmuss50.mod-publish-plugin" version "0.3.3"
 }
 
+archivesBaseName = "${archivesBaseName}-fabric"
+
 // sourceCompatibility = JavaVersion.VERSION_17
 // targetCompatibility = JavaVersion.VERSION_17
 
@@ -116,18 +118,11 @@ shadowJar {
 }
 
 remapJar {
-    // injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier.set "fabric"
-}
-
-jar {
-    archiveClassifier.set "fabric-dev"
 }
 
 sourcesJar {
-    archiveClassifier.set "fabric-sources"
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
@@ -142,7 +137,7 @@ components.java {
 publishing {
     publications {
         mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = archivesBaseName
             from components.java
         }
     }

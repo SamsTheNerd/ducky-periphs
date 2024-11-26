@@ -9,6 +9,8 @@ architectury {
 
 }
 
+archivesBaseName = "${archivesBaseName}-forge"
+
 // idk shedaniel said to have this?
 configurations.configureEach {
     resolutionStrategy.force("net.sf.jopt-simple:jopt-simple:5.0.4")
@@ -115,15 +117,9 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    archiveClassifier.set "forge"
-}
-
-jar {
-    archiveClassifier.set "forge-dev"
 }
 
 sourcesJar {
-    archiveClassifier.set "forge-sources"
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
@@ -138,7 +134,7 @@ components.java {
 publishing {
     publications {
         mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = archivesBaseName
             from components.java
         }
     }

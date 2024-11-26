@@ -25,8 +25,11 @@
     "client": [
       "com.samsthenerd.duckyperiphs.DuckyPeriphsFabricClient"
     ],
-    "cardinal-components": [
-      "com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingCC"
+    "cardinal-components-item": [
+      "com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingCCItems"
+    ],
+    "cardinal-components-entity": [
+      "com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingCCEntities"
     ],
     "rei_client": [
       "com.samsthenerd.duckyperiphs.compat.REI.REIPlugin"

@@ -6,6 +6,8 @@ loom {
     accessWidenerPath = file("src/main/resources/ducky-periphs.accesswidener")
 }
 
+archivesBaseName = "${archivesBaseName}-common"
+
 dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
@@ -46,7 +48,6 @@ dependencies {
 
     // for moreIotas matrices
 	implementation group: "org.jblas", name: "jblas", version: "1.2.5"
-    include group: "org.jblas", name: "jblas", version: "1.2.5"
 
     // compileOnly "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
 
@@ -56,7 +57,7 @@ dependencies {
 publishing {
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
+            artifactId = archivesBaseName
             from components.java
         }
     }
