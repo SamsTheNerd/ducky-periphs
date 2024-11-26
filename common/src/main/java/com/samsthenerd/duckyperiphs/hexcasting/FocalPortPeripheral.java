@@ -50,7 +50,7 @@ public class FocalPortPeripheral implements IPeripheral{
         return this == other;
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult readIota(){
         Iota iota = fpTile.getIota();
         World world = fpTile.getWorld();
@@ -66,7 +66,7 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(luaObject);
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult writeIota(Object luaObject){
         if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
             return MethodResult.of(false);
@@ -75,7 +75,7 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(fpTile.writeIota(iota, false));
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult canWriteIota(Object luaObject){
         if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
             return MethodResult.of(false);
@@ -84,7 +84,7 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(fpTile.writeIota(iota, true));
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult hasFocus(Object luaObject){
         if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
             return MethodResult.of(false);
@@ -92,7 +92,7 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(fpTile.hasFocus());
     }
 
-    @LuaFunction 
+    @LuaFunction(mainThread = true)
     public final MethodResult getIotaType(){
         if(fpTile.getWorld().isClient() || fpTile.getWorld() == null){
             return MethodResult.of();
@@ -104,17 +104,17 @@ public class FocalPortPeripheral implements IPeripheral{
         return MethodResult.of(IotaLuaUtils.getIotaTypeID(iota.getType()));
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getSlotCount(){
         return MethodResult.of(fpTile.getSlotCount());
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getCurrentSlot(){
         return MethodResult.of(fpTile.getCurrentSlot());
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult setCurrentSlot(int slot){
         return MethodResult.of(fpTile.setCurrentSlot(slot));
     }

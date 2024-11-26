@@ -79,12 +79,12 @@ public class FocalLinkPeripheral implements IPeripheral{
         flTile.clearReceivedIotas();
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult remainingIotaCount(){
         return MethodResult.of(flTile.numRemainingIota());
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult numLinked(){
         return MethodResult.of(flTile.numLinked());
     }
@@ -144,7 +144,7 @@ public class FocalLinkPeripheral implements IPeripheral{
         flTile.setRGBColorizer(argb);
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getPigment(){
         FrozenPigment col = flTile.pigment();
         Identifier id = Registries.ITEM.getId(col.item().getItem());
@@ -158,7 +158,7 @@ public class FocalLinkPeripheral implements IPeripheral{
         return MethodResult.of(idString);
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getPigmentRGB(){
         FrozenPigment col = flTile.pigment();
         int rgb = ItemRGBColorizer.getRGB(col.item());

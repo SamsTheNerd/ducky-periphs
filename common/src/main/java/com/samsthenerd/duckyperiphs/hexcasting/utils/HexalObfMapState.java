@@ -158,7 +158,7 @@ public class HexalObfMapState extends PersistentState{
         HexalObfMapState serverState = persistentStateManager.getOrCreate(
                 HexalObfMapState::createFromNbt,
                 HexalObfMapState::new,
-                DuckyPeriphs.MOD_ID + ":hexal_gate_map");  // keeping this as 'gate' so we don't break existing data. maybe change it on a version boundary
+                DuckyPeriphs.MOD_ID + "_hexal_gate_map");  // keeping this as 'gate' so we don't break existing data. maybe change it on a version boundary
 
         serverState.markDirty(); // YOU MUST DO THIS!!!! Or data wont be saved correctly.
  
