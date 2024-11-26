@@ -95,55 +95,47 @@ public class KeyboardTile extends BlockEntity implements IPeripheralTileDucky, N
     }
 
     
-    public static void keyPress(BlockPos pos, World world, int key, int scancode, int modifiers, Boolean repeat, String pasteText){
-//        DuckyPeriphs.logPrint("reached keyPress in world " + world.getRegistryKey().getValue() + " at " + pos.toString() + " with key " + key);
+    public static void keyPress(BlockPos pos, World world, int key, int scancode, int modifiers, Boolean repeat,
+                                String pasteText, ServerPlayerEntity player){
+//        DuckyPeriphs.logPrint("reached keyPress in world " + world.getRegistryKey().getValue() + " at " + pos.toString() + " with key " + key
+//            + " and modifiers: " + modifiers + " with pasteText \"" + pasteText + "\"");
 
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
-            // DuckyPeriph.logPrint("kbTile found");
-            kbTileTry.kbPeriph.sendKey(key, repeat);
-            // char charToSend = getChar(key, modifiers);
-            // if(charToSend != '\0')
-            //     kbTileTry.kbPeriph.sendChar(charToSend);
-            // handle some special stuff, mostly just copy/paste
-            if(key == 86 && (modifiers & 8) != 0){ // paste
-                
-            }
-            // I don't *think* you can select text in cc, so shouldn't be able to copy either? 
-        } else {
-            // DuckyPeriph.logPrint("kbTile not found");
-
+            kbTileTry.kbPeriph.sendKey(key, repeat, player);
+            if(!pasteText.isEmpty()) kbTileTry.kbPeriph.sendPaste(pasteText, player);
+            // I don't *think* you can select text in cc, so shouldn't be able to copy either?
         }
     }
 
-    public static void keyUp(BlockPos pos, World world, int key, int scancode, int modifiers){
+    public static void keyUp(BlockPos pos, World world, int key, int scancode, int modifiers, ServerPlayerEntity player){
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
-            kbTileTry.kbPeriph.sendKeyUp(key);
+            kbTileTry.kbPeriph.sendKeyUp(key, player);
         }
     }
 
-    public static void charTyped(BlockPos pos, World world, char typedChar, int modifiers){
+    public static void charTyped(BlockPos pos, World world, char typedChar, int modifiers, ServerPlayerEntity player){
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
             if(typedChar != '\0')
-                kbTileTry.kbPeriph.sendChar(typedChar);
+                kbTileTry.kbPeriph.sendChar(typedChar, player);
         }
     }
 
     // for terminate, reboot, shutdown
-    public static void handleEvents(BlockPos pos, World world, int event){
+    public static void handleEvents(BlockPos pos, World world, int event, ServerPlayerEntity player){
         KeyboardTile kbTileTry = (KeyboardTile) world.getBlockEntity(pos);
         if(kbTileTry != null){
             // kbTileTry.kbPeriph.sendEvent(event);
             if (event == 0){
-                kbTileTry.kbPeriph.sendTerminate();
+                kbTileTry.kbPeriph.sendTerminate(player);
             }
             if (event == 1){
-                kbTileTry.kbPeriph.sendShutdown();
+                kbTileTry.kbPeriph.sendShutdown(player);
             }
             if (event == 2){
-                kbTileTry.kbPeriph.sendReboot();
+                kbTileTry.kbPeriph.sendReboot(player);
             }
         }
     }

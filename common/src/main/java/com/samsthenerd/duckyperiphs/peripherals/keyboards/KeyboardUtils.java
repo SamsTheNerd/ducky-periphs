@@ -29,7 +29,7 @@ public class KeyboardUtils {
         World world = player.getEntityWorld();
 //        DuckyPeriphs.logPrint("recieved key press packet: " + key + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
-            KeyboardTile.keyPress(pos, world, key, scancode, modifiers, repeat, pasteText);
+            KeyboardTile.keyPress(pos, world, key, scancode, modifiers, repeat, pasteText, player);
         });
     }
 
@@ -49,7 +49,7 @@ public class KeyboardUtils {
         World world = player.getEntityWorld();
 //        DuckyPeriphs.logPrint("recieved key up packet: " + key + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
-            KeyboardTile.keyUp(pos, world, key, scancode, modifiers);
+            KeyboardTile.keyUp(pos, world, key, scancode, modifiers, player);
         });
     }
 
@@ -70,7 +70,7 @@ public class KeyboardUtils {
         World world = player.getEntityWorld();
 //        DuckyPeriphs.logPrint("recieved char " + char_sent + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
-            KeyboardTile.charTyped(pos, world, char_sent, modifiers);
+            KeyboardTile.charTyped(pos, world, char_sent, modifiers, player);
         });
     }
 
@@ -88,7 +88,7 @@ public class KeyboardUtils {
         World world = player.getEntityWorld();
 //        DuckyPeriphs.logPrint("recieved event " + eventCode + " on worldtype: " + (world.isClient ? "client" : "server"));
         server.execute(()->{
-            KeyboardTile.handleEvents(pos, world, eventCode);
+            KeyboardTile.handleEvents(pos, world, eventCode, player);
         });
     }
 
