@@ -1,0 +1,87 @@
+{
+    "block.ducky-periphs.duck_block": "Резиновая уточка",
+    "item.ducky-periphs.duck_block": "Резиновая уточка",
+
+    "block.ducky-periphs.weather_machine_block": "Погодная машина",
+    "item.ducky-periphs.weather_machine_block": "Погодная машина",
+    "block.ducky-periphs.entity_detector_block": "Детектор сущностей",
+    "item.ducky-periphs.entity_detector_block": "Детектор сущностей",
+    
+    "subtitles.ducky-periphs.quack": "Писк резиновой уточки",
+    "subtitles.ducky-periphs.hexxy_quack": "Писк наколдованной уточки",
+    "itemGroup.ducky-periphs.general": "Ducky Peripherals",
+
+    "block.ducky-periphs.keyboard_block": "Клавиатура",
+    "item.ducky-periphs.keyboard_block": "Клавиатура",
+
+    "block.ducky-periphs.sculkophone_block": "Скалкофон",
+    "item.ducky-periphs.sculkophone_block": "Скалкофон",
+
+    "subtitles.ducky-periphs.sculkophone_clicking": "Скалкофон кликает",
+    "subtitles.ducky-periphs.sculkophone_clicking_stop": "Скалкофон перестаёт кликать",
+
+    "block.ducky-periphs.focal_port_block": "Рунный порт",
+    "item.ducky-periphs.focal_port_block": "Рунный порт",
+    "entity.ducky-periphs.focal_port_wrapper_entity": "Рунный порт",
+    "block.ducky-periphs.focal_link_block": "Рунный линкер",
+    "item.ducky-periphs.focal_link_block": "Рунный линкер",
+
+    "block.ducky-periphs.conjured_ducky_block": "Наколдованная уточка",
+    "item.ducky-periphs.conjured_ducky_block": "Наколдованная уточка",
+    "hexcasting.spell.ducky-periphs:conjure_ducky": "Наколдовать Уточку",
+
+    "item.ducky-periphs.ducky_banner_pattern": "Узор флага",
+    "item.ducky-periphs.ducky_banner_pattern.desc": "Узор флага уточки",
+    
+    "block.minecraft.banner.ducky-periphs.ducky.white": "Белая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.orange": "Оранжевая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.magenta": "Сиреневая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.light_blue": "Голубая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.yellow": "Жёлтая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.lime": "Лаймовая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.pink": "Розовая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.gray": "Серая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.light_gray": "Светло-серая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.cyan": "Бирюзовая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.purple": "Фиолетовая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.blue": "Синяя уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.brown": "Коричневая уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.green": "Зелёная уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.red": "Красная уточка",
+    "block.minecraft.banner.ducky-periphs.ducky.black": "Чёрная уточка",
+	
+    "ducky-periphs.keyboardescmsg": "Нажмите ESC для выхода из клавиатуры",
+
+
+    "ducky-periphs.keycraftingzone.esc": "Esc",
+    "ducky-periphs.keycraftingzone.fn_left": "FN Влево",
+    "ducky-periphs.keycraftingzone.fn_right": "FN Вправо",
+    "ducky-periphs.keycraftingzone.fn_main": "FN Main",
+    "ducky-periphs.keycraftingzone.screen_keys": "Экранные клавишы",
+    "ducky-periphs.keycraftingzone.tab": "Таб",
+    "ducky-periphs.keycraftingzone.wasd": "WASD",
+    "ducky-periphs.keycraftingzone.num_row": "Циферный ряд",
+    "ducky-periphs.keycraftingzone.backspace": "Backspace",
+    "ducky-periphs.keycraftingzone.side_top": "Боковая Верхушка",
+    "ducky-periphs.keycraftingzone.caps": "Caps",
+    "ducky-periphs.keycraftingzone.main": "Main",
+    "ducky-periphs.keycraftingzone.Keyboard": "Клавиатура",
+    "ducky-periphs.keycraftingzone.enter": "Enter",
+    "ducky-periphs.keycraftingzone.side_mid": "Боковая середина",
+    "ducky-periphs.keycraftingzone.lshift": "Левый шифт",
+    "ducky-periphs.keycraftingzone.util_keys": "Util Клавишы",
+    "ducky-periphs.keycraftingzone.space": "Пробел",
+    "ducky-periphs.keycraftingzone.arrows": "Стрелочки",
+    "ducky-periphs.keycraftingzone.rshift": "Правый шифт",
+    "ducky-periphs.keycraftingzone.left_modifiers": "Левые модификаторы",
+    "ducky-periphs.keycraftingzone.right_modifiers": "Правые модификаторы",
+    "ducky-periphs.keycraftingzone.case_left": "Case Влево",
+    "ducky-periphs.keycraftingzone.case_right": "Case Вправо",
+    "ducky-periphs.keycraftingzone.case_main": "Case Main"
+
+
+
+
+
+
+}
