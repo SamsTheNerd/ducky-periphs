@@ -12,6 +12,7 @@ A general peripheral addon mod for ComputerCraft Restitched (fabric) and Tweaked
 - Sculkophone - it's like a sculk sensor but for your computer
 - Focal Port - read/write iotas between cc and hex casting
 - Hex Peripherals - added for various blocks from hex casting
+- Inventory Manager - query your Inventory and move items in or out of it regardless of distance - like from https://github.com/Seniorendi/AdvancedPeripherals
 
 <br>
 

@@ -16,6 +16,10 @@ import com.samsthenerd.duckyperiphs.hexcasting.DummyNoHex;
 import com.samsthenerd.duckyperiphs.misc.DuckyBanners;
 import com.samsthenerd.duckyperiphs.peripherals.EntityDetector.EntityDetectorBlock;
 import com.samsthenerd.duckyperiphs.peripherals.EntityDetector.EntityDetectorTile;
+import com.samsthenerd.duckyperiphs.peripherals.InventoryManager.InventoryManagerBlock;
+import com.samsthenerd.duckyperiphs.peripherals.InventoryManager.InventoryManagerScreenHandler;
+import com.samsthenerd.duckyperiphs.peripherals.InventoryManager.InventoryManagerTile;
+import com.samsthenerd.duckyperiphs.peripherals.InventoryManager.MemoryCardItem;
 import com.samsthenerd.duckyperiphs.peripherals.WeatherMachine.WeatherMachineBlock;
 import com.samsthenerd.duckyperiphs.peripherals.WeatherMachine.WeatherMachineTile;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardBlock;
@@ -91,6 +95,12 @@ public class DuckyPeriphs{
 	// Entity Detector Registering
 	public static final RegistrySupplier<EntityDetectorBlock> ENTITY_DETECTOR_BLOCK = blockItem("entity_detector_block", () -> new EntityDetectorBlock(peripheralBlockSettings()));
 	public static RegistrySupplier<BlockEntityType<EntityDetectorTile>> ENTITY_DETECTOR_TILE = blockEntities.register(new Identifier(MOD_ID, "entity_detector_tile"), () -> BlockEntityType.Builder.create(EntityDetectorTile::new, ENTITY_DETECTOR_BLOCK.get()).build(null));
+
+	// Inventory Manager Registering - ported from Advanced Peripherals (Apache-2.0)
+	public static final RegistrySupplier<InventoryManagerBlock> INVENTORY_MANAGER_BLOCK = blockItem("inventory_manager_block", () -> new InventoryManagerBlock(peripheralBlockSettings()));
+	public static RegistrySupplier<BlockEntityType<InventoryManagerTile>> INVENTORY_MANAGER_TILE = blockEntities.register(new Identifier(MOD_ID, "inventory_manager_tile"), () -> BlockEntityType.Builder.create(InventoryManagerTile::new, INVENTORY_MANAGER_BLOCK.get()).build(null));
+	public static final RegistrySupplier<MemoryCardItem> MEMORY_CARD = item("memory_card", () -> new MemoryCardItem(dpItemSettings()));
+	public static final ScreenHandlerType<InventoryManagerScreenHandler> INVENTORY_MANAGER_SCREEN_HANDLER = MenuRegistry.ofExtended(InventoryManagerScreenHandler::new);
 
 	// Keyboard Registering - may end up having more keyboards here later
 	public static final RegistrySupplier<KeyboardBlock> KEYBOARD_BLOCK = blockNoItem("keyboard_block", () -> new KeyboardBlock(peripheralBlockSettings().hardness((float)0.7)));
@@ -179,6 +189,7 @@ public class DuckyPeriphs{
 
 	private static void setupMisc(){
 		screenHandlers.register(new Identifier("ducky-periphs", "keyboard_screen_handler"), () -> KEYBOARD_SCREEN_HANDLER);
+		screenHandlers.register(new Identifier("ducky-periphs", "inventory_manager_screen_handler"), () -> INVENTORY_MANAGER_SCREEN_HANDLER);
 	}
 
 

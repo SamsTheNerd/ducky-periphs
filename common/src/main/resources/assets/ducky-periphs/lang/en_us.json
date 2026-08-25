@@ -6,7 +6,14 @@
     "item.ducky-periphs.weather_machine_block": "Weather Machine",
     "block.ducky-periphs.entity_detector_block": "Entity Detector",
     "item.ducky-periphs.entity_detector_block": "Entity Detector",
-    
+
+    "block.ducky-periphs.inventory_manager_block": "Inventory Manager",
+    "item.ducky-periphs.inventory_manager_block": "Inventory Manager",
+    "item.ducky-periphs.memory_card": "Memory Card",
+    "item.ducky-periphs.memory_card.tooltip.bound": "Bound to %s. Use again to unbind.",
+    "text.ducky-periphs.memory_card.added_player": "Memory card is now bound to you",
+    "text.ducky-periphs.memory_card.removed_player": "Removed the player binding from the memory card",
+
     "subtitles.ducky-periphs.quack": "Rubber Duck Squeak",
     "subtitles.ducky-periphs.hexxy_quack": "Conjured Duck Squeak",
     "itemGroup.ducky-periphs.general": "Ducky Peripherals",
