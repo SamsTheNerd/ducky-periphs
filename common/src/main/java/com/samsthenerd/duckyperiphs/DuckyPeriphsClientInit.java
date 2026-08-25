@@ -1,6 +1,7 @@
 package com.samsthenerd.duckyperiphs;
 import com.samsthenerd.duckyperiphs.hexcasting.DuckyCastingClient;
 import com.samsthenerd.duckyperiphs.hexcasting.DummyNoHex;
+import com.samsthenerd.duckyperiphs.peripherals.InventoryManager.InventoryManagerScreen;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyCaps;
 import com.samsthenerd.duckyperiphs.peripherals.keyboards.KeyboardScreen;
 
@@ -22,6 +23,7 @@ public class DuckyPeriphsClientInit{
 					DuckyPeriphs.KEYBOARD_BLOCK.get(), DuckyPeriphs.DUCK_BLOCK.get());
 
         MenuRegistry.registerScreenFactory(DuckyPeriphs.KEYBOARD_SCREEN_HANDLER, KeyboardScreen::new);
+        MenuRegistry.registerScreenFactory(DuckyPeriphs.INVENTORY_MANAGER_SCREEN_HANDLER, InventoryManagerScreen::new);
 
         registerColorProviders();
 

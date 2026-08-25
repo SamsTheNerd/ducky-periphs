@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "ducky-periphs:block/inventory_manager_front",
+        "north": "ducky-periphs:block/inventory_manager_front",
+        "south": "ducky-periphs:block/inventory_manager",
+        "east": "ducky-periphs:block/inventory_manager",
+        "west": "ducky-periphs:block/inventory_manager",
+        "up": "ducky-periphs:block/inventory_manager_top",
+        "down": "ducky-periphs:block/bottom"
+    }
+}

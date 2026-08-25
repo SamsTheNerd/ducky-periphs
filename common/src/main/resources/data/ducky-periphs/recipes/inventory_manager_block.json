@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "III",
+        "ICI",
+        "III"
+    ],
+    "key": {
+        "I": {
+            "item": "minecraft:iron_ingot"
+        },
+        "C": {
+            "tag": "minecraft:chests"
+        }
+    },
+    "result": {
+        "item": "ducky-periphs:inventory_manager_block",
+        "count": 1
+    }
+}
